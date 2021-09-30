@@ -9,10 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.nnk.springboot.constant.GeneralConstraints;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "bidlist")
@@ -20,36 +23,43 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class BidList {
 
-	private static final int VARIABLE_LENGTH_30 = 30;
-
-	private static final int VARIABLE_LENGTH_125 = 125;
 	
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "bid_list_id")
     private Integer bidListId;
 
-	@Column(name = "account", length = VARIABLE_LENGTH_30, nullable = false)
+	@Column(name = "account",
+			length = GeneralConstraints.VARIABLE_LENGTH_30,
+			nullable = false)
     private String account;
 
-    @Column(name = "type", length = VARIABLE_LENGTH_30, nullable = false)
+    @Column(name = "type",
+    		length = GeneralConstraints.VARIABLE_LENGTH_30,
+    		nullable = false)
 	private String type;
 
-    @Column(name = "bid_quantity", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "bid_quantity",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double bidQuantity;
 
-    @Column(name = "ask_quantity", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "ask_quantity",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double askQuantity;
 
-    @Column(name = "bid", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "bid",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double bid;
 
-    @Column(name = "ask", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "ask",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double ask;
 
-    @Column(name = "benchmark", length = VARIABLE_LENGTH_125)
+    @Column(name = "benchmark",
+    		length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String benchmark;
 
 //    @CreationTimestamp
@@ -90,8 +100,12 @@ public class BidList {
 
     private String side;
 
-    public BidList(final String account, final String type, final Double bidQuantity) {
-        this.account = account;
+    public BidList(
+    		final String account,
+    		final String type,
+    		final Double bidQuantity) {
+
+    	this.account = account;
         this.type = type;
         this.bidQuantity = bidQuantity;
     }
