@@ -1,8 +1,11 @@
 package com.nnk.springboot.util;
 
+import org.springframework.stereotype.Component;
+
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 
+@Component
 public class CurvePointMapper {
 
     public CurvePointDTO toCurvePointDTO(final CurvePoint curvePoint) {

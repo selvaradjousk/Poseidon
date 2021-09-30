@@ -1,8 +1,11 @@
 package com.nnk.springboot.util;
 
+import org.springframework.stereotype.Component;
+
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 
+@Component
 public class RatingMapper {
 
     public RatingDTO toRatingDTO(final Rating rating) {
