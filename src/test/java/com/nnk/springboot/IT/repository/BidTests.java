@@ -1,7 +1,8 @@
-package com.nnk.springboot;
+package com.nnk.springboot.IT.repository;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.repositories.BidListRepository;
+import com.nnk.springboot.repository.BidListRepository;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
