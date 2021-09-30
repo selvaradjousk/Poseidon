@@ -7,10 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.nnk.springboot.constant.GeneralConstraints;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "rating")
@@ -18,29 +21,37 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Rating {
 
-	private static final int VARIABLE_LENGTH_125 = 125;
-
+	
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-	@Column(name = "moodys_rating", length = VARIABLE_LENGTH_125)
+	@Column(name = "moodys_rating",
+			length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String moodysRating;
 
-    @Column(name = "sand_prating", length = VARIABLE_LENGTH_125)
+    @Column(name = "sand_prating",
+    		length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String sandPRating;
 
-    @Column(name = "fitch_rating", length = VARIABLE_LENGTH_125)
+    @Column(name = "fitch_rating",
+    		length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String fitchRating;
 
     @Column(name = "order_number")
     private Integer orderNumber;
 
-    public Rating(final String moodysRating, final String sandPRating, final String fitchRating, final Integer orderNumber) {
-        this.moodysRating = moodysRating;
+    public Rating(
+    		final String moodysRating,
+    		final String sandPRating,
+    		final String fitchRating,
+    		final Integer orderNumber) {
+
+    	this.moodysRating = moodysRating;
         this.sandPRating = sandPRating;
         this.fitchRating = fitchRating;
         this.orderNumber = orderNumber;
