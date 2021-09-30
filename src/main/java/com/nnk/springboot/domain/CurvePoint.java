@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
@@ -21,6 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CurvePoint {
 
     @Id
@@ -36,10 +38,12 @@ public class CurvePoint {
     @Column(name = "as_of_date")
     private LocalDateTime asOfDate;
 
-    @Column(name = "term", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "term",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double term;
 
-    @Column(name = "value", columnDefinition="Decimal(10,2) default '0.00'")
+    @Column(name = "value",
+    		columnDefinition="Decimal(10,2) default '0.00'")
     private Double value;
 
 //    @CreationTimestamp
@@ -47,8 +51,12 @@ public class CurvePoint {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
-    public CurvePoint(final Integer curveId, final Double term, final Double value) {
-        this.curveId = curveId;
+    public CurvePoint(
+    		final Integer curveId,
+    		final Double term,
+    		final Double value) {
+
+    	this.curveId = curveId;
         this.term = term;
         this.value = value;
     }	
