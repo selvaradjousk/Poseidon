@@ -1,20 +1,23 @@
 package com.nnk.springboot.IT.repository;
 
-import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.repository.RatingRepository;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+
+import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.repository.RatingRepository;
+
+//@RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource({"/application-test.properties"})
 public class RatingTests {
 
 	@Autowired
@@ -26,22 +29,22 @@ public class RatingTests {
 
 		// Save
 		rating = ratingRepository.save(rating);
-		Assert.assertNotNull(rating.getId());
-		Assert.assertTrue(rating.getOrderNumber() == 10);
+		assertNotNull(rating.getId());
+		assertTrue(rating.getOrderNumber() == 10);
 
 		// Update
 		rating.setOrderNumber(20);
 		rating = ratingRepository.save(rating);
-		Assert.assertTrue(rating.getOrderNumber() == 20);
+		assertTrue(rating.getOrderNumber() == 20);
 
 		// Find
 		List<Rating> listResult = ratingRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
+		assertTrue(listResult.size() > 0);
 
 		// Delete
 		Integer id = rating.getId();
 		ratingRepository.delete(rating);
 		Optional<Rating> ratingList = ratingRepository.findById(id);
-		Assert.assertFalse(ratingList.isPresent());
+		assertFalse(ratingList.isPresent());
 	}
 }
