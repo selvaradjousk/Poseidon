@@ -1,9 +1,10 @@
-package com.nnk.springboot.UnitTests.config;
+package com.nnk.springboot.IT.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource({"/application-test.properties"})
 public class PasswordEncodeTest {
     @Test
     public void testPassword() {
