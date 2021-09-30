@@ -1,12 +1,49 @@
 package com.nnk.springboot.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "rating")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Rating {
-    // TODO: Map columns in data table RATING with corresponding java fields
+
+	private static final int VARIABLE_LENGTH_125 = 125;
+
+	@Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private Integer id;
+
+	@Column(name = "moodys_rating", length = VARIABLE_LENGTH_125)
+    private String moodysRating;
+
+    @Column(name = "sand_prating", length = VARIABLE_LENGTH_125)
+    private String sandPRating;
+
+    @Column(name = "fitch_rating", length = VARIABLE_LENGTH_125)
+    private String fitchRating;
+
+    @Column(name = "order_number")
+    private Integer orderNumber;
+
+    public Rating(final String moodysRating, final String sandPRating, final String fitchRating, final Integer orderNumber) {
+        this.moodysRating = moodysRating;
+        this.sandPRating = sandPRating;
+        this.fitchRating = fitchRating;
+        this.orderNumber = orderNumber;
+    }
+
 }
