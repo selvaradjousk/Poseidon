@@ -152,6 +152,27 @@ class TradeServiceUpdateTest {
 	
 
 	// *******************************************************************	
+    
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new Trade,"
+		+ " when UPDATE TRADE action request,"
+		+ " then TRADE should not be null")	    
+    @Test
+    public void testUpdateExistingTradeNotNullCheck() {
+		
+
+        TradeDTO tradeSaved = tradeService.updateTrade(2, tradeUpdatedDTO);
+
+        assertNotNull(tradeSaved);
+    }
+
+	// *******************************************************************			
+    
+    
+    
+    
+    
   }
 
 
