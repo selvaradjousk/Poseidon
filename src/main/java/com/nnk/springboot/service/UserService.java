@@ -147,10 +147,26 @@ public class UserService implements IUserService {
 
 
 	@Override
-	public UserDTO updateUser(int userId, UserDTO user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public UserDTO updateUser(final int userId, final UserDTO userDTO) {
+
+        userRepository.findById(userId).orElseThrow(() ->
+                new DataNotFoundException("User Does not Exist"));
+
+        User userToUpdate = userMapper
+        		.toUser(userDTO);
+        
+        userToUpdate.setId(userId);
+        
+        userToUpdate.setPassword(passwordEncoder
+        		.encode(userDTO.getPassword()));
+        
+        User userUpdated = userRepository
+        		.save(userToUpdate);
+
+        return userMapper
+        		.toUserDTO(userUpdated);
+    }
+
 
 
 }
