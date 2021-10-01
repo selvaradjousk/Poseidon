@@ -1,5 +1,7 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.inOrder;
@@ -144,9 +146,24 @@ class TradeServiceAddTest {
     }
 
 	// *******************************************************************			
-		     
-	
+    
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new Trade,"
+    		+ " when ADD TRADE action request,"
+    		+ " then TRADE added should be added and same as test record")
+    public void testAddNewPersonReturnResultMatch() {
+   			
+
+   	        TradeDTO tradeSaved = tradeService.addTrade(tradeToAddDTO);
+
+   	        assertEquals(tradeToAddDTO, tradeSaved);
+   	        assertThat(tradeSaved).usingRecursiveComparison().isEqualTo(tradeToAddDTO);
+   	    }
+    
     }
+    
+   	// *******************************************************************	
 
 
 }
