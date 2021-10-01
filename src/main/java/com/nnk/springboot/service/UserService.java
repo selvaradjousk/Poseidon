@@ -104,9 +104,6 @@ public class UserService implements IUserService {
 		User userExistsCheck = userRepository
 				.findByUsername(userDTO.getUsername());
 
-        log.info("Request: userRepository.findByUsername"
-        		+ "User ID: {} & UserName: {} ",
-        		userExistsCheck.getId(), userExistsCheck.getUsername());
 
 		if (userExistsCheck != null) {
 
@@ -117,6 +114,10 @@ public class UserService implements IUserService {
 			throw new DataAlreadyExistsException(
             		"Username already exists");
         }
+
+        log.info("Request: userRepository.findByUsername"
+        		+ "User ID: {} & UserName: {} NOT FOUND ==> OK to ADD",
+        		userDTO.getId(), userDTO.getUsername());
 
 		User userToAdd = userMapper
 				.toUser(userDTO);

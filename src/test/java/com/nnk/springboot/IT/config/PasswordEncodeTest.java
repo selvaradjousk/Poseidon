@@ -23,4 +23,9 @@ public class PasswordEncodeTest {
         String pw = encoder.encode("123456");
         System.out.println("[ "+ pw + " ]");
     }
+    
+    
+    
+    
+    // https://stackoverflow.com/questions/60848619/consider-defining-a-bean-of-type-org-springframework-security-crypto-bcrypt-bcr?noredirect=1&lq=1
 }

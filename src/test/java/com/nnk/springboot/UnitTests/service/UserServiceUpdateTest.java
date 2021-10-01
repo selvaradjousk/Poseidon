@@ -155,12 +155,12 @@ class UserServiceUpdateTest {
         		"USER"));
 
         InOrder inOrder = inOrder(userRepository, passwordEncoder, userMapper);
-        inOrder.verify(userRepository).findById(anyInt());
+        inOrder.verify(userRepository, times(2)).findById(anyInt());
         inOrder.verify(passwordEncoder).encode(anyString());
         inOrder.verify(userRepository).save(any(User.class));
         inOrder.verify(userMapper).toUserDTO(any(User.class));
         
-        verify(userRepository, times(1)).findById(anyInt());
+        verify(userRepository, times(2)).findById(anyInt());
         verify(passwordEncoder, times(1)).encode(anyString());
         verify(userRepository, times(1)).save(any(User.class));
         verify(userMapper, times(1)).toUserDTO(any(User.class));

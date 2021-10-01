@@ -58,6 +58,7 @@ class UserServiceGetByIdTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
         testUserDTO1 = UserDTO.builder()
+        		.id(1)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -65,6 +66,7 @@ class UserServiceGetByIdTest {
         		.build();
         
         testUserDTO2 = UserDTO.builder()
+        		.id(2)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -74,6 +76,7 @@ class UserServiceGetByIdTest {
 
         
         testUser1 = User.builder()
+        		.id(1)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -81,6 +84,7 @@ class UserServiceGetByIdTest {
         		.build();
         
         testUser2 = User.builder()
+        		.id(2)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -161,7 +165,7 @@ class UserServiceGetByIdTest {
 
     	assertEquals(result, testUserDTO1);
 	    assertThat(result).usingRecursiveComparison().isEqualTo(testUserDTO1);
-	    assertEquals("UserName", result.getUsername());
+	    assertEquals("Username", result.getUsername());
 	    assertEquals(1, result.getId());
     }
      
