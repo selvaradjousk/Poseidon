@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
@@ -17,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.User;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 import com.nnk.springboot.util.UserMapper;
@@ -83,5 +85,25 @@ class UserServiceDeleteTest {
     
 	}
    
+	   
+		// *******************************************************************	
+		
+	    @DisplayName("Check <Exception>"
+			+ "GIVEN a User not exist "
+			+ "WHEN Requested DELETE User "
+			+ "THEN throws Exception")	    
+		@Test
+		public void testDeleteUserNotExists() throws Exception {
+
+	    	when(userRepository
+	    			.findById(anyInt()))
+	    	.thenReturn(java.util.Optional.empty());
+	    
+	    	// WHEN // THEN
+	    	assertThrows(DataNotFoundException.class, ()
+	        		-> userService.deleteUser(anyInt()));
+		} 
+
+		// *******************************************************************	
 
 }
