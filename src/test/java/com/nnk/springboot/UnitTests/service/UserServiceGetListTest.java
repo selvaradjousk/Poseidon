@@ -92,7 +92,6 @@ class UserServiceGetListTest {
     }
     
 
-    
 
    	// *******************************************************************	
     @DisplayName("Test List Users")
@@ -117,8 +116,6 @@ class UserServiceGetListTest {
         }
         
         
-        
-
     	// *******************************************************************	
         
         @DisplayName("Check <Execution Order>"
@@ -146,8 +143,6 @@ class UserServiceGetListTest {
         }
    	
         
-        
-
       	// *******************************************************************	
           
           @DisplayName("Check Check <NotNull>"
@@ -168,8 +163,6 @@ class UserServiceGetListTest {
           }
      	
           
-          
-
       	// *******************************************************************	
           
           @DisplayName("Check <Validate> match of both same record instance "
@@ -190,8 +183,6 @@ class UserServiceGetListTest {
           }
      	
           
-          
-
         	// *******************************************************************	
             
             @DisplayName("Check <Execution Order>"
@@ -211,7 +202,6 @@ class UserServiceGetListTest {
                assertEquals(2, result.size());
 
             }
- 
     } 
     
     
