@@ -135,7 +135,7 @@ public class UserService implements IUserService {
         		.save(userToAdd);
 
 		log.info("Request: UserAdded Successfully => {}",
-				userToAdd.getUsername());
+				userAdded.getUsername());
 
 		return userMapper
         		.toUserDTO(userAdded);
@@ -152,16 +152,34 @@ public class UserService implements IUserService {
         userRepository.findById(userId).orElseThrow(() ->
                 new DataNotFoundException("User Does not Exist"));
 
+
+        log.info("Request: userRepository.findById(userId)"
+        		+ "User ID: {} ",
+        		userRepository.findById(userId));
+
+
         User userToUpdate = userMapper
         		.toUser(userDTO);
         
+		log.info("Request: userToUpdate => {}"
+				, userToUpdate.getUsername());
+		log.info("Request: UserPassword Before Encoding => {}",
+				userToUpdate.getPassword());
+
         userToUpdate.setId(userId);
         
         userToUpdate.setPassword(passwordEncoder
         		.encode(userDTO.getPassword()));
         
+
+		log.info("Request: UserPassword After Encoding => {}",
+				userToUpdate.getPassword());
+
         User userUpdated = userRepository
         		.save(userToUpdate);
+
+		log.info("Request: UserAdded Successfully => {}",
+				userUpdated.getUsername());
 
         return userMapper
         		.toUserDTO(userUpdated);
