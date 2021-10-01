@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.util.TradeMapper;
 
@@ -55,10 +56,16 @@ public class TradeService implements ITradeService {
     // ******************************************************************
 
 	@Override
-	public TradeDTO getTradeById(int tradeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public TradeDTO getTradeById(final int tradeId) {
+
+        Trade tradeById = tradeRepository
+        		.findById(tradeId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("Trade ID NOT FOUND"));
+
+        return tradeMapper
+        		.toTradeDTO(tradeById);
+    }
 
     // ******************************************************************
 
