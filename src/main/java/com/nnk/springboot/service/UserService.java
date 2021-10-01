@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
+import com.nnk.springboot.exception.DataAlreadyExistsException;
 import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.util.UserMapper;
@@ -100,8 +101,13 @@ public class UserService implements IUserService {
 	@Override
 	public UserDTO addUser(UserDTO userDTO) {
 
-		userRepository.findByUsername(userDTO.getUsername());
+		User userExistsCheck = userRepository
+				.findByUsername(userDTO.getUsername());
 
+        if (userExistsCheck != null) {
+            throw new DataAlreadyExistsException(
+            		"Username already exists");
+        }
 
 	        User userToAdd = userMapper
 	        		.toUser(userDTO);
