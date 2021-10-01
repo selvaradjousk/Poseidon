@@ -52,7 +52,7 @@ class TradeServiceAddTest {
     public void setUp() {
         objectMapper = new ObjectMapper();
         testTradeDTO1 = TradeDTO.builder()
-        		.tradeId(1)
+        		.tradeId(2)
         		.account("Account")
         		.type("Type")
         		.buyQuantity(10.0)
@@ -60,7 +60,7 @@ class TradeServiceAddTest {
  
         
         testTrade1 = Trade.builder()
-         		.tradeId(1)
+         		.tradeId(2)
         		.account("Account")
         		.type("Type")
         		.buyQuantity(10.0)
@@ -79,7 +79,7 @@ class TradeServiceAddTest {
         public void init() {
         	
  	       tradeToAdd = Trade.builder()
-        			.tradeId(1)
+        			.tradeId(2)
         			.account("Account")
         			.type("Type")
         			.buyQuantity(10.0)
@@ -157,7 +157,7 @@ class TradeServiceAddTest {
 
    	        TradeDTO tradeSaved = tradeService.addTrade(tradeToAddDTO);
 
-   	        assertEquals(tradeToAddDTO, tradeSaved);
+   	        assertEquals(tradeToAddDTO.toString(), tradeSaved.toString());
    	        assertThat(tradeSaved).usingRecursiveComparison().isEqualTo(tradeToAddDTO);
    	    }
     

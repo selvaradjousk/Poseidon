@@ -4,6 +4,7 @@ HELP.md
 ## Maven
 ##############################
 target/
+bin/
 
 ##############################
 ## Personal log folder
