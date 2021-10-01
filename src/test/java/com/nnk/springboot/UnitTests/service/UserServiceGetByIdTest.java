@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -124,7 +125,25 @@ class UserServiceGetByIdTest {
         verify(userMapper, times(1)).toUserDTO(any(User.class));
     }
 
+
+
+	// *******************************************************************	
     
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a existing User,"
+    		+ " when GET USER By ID action request,"
+    		+ " then USER should not be null")	    
+	    @Test
+	    public void testUserByIdNotNullCheck() {
+			
+
+    		UserDTO result = userService.getUserById(1);
+
+	        assertNotNull(result);
+	    }
+
+	// *******************************************************************			
+	   
     
     }
 
