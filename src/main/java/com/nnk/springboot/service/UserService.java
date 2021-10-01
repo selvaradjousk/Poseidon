@@ -191,9 +191,12 @@ public class UserService implements IUserService {
 
 
 	@Override
-	public void deleteUser(int userId) {
-		// TODO Auto-generated method stub
-		
+	   public void deleteUser(final int userId) {
+
+		userRepository.findById(userId).orElseThrow(() ->
+             new DataNotFoundException("User Not Found"));
+
+		userRepository.deleteById(userId);
 	}
 
 
