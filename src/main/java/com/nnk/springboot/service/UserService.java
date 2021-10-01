@@ -187,4 +187,18 @@ public class UserService implements IUserService {
 
 
 
+	// *******************************************************************	
+
+
+	@Override
+	public void deleteUser(int userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	// *******************************************************************	
+
+
 }

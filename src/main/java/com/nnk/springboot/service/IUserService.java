@@ -14,4 +14,6 @@ public interface IUserService {
 
 	UserDTO updateUser(final int userId, final UserDTO user);
 
+	void deleteUser(final int userId);
+
 }
