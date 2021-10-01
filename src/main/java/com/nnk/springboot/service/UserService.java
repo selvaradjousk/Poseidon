@@ -65,6 +65,11 @@ public class UserService implements IUserService {
         		.findById(userId).orElseThrow(() ->
                 new DataNotFoundException("User Not Found"));
 
+
+        log.info("Request: userRepository.findById(userId)"
+        		+ "User ID: {} & UserName: {} ",
+        		user.getId(), user.getUsername());
+
         return userMapper
         		.toUserDTO(user);
     }
