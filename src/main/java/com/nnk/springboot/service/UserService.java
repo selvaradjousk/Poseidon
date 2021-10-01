@@ -104,23 +104,42 @@ public class UserService implements IUserService {
 		User userExistsCheck = userRepository
 				.findByUsername(userDTO.getUsername());
 
-        if (userExistsCheck != null) {
-            throw new DataAlreadyExistsException(
+        log.info("Request: userRepository.findByUsername"
+        		+ "User ID: {} & UserName: {} ",
+        		userExistsCheck.getId(), userExistsCheck.getUsername());
+
+		if (userExistsCheck != null) {
+
+    	log.error("ERROR on Request: userRepository.findByUsername"
+				+ " - User Exists: {} <= user",
+				userExistsCheck.getUsername());
+
+			throw new DataAlreadyExistsException(
             		"Username already exists");
         }
 
-	        User userToAdd = userMapper
-	        		.toUser(userDTO);
+		User userToAdd = userMapper
+				.toUser(userDTO);
 
-	        userToAdd.setPassword(passwordEncoder
-	        		.encode(userDTO.getPassword()));
+		log.info("Request: UserToAdd => {}", userToAdd.getUsername());
+		log.info("Request: UserPassword Before Encoding => {}",
+				userToAdd.getPassword());
 
-	        User userAdded = userRepository
-	        		.save(userToAdd);
+		userToAdd.setPassword(passwordEncoder
+        		.encode(userDTO.getPassword()));
 
-	        return userMapper
-	        		.toUserDTO(userAdded);
-	    }
+		log.info("Request: UserPassword After Encoding => {}",
+				userToAdd.getPassword());
+
+		User userAdded = userRepository
+        		.save(userToAdd);
+
+		log.info("Request: UserAdded Successfully => {}",
+				userToAdd.getUsername());
+
+		return userMapper
+        		.toUserDTO(userAdded);
+        }
 
 	// *******************************************************************	
 
