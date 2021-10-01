@@ -3,6 +3,7 @@ package com.nnk.springboot.UnitTests.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 import com.nnk.springboot.util.UserMapper;
@@ -139,7 +141,8 @@ class UserServiceGetByIdTest {
 	    public void testUserByIdNotNullCheck() {
 			
 
-    		UserDTO result = userService.getUserById(1);
+    		UserDTO result = userService
+    				.getUserById(1);
 
 	        assertNotNull(result);
 	    }
@@ -153,7 +156,8 @@ class UserServiceGetByIdTest {
     		+ " then USER ID same as test record")
     public void testAddNewPersonReturnResultMatch() {
 			
-    	UserDTO result = userService.getUserById(1);
+    	UserDTO result = userService
+    			.getUserById(1);
 
     	assertEquals(result, testUserDTO1);
 	    assertThat(result).usingRecursiveComparison().isEqualTo(testUserDTO1);
@@ -164,4 +168,25 @@ class UserServiceGetByIdTest {
     }
 
     
+	
+	// *******************************************************************	
+	
+    @DisplayName("ERROR GET EXISTING USER by ID for non existing USER data"
+    		+ " - Given a non existing USER,"
+    		+ " when GET USER By ID action request,"
+    		+ " then USER entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetUserByIdNonExistingUserData() throws Exception {
+
+    	when(userRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> userService.getUserById(1));
+	}
+    
+	// *******************************************************************	   
 }
