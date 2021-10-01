@@ -128,7 +128,7 @@ class TradeServiceUpdateTest {
 	// *******************************************************************	
     
     @DisplayName("Check <Execution Order>"
-    		+ " - Given a new Trade,"
+    		+ " - Given a existing Trade,"
     		+ " when UPDATE TRADE action request,"
     		+ " then all steps are executed in correct order and number of expected times")    
     @Test
@@ -143,10 +143,10 @@ class TradeServiceUpdateTest {
         inOrder.verify(tradeRepository).save(any(Trade.class));
         inOrder.verify(tradeMapper).toTradeDTO(any(Trade.class));
         
-        inOrder.verify(tradeRepository, times(1)).findById(anyInt());
-        inOrder.verify(tradeMapper, times(1)).toTrade(any(TradeDTO.class));
-        inOrder.verify(tradeRepository, times(1)).save(any(Trade.class));
-        inOrder.verify(tradeMapper, times(1)).toTradeDTO(any(Trade.class));
+        verify(tradeRepository, times(1)).findById(anyInt());
+        verify(tradeMapper, times(1)).toTrade(any(TradeDTO.class));
+        verify(tradeRepository, times(1)).save(any(Trade.class));
+        verify(tradeMapper, times(1)).toTradeDTO(any(Trade.class));
         
     }
 	

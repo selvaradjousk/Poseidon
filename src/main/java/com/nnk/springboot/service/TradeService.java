@@ -99,10 +99,23 @@ public class TradeService implements ITradeService {
 	// ******************************************************************
 
 	@Override
-	public TradeDTO updateTrade(int tradeId, TradeDTO trade) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public TradeDTO updateTrade(final int tradeId, final TradeDTO tradeDTO) {
+
+        tradeRepository.findById(tradeId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("Trade ID not Found"));
+
+        Trade tradeToUpdate = tradeMapper
+        		.toTrade(tradeDTO);
+
+        tradeToUpdate.setTradeId(tradeId);
+
+        Trade tradeUpdated = tradeRepository
+        		.save(tradeToUpdate);
+
+        return tradeMapper
+        		.toTradeDTO(tradeUpdated);
+    }
 
 
 	// ******************************************************************
