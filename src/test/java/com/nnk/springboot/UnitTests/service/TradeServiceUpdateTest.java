@@ -3,6 +3,7 @@ package com.nnk.springboot.UnitTests.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -23,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.TradeService;
 import com.nnk.springboot.util.TradeMapper;
@@ -187,10 +189,27 @@ class TradeServiceUpdateTest {
 
    	// *******************************************************************	
 
-
-    
-    
+ 
   }
 
 
+	
+    @DisplayName("ERROR UPDATE TRADE for non existing TRADE data"
+    		+ " - Given a non existing TRADE,"
+    		+ " when UPDATE TRADEaction request,"
+    		+ " then USER entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetUserByIdNonExistingUserData() throws Exception {
+
+    	when(tradeRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> tradeService.updateTrade(5, tradeUpdatedDTO));
+	}
+    
+	// *******************************************************************	   
 }
