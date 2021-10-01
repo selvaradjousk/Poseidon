@@ -94,8 +94,19 @@ public class TradeService implements ITradeService {
         return tradeMapper
         		.toTradeDTO(tradeAdded);
 
-	// ******************************************************************
 	}
-	
-	
+
+	// ******************************************************************
+
+	@Override
+	public TradeDTO updateTrade(int tradeId, TradeDTO trade) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	// ******************************************************************
+
+
+
 }

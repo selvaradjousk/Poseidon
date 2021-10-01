@@ -12,4 +12,6 @@ public interface ITradeService {
 
 	TradeDTO addTrade(final TradeDTO trade);
 
+	TradeDTO updateTrade(final int tradeId, final TradeDTO trade);
+
 }
