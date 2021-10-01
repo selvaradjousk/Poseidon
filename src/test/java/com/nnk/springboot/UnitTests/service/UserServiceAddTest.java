@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.inOrder;
@@ -142,8 +143,11 @@ class UserServiceAddTest {
     public void testAddNewUserExecutionOrderCheck() throws Exception {
 		
 
-        userService.addUser(new UserDTO("Username", "Password&1",
-                "Fullname", "USER"));
+        userService.addUser(new UserDTO(
+        		"Username",
+        		"Password&1",
+                "Fullname",
+                "USER"));
 
         InOrder inOrder = inOrder(userRepository, passwordEncoder, userMapper);
         inOrder.verify(userRepository).findByUsername(anyString());
@@ -159,6 +163,29 @@ class UserServiceAddTest {
 	
 
 	// *******************************************************************	
+    
+    
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a new User,"
+    		+ " when ADD USER action request,"
+    		+ " then USER should not be null")	    
+	    @Test
+	    public void testAddNewUserNotNullCheck() {
+			
+
+	        UserDTO userSaved = userService
+	        		.addUser(new UserDTO(
+	        				"Username",
+	        				"Password&1",
+	        				"Fullname",
+	        				"USER"));
+
+	        assertNotNull(userSaved);
+	    }
+
+	// *******************************************************************			
+		     
+
     
     
     }
