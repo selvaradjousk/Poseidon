@@ -130,5 +130,14 @@ public class TradeService implements ITradeService {
 	// ******************************************************************
 
 
+	@Override
+	public void deleteTrade(int tradeId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	// ******************************************************************
+
+
 
 }

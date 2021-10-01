@@ -14,4 +14,6 @@ public interface ITradeService {
 
 	TradeDTO updateTrade(final int tradeId, final TradeDTO trade);
 
+	void deleteTrade(final int tradeId);
+
 }
