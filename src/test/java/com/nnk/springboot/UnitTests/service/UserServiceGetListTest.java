@@ -1,6 +1,7 @@
 package com.nnk.springboot.UnitTests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
@@ -90,23 +92,45 @@ class UserServiceGetListTest {
     
 
    	// *******************************************************************	
-       
-   	@DisplayName("List Users"
-   			+ "GIVEN List of Users  "
-   			+ "WHEN Requested List Users"
-   			+ "THEN returns expected list of users")	    
-       @Test
-       public void testGetUserList() throws Exception {
+    @DisplayName("Test List Users")
+    @Nested
+    class TestAddNewUser {  
+    	
+        @BeforeEach
+        public void init() {
+        	
+            when(userRepository
+            		.findAll())
+            .thenReturn(userList);
+            
+            when(userMapper
+            		.toUserDTO(testUser1))
+            .thenReturn(testUserDTO1);
+            
+            when(userMapper
+            		.toUserDTO(testUser2))
+            .thenReturn(testUserDTO2);
+            
+        }
+        
+        
+        
+
+    	// *******************************************************************	
+        
+        @DisplayName("Check <Execution Order>"
+        		+ " - Given a User List,"
+        		+ " when Get User List action request,"
+        		+ " then all steps are executed in correct order and number of expected times")    
+        @Test
+        public void testGetUsersListExecutionOrderCheck() throws Exception {
    	
            // GIVEN
-           when(userRepository.findAll()).thenReturn(userList);
-           when(userMapper.toUserDTO(testUser1)).thenReturn(testUserDTO1);
-           when(userMapper.toUserDTO(testUser2)).thenReturn(testUserDTO2);
+
            // WHEN
-           List<UserDTO> result = userService.getAllUser();
+           userService.getAllUser();
            
            // THEN
-           assertEquals(userDTOList, result);
            InOrder inOrder = inOrder(userRepository, userMapper);
            inOrder.verify(userRepository).findAll();
            inOrder.verify(userMapper).toUserDTO(testUser1);
@@ -116,7 +140,76 @@ class UserServiceGetListTest {
            verify(userMapper, times(1)).toUserDTO(testUser1);
            verify(userMapper, times(1)).toUserDTO(testUser2);
        
-   	}
+        }
    	
-   	
+        
+        
+
+      	// *******************************************************************	
+          
+          @DisplayName("Check Check <NotNull>"
+          		+ " - Given a User List,"
+          		+ " when Get User List action request,"
+          		+ " then returns userslist not null")    
+          @Test
+          public void testGetUsersListNotNullCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<UserDTO> result = userService.getAllUser();
+             
+             // THEN
+             assertNotNull(result);
+         
+          }
+     	
+          
+          
+
+      	// *******************************************************************	
+          
+          @DisplayName("Check <Validate> match of both same record instance "
+          		+ " - Given a User List,"
+          		+ " when Get User List action request,"
+          		+ " then USER added should be added and same as test record")   
+          @Test
+          public void testGetUsersListREsultMatchCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<UserDTO> result = userService.getAllUser();
+             
+             // THEN
+             assertEquals(userDTOList, result);
+         
+          }
+     	
+          
+          
+
+        	// *******************************************************************	
+            
+            @DisplayName("Check <Execution Order>"
+            		+ " - Given a User List,"
+            		+ " when Get User List action request,"
+            		+ " then return expected No of Users")    
+            @Test
+            public void testGetUsersListRecordsNumberMatchCheck() throws Exception {
+       	
+               // GIVEN
+
+               // WHEN
+               List<UserDTO> result = userService.getAllUser();
+               
+               // THEN
+               assertEquals(userDTOList.size(), result.size());
+               assertEquals(2, result.size());
+
+            }
+
+            
+            
+    } 	
 }
