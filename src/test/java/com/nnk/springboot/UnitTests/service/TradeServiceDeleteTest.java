@@ -68,7 +68,7 @@ class TradeServiceDeleteTest {
 
 	// *******************************************************************	
     
-	@DisplayName("Delete Trades - "
+	@DisplayName("Delete Trade - "
 			+ "GIVEN a TRADE  "
 			+ "WHEN Requested DELETE Trade"
 			+ "THEN returns expected trade deleted")	    
@@ -93,5 +93,26 @@ class TradeServiceDeleteTest {
     
 	}
    
+
+	   
+	// *******************************************************************	
+	
+    @DisplayName("Check <Exception>"
+		+ "GIVEN a Trade not exist "
+		+ "WHEN Requested DELETE Trade "
+		+ "THEN throws Exception")	    
+	@Test
+	public void testDeleteTradeNotExists() throws Exception {
+
+    	when(tradeRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> tradeService.deleteTrade(anyInt()));
+	} 
+
+	// *******************************************************************	
 	
 }
