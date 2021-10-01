@@ -94,7 +94,7 @@ class TradeServiceGetByIdTest {
     
     @DisplayName("Check <Execution Order>"
     		+ " - Given a Trade,"
-    		+ " when GET USER BY ID action request,"
+    		+ " when GET TRADE BY ID action request,"
     		+ " then all steps are executed in correct order and number of expected times")    
     @Test
     public void testGetTradeByIdExecutionOrderCheck() throws Exception {
@@ -115,8 +115,8 @@ class TradeServiceGetByIdTest {
     
     @DisplayName("Check <NotNull>"
     		+ " - Given a existing Trade,"
-    		+ " when GET USER By ID action request,"
-    		+ " then USER should not be null")	    
+    		+ " when GET TRADE By ID action request,"
+    		+ " then TRADE should not be null")	    
 	    @Test
 	    public void testTradeByIdNotNullCheck() {
 			
@@ -133,8 +133,8 @@ class TradeServiceGetByIdTest {
     @Test
     @DisplayName("Check <Validate> match of both same record instance "
     		+ " - Given a existing Trade,"
-    		+ " when GET USER By ID action request,"
-    		+ " then USER ID same as test record")
+    		+ " when GET TRADE By ID action request,"
+    		+ " then TRADE ID same as test record")
     public void testAddNewPersonReturnResultMatch() {
 			
     	TradeDTO result = tradeService
@@ -151,10 +151,10 @@ class TradeServiceGetByIdTest {
 	
   	// *******************************************************************	
   	
-      @DisplayName("ERROR GET EXISTING USER by ID for non existing USER data"
-      		+ " - Given a non existing USER,"
-      		+ " when GET USER By ID action request,"
-      		+ " then USER entry should respond"
+      @DisplayName("ERROR GET EXISTING TRADE by ID for non existing TRADE data"
+      		+ " - Given a non existing TRADE,"
+      		+ " when GET TRADE By ID action request,"
+      		+ " then TRADE entry should respond"
       		+ " with Data Not Found Exception")
   	@Test
   	public void testGetTradeByIdNonExistingTradeData() throws Exception {

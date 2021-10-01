@@ -63,6 +63,10 @@ public class TradeService implements ITradeService {
         		.orElseThrow(() ->
                 new DataNotFoundException("Trade ID NOT FOUND"));
 
+        log.info("Request: tradeRepository.findById(tradeId)"
+        		+ "Trade ID: {} & Account: {} ",
+        		tradeById.getTradeId(), tradeById.getAccount());
+
         return tradeMapper
         		.toTradeDTO(tradeById);
     }
