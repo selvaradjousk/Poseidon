@@ -133,15 +133,26 @@ public class TradeService implements ITradeService {
 	@Override
     public void deleteTrade(final int tradeId) {
 
-        tradeRepository.findById(tradeId)
+		log.info("Request: TradeToDelete ID => {}",
+				tradeId);
+
+		tradeRepository.findById(tradeId)
         		.orElseThrow(() ->
                 new DataNotFoundException("Trade ID Not FOUND"));
 
-        tradeRepository.deleteById(tradeId);
-    }
+
+		log.info("Request: TradeToDelete ID => {} FOUND",
+				tradeId);
+
+
+		tradeRepository.deleteById(tradeId);
+
+		log.info("Request: TradeToDelete ID => {} DELETED",
+				tradeId);
+
+
+	}
 
 	// ******************************************************************
-
-
 
 }
