@@ -193,10 +193,20 @@ public class UserService implements IUserService {
 	@Override
 	   public void deleteUser(final int userId) {
 
+		log.info("Request: UserToDelete ID => {}",
+				userId);
+
 		userRepository.findById(userId).orElseThrow(() ->
              new DataNotFoundException("User Not Found"));
 
+		log.info("Request: UserToDelete ID => {} FOUND",
+				userId);
+
 		userRepository.deleteById(userId);
+
+		log.info("Request: UserToDelete ID => {} DELETED",
+				userId);
+
 	}
 
 

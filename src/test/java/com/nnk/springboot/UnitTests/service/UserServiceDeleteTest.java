@@ -48,6 +48,7 @@ class UserServiceDeleteTest {
      
         
         testUser1 = User.builder()
+        		.id(1)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -73,7 +74,7 @@ class UserServiceDeleteTest {
 		 .thenReturn(java.util.Optional.ofNullable(testUser1));
 		 
         // WHEN
-		 userService.deleteUser(anyInt());
+		 userService.deleteUser(1);
         
         // THEN
 	       InOrder inOrder = inOrder(userRepository);
