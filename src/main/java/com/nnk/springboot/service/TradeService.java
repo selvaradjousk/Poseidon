@@ -80,8 +80,16 @@ public class TradeService implements ITradeService {
         Trade tradeToAdd = tradeMapper
         		.toTrade(tradeDTO);
 
+        log.info("Request: to ADD TRADE "
+        		+ "Trade ID: {} & Account: {} ",
+        		tradeToAdd.getTradeId(), tradeToAdd.getAccount());
+
         Trade tradeAdded = tradeRepository
         		.save(tradeToAdd);
+
+        log.info("TRADED ADDED SUCCESSFULLY - "
+        		+ "Trade ID: {} & Account: {} ",
+        		tradeToAdd.getTradeId(), tradeToAdd.getAccount());
 
         return tradeMapper
         		.toTradeDTO(tradeAdded);
