@@ -160,7 +160,28 @@ class TradeServiceGetListTest {
           
   
         // *******************************************************************	          
+   
           
+          @DisplayName("Check <Validate> match of both same record instance "
+          		+ " - Given a Trade List,"
+          		+ " when Get Trade List action request,"
+          		+ " then Trade added should be added and same as test record")   
+          @Test
+          public void testGetTradesListREsultMatchCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<TradeDTO> result = TradeService.getAllTrade();
+             
+             // THEN
+             assertEquals(TradeDTOList, result);
+         
+          }
+     	
+          
+        // *******************************************************************	
+                      
           
     } 
     
