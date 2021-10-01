@@ -57,4 +57,14 @@ public class UserService implements IUserService {
 
 	// *******************************************************************	
 
+
+	@Override
+	public UserDTO getUserById(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	// *******************************************************************	
+
 }
