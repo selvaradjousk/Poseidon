@@ -77,4 +77,13 @@ public class UserService implements IUserService {
 
 	// *******************************************************************	
 
+
+	@Override
+	public UserDTO addUser(UserDTO user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
 }

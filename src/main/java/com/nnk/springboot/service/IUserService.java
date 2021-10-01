@@ -10,4 +10,6 @@ public interface IUserService {
 
 	UserDTO getUserById(final int userId);
 
+	UserDTO addUser(final UserDTO user);
+
 }
