@@ -106,6 +106,10 @@ public class TradeService implements ITradeService {
         		.orElseThrow(() ->
                 new DataNotFoundException("Trade ID not Found"));
 
+        log.info("Request: to UPDATE TRADE FOUND "
+        		+ "Trade ID: {} & Account: {} ",
+        		tradeId, tradeDTO.getAccount());
+        
         Trade tradeToUpdate = tradeMapper
         		.toTrade(tradeDTO);
 
@@ -113,6 +117,10 @@ public class TradeService implements ITradeService {
 
         Trade tradeUpdated = tradeRepository
         		.save(tradeToUpdate);
+
+        log.info("Request: UPDATED TRADE SUCCESSFULLY "
+        		+ "Trade ID: {} & Account: {} ",
+        		tradeId, tradeDTO.getAccount());
 
         return tradeMapper
         		.toTradeDTO(tradeUpdated);
