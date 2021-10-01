@@ -182,8 +182,28 @@ class TradeServiceGetListTest {
           
         // *******************************************************************	
                       
+
+
+          @DisplayName("Check <Execution Order>"
+          		+ " - Given a Trade List,"
+          		+ " when Get Trade List action request,"
+          		+ " then return expected Number of Trades")    
+          @Test
+          public void testGetTradesListRecordsNumberMatchCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<TradeDTO> result = TradeService.getAllTrade();
+             
+             // THEN
+             assertEquals(TradeDTOList.size(), result.size());
+             assertEquals(2, result.size());
+
+          }    
           
+          // *******************************************************************	
+                        
     } 
-    
-     
+   
 }
