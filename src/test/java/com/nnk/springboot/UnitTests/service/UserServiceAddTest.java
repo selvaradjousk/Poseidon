@@ -208,5 +208,21 @@ class UserServiceAddTest {
 	// *******************************************************************	
 
 
+    @DisplayName("ERROR ADD NEW USER for existing USER data"
+    		+ " - Given a existing USER,"
+    		+ " when ADD USER action request,"
+    		+ " then USER entry should respond"
+    		+ " with Data Already Exists Exception")
+	@Test
+	public void testAddUserForExistingUserData() throws Exception {
+
+    	when(userRepository.findByUsername(anyString())).thenReturn(testUser1);
+    
+    	// WHEN // THEN
+    	assertThrows(DataAlreadyExistsException.class, ()
+        		-> userService.addUser(testUserDTO1));
+	}
+    
+	// *******************************************************************	
 
 }
