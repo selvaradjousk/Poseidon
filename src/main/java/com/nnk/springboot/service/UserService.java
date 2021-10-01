@@ -3,6 +3,7 @@ package com.nnk.springboot.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.User;
@@ -17,9 +18,27 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class UserService implements IUserService {
 
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
 
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
+
+	private final BCryptPasswordEncoder passwordEncoder;
+
+
+
+
+	// *******************************************************************	
+
+
+	public UserService(
+			final UserRepository userRepository,
+			final UserMapper userMapper,
+			final BCryptPasswordEncoder passwordEncoder) {
+
+		this.userRepository = userRepository;
+		this.userMapper = userMapper;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 
 
@@ -79,10 +98,25 @@ public class UserService implements IUserService {
 
 
 	@Override
-	public UserDTO addUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public UserDTO addUser(UserDTO userDTO) {
+
+		userRepository.findByUsername(userDTO.getUsername());
+
+
+	        User userToAdd = userMapper
+	        		.toUser(userDTO);
+
+	        userToAdd.setPassword(passwordEncoder
+	        		.encode(userDTO.getPassword()));
+
+	        User userAdded = userRepository
+	        		.save(userToAdd);
+
+	        return userMapper
+	        		.toUserDTO(userAdded);
+	    }
+
+	// *******************************************************************	
 
 
 
