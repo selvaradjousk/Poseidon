@@ -115,14 +115,14 @@ class TradeServiceAddTest {
 
     	tradeService.addTrade(tradeToAddDTO);
 
-        InOrder inOrder = inOrder(tradeRepository, tradeMapper, tradeMapper);
+        InOrder inOrder = inOrder(tradeMapper, tradeRepository, tradeMapper);
         inOrder.verify(tradeMapper).toTrade(any(TradeDTO.class));
         inOrder.verify(tradeRepository).save(any(Trade.class));
         inOrder.verify(tradeMapper).toTradeDTO(any(Trade.class));
         
         verify(tradeMapper, times(1)).toTrade(any(TradeDTO.class));
-        inOrder.verify(tradeRepository, times(1)).save(any(Trade.class));
-        inOrder.verify(tradeMapper, times(1)).toTradeDTO(any(Trade.class));
+        verify(tradeRepository, times(1)).save(any(Trade.class));
+        verify(tradeMapper, times(1)).toTradeDTO(any(Trade.class));
     }
 	
 

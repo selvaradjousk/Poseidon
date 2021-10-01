@@ -75,13 +75,19 @@ public class TradeService implements ITradeService {
 
 
 	@Override
-	public TradeDTO addTrade(TradeDTO trade) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public TradeDTO addTrade(final TradeDTO tradeDTO) {
+
+        Trade tradeToAdd = tradeMapper
+        		.toTrade(tradeDTO);
+
+        Trade tradeAdded = tradeRepository
+        		.save(tradeToAdd);
+
+        return tradeMapper
+        		.toTradeDTO(tradeAdded);
 
 	// ******************************************************************
-
+	}
 	
 	
 }
