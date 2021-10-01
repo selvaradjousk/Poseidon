@@ -11,11 +11,13 @@ import javax.persistence.UniqueConstraint;
 import com.nnk.springboot.constant.GeneralConstraints;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Builder
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 @Getter
