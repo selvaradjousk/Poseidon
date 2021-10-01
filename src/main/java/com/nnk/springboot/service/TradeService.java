@@ -131,10 +131,14 @@ public class TradeService implements ITradeService {
 
 
 	@Override
-	public void deleteTrade(int tradeId) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteTrade(final int tradeId) {
+
+        tradeRepository.findById(tradeId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("Trade ID Not FOUND"));
+
+        tradeRepository.deleteById(tradeId);
+    }
 
 	// ******************************************************************
 
