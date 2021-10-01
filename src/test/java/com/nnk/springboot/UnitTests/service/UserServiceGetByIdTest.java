@@ -1,5 +1,7 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -144,7 +146,22 @@ class UserServiceGetByIdTest {
 
 	// *******************************************************************			
 	   
-    
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a existing User,"
+    		+ " when GET USER By ID action request,"
+    		+ " then USER ID same as test record")
+    public void testAddNewPersonReturnResultMatch() {
+			
+    	UserDTO result = userService.getUserById(1);
+
+    	assertEquals(result, testUserDTO1);
+	    assertThat(result).usingRecursiveComparison().isEqualTo(testUserDTO1);
+	    assertEquals("UserName", result.getUsername());
+	    assertEquals(1, result.getId());
+    }
+     
     }
 
+    
 }
