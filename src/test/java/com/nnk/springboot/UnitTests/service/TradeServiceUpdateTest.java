@@ -170,7 +170,24 @@ class TradeServiceUpdateTest {
 	// *******************************************************************			
     
     
-    
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new Trade,"
+    		+ " when UPDATE TRADE action request,"
+    		+ " then TRADE updateed should be updateed and same as test record")
+    public void testUpdateExistingPersonReturnResultMatch() {
+   			
+
+   	        TradeDTO tradeSaved = tradeService.updateTrade(2, tradeUpdatedDTO);
+
+   	        assertEquals(tradeUpdatedDTO.toString(), tradeSaved.toString());
+   	        assertThat(tradeSaved).usingRecursiveComparison().isEqualTo(tradeUpdatedDTO);
+   	    }
+
+   	// *******************************************************************	
+
+
     
     
   }
