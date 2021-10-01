@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
@@ -127,6 +128,24 @@ class TradeServiceAddTest {
 	
 
 	// *******************************************************************	
+
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new Trade,"
+		+ " when ADD TRADE action request,"
+		+ " then TRADE should not be null")	    
+    @Test
+    public void testAddNewTradeNotNullCheck() {
+		
+
+        TradeDTO tradeSaved = tradeService.addTrade(tradeToAddDTO);
+
+        assertNotNull(tradeSaved);
+    }
+
+	// *******************************************************************			
+		     
+	
     }
 
 
