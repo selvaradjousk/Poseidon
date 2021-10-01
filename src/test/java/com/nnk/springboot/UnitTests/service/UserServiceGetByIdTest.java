@@ -123,7 +123,9 @@ class UserServiceGetByIdTest {
         verify(userRepository, times(1)).findById(anyInt());
         verify(userMapper, times(1)).toUserDTO(any(User.class));
     }
-	
+
+    
+    
     }
 
 }

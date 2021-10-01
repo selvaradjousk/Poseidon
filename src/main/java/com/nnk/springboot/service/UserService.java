@@ -60,9 +60,14 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserDTO getUserById(int userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+        User user = userRepository
+        		.findById(userId).orElseThrow(() ->
+                new DataNotFoundException("User Not Found"));
+
+        return userMapper
+        		.toUserDTO(user);
+    }
 
 
 	// *******************************************************************	
