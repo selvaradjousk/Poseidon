@@ -3,6 +3,7 @@ package com.nnk.springboot.UnitTests.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -25,6 +26,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 import com.nnk.springboot.util.UserMapper;
@@ -209,10 +211,28 @@ class UserServiceUpdateTest {
 		        assertThat(userUpdated).usingRecursiveComparison().isEqualTo(userUpdatedDTO);
 		    }
  
-	// *******************************************************************
-    
+
     }
 
     
+    // *******************************************************************
+	
+    @DisplayName("ERROR ADD EXISTING USER for non existing USER data"
+    		+ " - Given a non existing USER,"
+    		+ " when UPDATE USER action request,"
+    		+ " then USER entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testUpdateUserForNonExistingUserData() throws Exception {
+
+    	when(userRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> userService.updateUser(1, testUserDTO1));
+	}
+     
     // *******************************************************************	
 }
