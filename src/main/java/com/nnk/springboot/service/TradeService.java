@@ -20,12 +20,16 @@ public class TradeService implements ITradeService {
 
     private final TradeMapper tradeMapper;
 
+    // ******************************************************************
+
     public TradeService(
     		final TradeRepository tradeRepository,
     		final TradeMapper tradeMapper) {
         this.tradeRepository = tradeRepository;
         this.tradeMapper = tradeMapper;
     }
+
+    // ******************************************************************
 
 	@Override
     public List<TradeDTO> getAllTrade() {
@@ -47,5 +51,15 @@ public class TradeService implements ITradeService {
 
         return tradeList;
     }
+
+    // ******************************************************************
+
+	@Override
+	public TradeDTO getTradeById(int tradeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    // ******************************************************************
 
 }

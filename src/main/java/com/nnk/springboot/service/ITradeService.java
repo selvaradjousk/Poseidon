@@ -8,4 +8,6 @@ public interface ITradeService {
 
 	List<TradeDTO> getAllTrade();
 
+	TradeDTO getTradeById(final int tradeId);
+
 }

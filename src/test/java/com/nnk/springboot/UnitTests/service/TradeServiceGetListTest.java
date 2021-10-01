@@ -2,14 +2,12 @@ package com.nnk.springboot.UnitTests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +23,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeDTO;
-import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.TradeService;
 import com.nnk.springboot.util.TradeMapper;
