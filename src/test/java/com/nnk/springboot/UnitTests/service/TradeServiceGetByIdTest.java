@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -105,8 +106,27 @@ class TradeServiceGetByIdTest {
         verify(tradeMapper, times(1)).toTradeDTO(any(Trade.class));
     }
 
-
-
+    
 	// *******************************************************************	
+    
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a existing Trade,"
+    		+ " when GET USER By ID action request,"
+    		+ " then USER should not be null")	    
+	    @Test
+	    public void testTradeByIdNotNullCheck() {
+			
+
+    		TradeDTO result = tradeService
+    				.getTradeById(1);
+
+	        assertNotNull(result);
+	    }
+
+	// ******************************************************************		
+	   
+    
+    
+
     }
 }
