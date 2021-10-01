@@ -138,10 +138,31 @@ class TradeServiceGetListTest {
        
         }
    	
- 
+        
+      	// *******************************************************************	
+          
+          @DisplayName("Check Check <NotNull>"
+          		+ " - Given a Trade List,"
+          		+ " when Get Trade List action request,"
+          		+ " then returns Tradeslist not null")    
+          @Test
+          public void testGetTradesListNotNullCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<TradeDTO> result = TradeService.getAllTrade();
+             
+             // THEN
+             assertNotNull(result);
+         
+          }
+          
+  
+        // *******************************************************************	          
+          
+          
     } 
     
-    
- 	// *******************************************************************	
-      
+     
 }
