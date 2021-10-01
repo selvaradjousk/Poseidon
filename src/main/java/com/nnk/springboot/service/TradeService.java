@@ -140,16 +140,13 @@ public class TradeService implements ITradeService {
         		.orElseThrow(() ->
                 new DataNotFoundException("Trade ID Not FOUND"));
 
-
 		log.info("Request: TradeToDelete ID => {} FOUND",
 				tradeId);
-
 
 		tradeRepository.deleteById(tradeId);
 
 		log.info("Request: TradeToDelete ID => {} DELETED",
 				tradeId);
-
 
 	}
 

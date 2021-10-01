@@ -94,7 +94,6 @@ class TradeServiceDeleteTest {
 	}
    
 
-	   
 	// *******************************************************************	
 	
     @DisplayName("Check <Exception>"
@@ -114,5 +113,5 @@ class TradeServiceDeleteTest {
 	} 
 
 	// *******************************************************************	
-	
+
 }
