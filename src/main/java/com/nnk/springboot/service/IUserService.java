@@ -12,4 +12,6 @@ public interface IUserService {
 
 	UserDTO addUser(final UserDTO user);
 
+	UserDTO updateUser(final int userId, final UserDTO user);
+
 }

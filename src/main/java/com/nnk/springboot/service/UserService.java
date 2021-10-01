@@ -141,8 +141,16 @@ public class UserService implements IUserService {
         		.toUserDTO(userAdded);
         }
 
+
+
 	// *******************************************************************	
 
+
+	@Override
+	public UserDTO updateUser(int userId, UserDTO user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

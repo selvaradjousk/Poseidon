@@ -50,9 +50,9 @@ class UserServiceAddTest {
     @Mock
     private ObjectMapper objectMapper;
 	
-    private static UserDTO testUserDTO1, testUserDTO2, userToAddDTO;
+    private static UserDTO testUserDTO1, userToAddDTO;
     
-    private static User testUser1, testUser2, userToAdd;
+    private static User testUser1, userToAdd;
     
     
     @BeforeEach
@@ -64,24 +64,9 @@ class UserServiceAddTest {
         		.fullname("Fullname")
         		.role("USER")
         		.build();
-        
-        testUserDTO2 = UserDTO.builder()
-        		.username("Username")
-        		.password("Password&1")
-        		.fullname("Fullname")
-        		.role("USER")
-        		.build();
-        
-
+ 
         
         testUser1 = User.builder()
-        		.username("Username")
-        		.password("Password&1")
-        		.fullname("Fullname")
-        		.role("USER")
-        		.build();
-        
-        testUser2 = User.builder()
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
