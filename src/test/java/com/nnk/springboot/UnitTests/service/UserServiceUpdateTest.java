@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -143,7 +144,11 @@ class UserServiceUpdateTest {
     public void testUpdateUserExecutionOrderCheck() throws Exception {
 		
 
-        userService.updateUser(1, new UserDTO("Username", "Password&1", "FullnameUpdate", "USER"));
+        userService.updateUser(1, new UserDTO(
+        		"Username",
+        		"Password&1",
+        		"FullnameUpdate",
+        		"USER"));
 
         InOrder inOrder = inOrder(userRepository, passwordEncoder, userMapper);
         inOrder.verify(userRepository).findById(anyInt());
@@ -157,8 +162,35 @@ class UserServiceUpdateTest {
         verify(userMapper, times(1)).toUserDTO(any(User.class));
     }
 
-    
+
+
 	// *******************************************************************	
+    
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a existing User,"
+    		+ " when UPDATE USER action request,"
+    		+ " then USER should not be null")	    
+	    @Test
+	    public void testUpdateUserNotNullCheck() {
+			
+
+	        UserDTO userUpdated = userService
+	        		.updateUser(1, new UserDTO(
+	        				"Username",
+	        				"Password&1",
+	        				"FullnameUpdate",
+	        				"USER"));
+
+	        assertNotNull(userUpdated);
+	    }
+
+
+	// *******************************************************************
+    
+    
+    
+    
+    
     }
 
     
