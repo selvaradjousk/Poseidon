@@ -36,7 +36,10 @@ public class UserService implements IUserService {
 				+ " - ListSize: {} users", users.size());		
 
         if (users.isEmpty()) {
-            throw new DataNotFoundException("User List Not Available");
+
+        	log.error("ERROR on Request: UserService.userRepository.findAll()"
+    				+ " - ListSize EMPTY: {} users", users.size());	
+        	throw new DataNotFoundException("User List Not Available");
         }
 
         for (User user : users) {
