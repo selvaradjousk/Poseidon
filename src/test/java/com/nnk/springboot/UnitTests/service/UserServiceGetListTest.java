@@ -2,12 +2,14 @@ package com.nnk.springboot.UnitTests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 import com.nnk.springboot.util.UserMapper;
@@ -208,8 +211,28 @@ class UserServiceGetListTest {
                assertEquals(2, result.size());
 
             }
+ 
+    } 
+    
+    
+ 	// *******************************************************************	
+ 	
+     @DisplayName("Check <Exception>"
+ 		+ "GIVEN List of Users null "
+ 		+ "WHEN Requested List Users"
+ 		+ "THEN throws Exception")	    
+ 	@Test
+ 	public void testGetUserListEmptyExceptionCheck() throws Exception {
 
-            
-            
-    } 	
+     	when(userRepository.findAll()).thenReturn(Collections.emptyList());
+     
+     	// WHEN // THEN
+     	assertThrows(DataNotFoundException.class, ()
+         		-> userService.getAllUser());
+ 	}
+     
+
+  	// *******************************************************************	
+  	
+     
 }
