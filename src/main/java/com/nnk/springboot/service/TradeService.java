@@ -33,10 +33,17 @@ public class TradeService implements ITradeService {
         List<Trade> trades = tradeRepository.findAll();
         List<TradeDTO> tradeList = new ArrayList<>();
 
+		log.info("Request: TradeService.tradeRepository.findAll()"
+				+ " - ListSize: {} trades", trades.size());		
+
         for (Trade trade : trades) {
             TradeDTO tradeDTO = tradeMapper.toTradeDTO(trade);
             tradeList.add(tradeDTO);
         }
+
+        log.info("Request: tradeList.add(tradeDTO)"
+        		+ " after tradeMapper.toTradeDTO(user)"
+				+ " - ListSize: {} trades", tradeList.size());	
 
         return tradeList;
     }
