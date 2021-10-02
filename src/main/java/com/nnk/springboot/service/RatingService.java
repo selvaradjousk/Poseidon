@@ -86,10 +86,18 @@ public class RatingService implements IRatingService {
 
 
 	@Override
-	public RatingDTO addRating(RatingDTO rating) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public RatingDTO addRating(final RatingDTO ratingDTO) {
+
+
+        Rating ratingToAdd = ratingMapper
+        		.toRating(ratingDTO);
+
+        Rating ratingAdded = ratingRepository
+        		.save(ratingToAdd);
+
+        return ratingMapper
+        		.toRatingDTO(ratingAdded);
+    }
 
     // ******************************************************************
 
