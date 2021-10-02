@@ -114,13 +114,29 @@ public class CurvePointService implements ICurvePointService {
 
     // ******************************************************************
 
-
 	@Override
-	public CurvePointDTO updateCurvePoint(
-			int curvePointId, CurvePointDTO curvePoint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public CurvePointDTO updateCurvePoint(
+    		final int curvePointId,
+    		final CurvePointDTO curvePointDTO) {
+
+
+        curvePointRepository.findById(curvePointId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID NOT FOUND"));
+
+        CurvePoint curvePoint = curvePointMapper
+        		.toCurvePoint(curvePointDTO);
+
+        curvePoint.setId(curvePointId);
+
+        curvePoint.setAsOfDate(LocalDateTime.now());
+
+        CurvePoint curvePointUpdated = curvePointRepository
+        		.save(curvePoint);
+
+        return curvePointMapper
+        		.toCurvePointDTO(curvePointUpdated);
+    }
 
     // ******************************************************************
 

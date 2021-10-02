@@ -134,9 +134,10 @@ class CurvePointServiceUpdateTest {
         verify(curvePointMapper, times(1)).toCurvePointDTO(any(CurvePoint.class));
         
     }
-	
 
 	// *******************************************************************	
+ 
+    
     }
     
 	// *******************************************************************	   
