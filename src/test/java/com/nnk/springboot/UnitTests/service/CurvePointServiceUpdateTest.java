@@ -153,6 +153,25 @@ class CurvePointServiceUpdateTest {
     }
 
 	// *******************************************************************			
+
+    
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new CurvePoint,"
+    		+ " when UPDATE CURVEPOINT action request,"
+    		+ " then CURVEPOINT updateed should be updateed and same as test record")
+    public void testUpdateExistingCurvePointReturnResultMatch() {
+   			
+
+   	        CurvePointDTO curvePointSaved = curvePointService
+   	        		.updateCurvePoint(2, curvePointUpdatedDTO);
+
+   	        assertEquals(curvePointUpdatedDTO.toString(), curvePointSaved.toString());
+   	        assertThat(curvePointSaved).usingRecursiveComparison().isEqualTo(curvePointUpdatedDTO);
+   	    }
+
+   	// *******************************************************************	
     
     
     }
