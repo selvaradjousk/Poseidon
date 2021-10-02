@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.times;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.service.CurvePointService;
 import com.nnk.springboot.util.CurvePointMapper;
@@ -89,6 +91,24 @@ class CurvePointServiceDeleteTest {
     
 	}
    
+
+	// *******************************************************************	
+	
+    @DisplayName("Check <Exception>"
+		+ "GIVEN a CurvePoint not exist "
+		+ "WHEN Requested DELETE CurvePoint "
+		+ "THEN throws Exception")	    
+	@Test
+	public void testDeleteCurvePointNotExists() throws Exception {
+
+    	when(curvePointRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> curvePointService.deleteCurvePoint(anyInt()));
+	} 
 
 	// *******************************************************************	
 
