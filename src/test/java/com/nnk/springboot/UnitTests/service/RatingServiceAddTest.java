@@ -133,6 +133,23 @@ class RatingServiceAddTest {
     }
 	
 
+
+	// *******************************************************************	
+
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new Rating,"
+		+ " when ADD RATING action request,"
+		+ " then RATING should not be null")	    
+    @Test
+    public void testAddNewRatingNotNullCheck() {
+		
+
+        RatingDTO ratingSaved = ratingService
+        		.addRating(ratingToAddDTO);
+
+        assertNotNull(ratingSaved);
+    }
     
     }
     
