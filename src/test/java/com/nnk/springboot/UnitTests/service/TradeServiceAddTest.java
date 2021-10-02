@@ -152,7 +152,7 @@ class TradeServiceAddTest {
     		+ " - Given a new Trade,"
     		+ " when ADD TRADE action request,"
     		+ " then TRADE added should be added and same as test record")
-    public void testAddNewPersonReturnResultMatch() {
+    public void testAddNewTradeReturnResultMatch() {
    			
 
    	        TradeDTO tradeSaved = tradeService.addTrade(tradeToAddDTO);
