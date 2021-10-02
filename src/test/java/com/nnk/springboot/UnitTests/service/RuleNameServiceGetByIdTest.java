@@ -115,6 +115,25 @@ class RuleNameServiceGetByIdTest {
     }
 
 
+    
+	// *******************************************************************	
+    
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a existing RuleName,"
+    		+ " when GET RULENAME By ID action request,"
+    		+ " then RULENAME should not be null")	    
+	    @Test
+	    public void testRuleNameByIdNotNullCheck() {
+			
+
+    		RuleNameDTO result = ruleNameService
+    				.getRuleNameById(1);
+
+	        assertNotNull(result);
+	    }
+
+	// ******************************************************************		
+	   
   }
 
   
