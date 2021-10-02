@@ -93,10 +93,20 @@ public class CurvePointService implements ICurvePointService {
         CurvePoint curvePointToAdd = curvePointMapper
         		.toCurvePoint(curvePointDTO);
 
+        log.info("Request: to ADD CURVEPOINT "
+        		+ "Curve ID: {} & Value: {} ",
+        		curvePointToAdd.getCurveId(),
+        		curvePointToAdd.getValue());
+
         curvePointToAdd.setCreationDate(LocalDateTime.now());
 
         CurvePoint curvePointAdded = curvePointRepository
         		.save(curvePointToAdd);
+
+        log.info("Request: CURVEPOINT ADDED SUCESSFULLY - "
+        		+ "Curve ID: {} & Value: {} ",
+        		curvePointToAdd.getCurveId(),
+        		curvePointToAdd.getValue());
 
         return curvePointMapper
         		.toCurvePointDTO(curvePointAdded);

@@ -87,7 +87,7 @@ public class TradeService implements ITradeService {
         Trade tradeAdded = tradeRepository
         		.save(tradeToAdd);
 
-        log.info("TRADED ADDED SUCCESSFULLY - "
+        log.info("TRADE ADDED SUCCESSFULLY - "
         		+ "Trade ID: {} & Account: {} ",
         		tradeToAdd.getTradeId(), tradeToAdd.getAccount());
 
