@@ -168,6 +168,24 @@ class RuleNameServiceUpdateTest {
 	// *******************************************************************	
     
 
+    
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new RuleName,"
+		+ " when UPDATE RULENAME action request,"
+		+ " then RULENAME should not be null")	    
+    @Test
+    public void testUpdateExistingRuleNameNotNullCheck() {
+		
+
+        RuleNameDTO ruleNameSaved = ruleNameService.updateRuleName(2, ruleNameUpdatedDTO);
+
+        assertNotNull(ruleNameSaved);
+    }
+
+	// *******************************************************************			
+    
+    
  
   }
 
