@@ -86,14 +86,22 @@ public class BidListService implements IBidListService {
     public BidListDTO addBidList(final BidListDTO bidListDTO) {
 
 
-    	BidList bidList = bidListMapper
+    	BidList bidListToAdd = bidListMapper
     			.toBidList(bidListDTO);
+
+        log.info("Request: to ADD BIDLIST "
+        		+ "BidList ID: {} & Account: {} ",
+        		bidListToAdd.getBidListId(), bidListToAdd.getAccount());
     	
-        BidList bidListSaved = bidListRepository
-        		.save(bidList);
+        BidList bidListAdded = bidListRepository
+        		.save(bidListToAdd);
+
+        log.info("BIDLIST ADDED SUCCESSFULLY - "
+        		+ "BidList ID: {} & Account: {} ",
+        		bidListToAdd.getBidListId(), bidListToAdd.getAccount());
 
         return bidListMapper
-        		.toBidListDTO(bidListSaved);
+        		.toBidListDTO(bidListAdded);
     }
 
 	// *******************************************************************
