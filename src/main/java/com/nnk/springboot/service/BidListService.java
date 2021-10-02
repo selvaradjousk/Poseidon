@@ -144,13 +144,22 @@ public class BidListService implements IBidListService {
 	@Override
     public void deleteBidList(final int bidListId) {
 
+		log.info("Request: BidListToDelete ID => {}",
+				bidListId);
 
         bidListRepository.findById(bidListId)
         	.orElseThrow(() ->
                 new DataNotFoundException("BidListID NOT FOUND"));
 
+		log.info("Request: BidListToDelete ID => {} FOUND",
+				bidListId);
+
         bidListRepository.deleteById(bidListId);
-    }
+
+		log.info("Request: BidListToDelete ID => {} DELETED",
+				bidListId);
+
+	}
 
 
 	// *******************************************************************
