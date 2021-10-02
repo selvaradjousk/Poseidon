@@ -1,9 +1,9 @@
 package com.nnk.springboot.UnitTests.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -24,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.BidListRepository;
 import com.nnk.springboot.service.BidListService;
 import com.nnk.springboot.util.BidListMapper;
@@ -148,5 +149,24 @@ class BidListServiceGetByIdTest {
   } 
 	// ******************************************************************		  
 
+   	
+      @DisplayName("ERROR GET EXISTING BIDLIST by ID for non existing BIDLIST data"
+      		+ " - Given a non existing BIDLIST,"
+      		+ " when GET BIDLIST By ID action request,"
+      		+ " then BIDLIST entry should respond"
+      		+ " with Data Not Found Exception")
+  	@Test
+  	public void testGetBidListByIdNonExistingBidListData() throws Exception {
+
+      	when(bidListRepository
+      			.findById(anyInt()))
+      	.thenReturn(java.util.Optional.empty());
+      
+      	// WHEN // THEN
+      	assertThrows(DataNotFoundException.class, ()
+          		-> bidListService.getBidListById(1));
+  	}
+      
+  	// *******************************************************************	  
 
 }
