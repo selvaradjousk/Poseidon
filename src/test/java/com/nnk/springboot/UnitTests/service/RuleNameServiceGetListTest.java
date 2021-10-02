@@ -172,7 +172,29 @@ class RuleNameServiceGetListTest {
 
       // *******************************************************************               
 
-    
+
+        
+        
+        @DisplayName("Check <Validate> match of both same record instance "
+        		+ " - Given a RuleName List,"
+        		+ " when Get RuleName List action request,"
+        		+ " then RuleName added should be added and same as test record")   
+        @Test
+        public void testGetRuleNamesListREsultMatchCheck() throws Exception {
+   	
+           // GIVEN
+
+           // WHEN
+           List<RuleNameDTO> result = RuleNameService
+          		 .getAllRuleName();
+           
+           // THEN
+           assertEquals(RuleNameDTOList, result);
+       
+        }
+   	
+        
+      // *******************************************************************    
     
     
     } 
