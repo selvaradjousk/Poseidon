@@ -152,10 +152,15 @@ public class CurvePointService implements ICurvePointService {
 
 
 	@Override
-	public void deleteCurvePoint(int curvePointId) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteCurvePoint(final int curvePointId) {
+
+
+        curvePointRepository.findById(curvePointId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID NOT FOUND"));
+
+        curvePointRepository.deleteById(curvePointId);
+    }
 
 	// ******************************************************************
 
