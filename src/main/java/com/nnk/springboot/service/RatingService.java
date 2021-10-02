@@ -154,12 +154,28 @@ public class RatingService implements IRatingService {
 	@Override
     public void deleteRating(final int ratingId) {
 
+
+        log.info("Request: to DELETE RATING"
+        		+ "Rating ID: {}",
+        		ratingId);
+
         ratingRepository.findById(ratingId)
         	.orElseThrow(() ->
                 new DataNotFoundException("ID NOT FOUND"));
 
+
+        log.info("Request: RATING to delete FOUND"
+        		+ "Rating ID: {}",
+        		ratingId);
+
         ratingRepository.deleteById(ratingId);
-    }
+
+
+        log.info("Request: RATING deleted SUCCESSFULLY"
+        		+ "Rating ID: {}",
+        		ratingId);
+
+	}
 
     // ******************************************************************
 
