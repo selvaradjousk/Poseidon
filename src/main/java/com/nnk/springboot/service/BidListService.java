@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.BidListRepository;
 import com.nnk.springboot.util.BidListMapper;
 
@@ -63,11 +64,21 @@ public class BidListService implements IBidListService {
    	// *******************************************************************
 
 	@Override
-	public BidListDTO getBidListById(int bidListId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public BidListDTO getBidListById(final int bidListId) {
+
+
+        BidList bidList = bidListRepository
+        		.findById(bidListId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("BIDLIST ID NOT FOUND"));
+
+        return bidListMapper
+        		.toBidListDTO(bidList);
+    }
 
    	// *******************************************************************
+
+
+
 
 }
