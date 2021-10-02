@@ -152,10 +152,14 @@ public class RatingService implements IRatingService {
 
 
 	@Override
-	public void deleteRating(int ratingId) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteRating(final int ratingId) {
+
+        ratingRepository.findById(ratingId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID NOT FOUND"));
+
+        ratingRepository.deleteById(ratingId);
+    }
 
     // ******************************************************************
 
