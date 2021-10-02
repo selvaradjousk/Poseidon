@@ -62,4 +62,12 @@ public class BidListService implements IBidListService {
 
    	// *******************************************************************
 
+	@Override
+	public BidListDTO getBidListById(int bidListId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+   	// *******************************************************************
+
 }

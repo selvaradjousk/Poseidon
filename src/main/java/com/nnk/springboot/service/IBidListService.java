@@ -8,4 +8,6 @@ public interface IBidListService {
 
 	List<BidListDTO> getAllBidList();
 
+	BidListDTO getBidListById(final int bidListId);
+
 }

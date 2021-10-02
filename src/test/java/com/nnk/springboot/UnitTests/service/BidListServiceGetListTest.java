@@ -32,13 +32,13 @@ import com.nnk.springboot.util.BidListMapper;
 class BidListServiceGetListTest {
 
     @InjectMocks
-    private BidListService BidListService;
+    private BidListService bidListService;
 
     @Mock
-    private BidListRepository BidListRepository;
+    private BidListRepository bidListRepository;
     
     @Mock
-    private BidListMapper BidListMapper;
+    private BidListMapper bidListMapper;
     
     private ObjectMapper objectMapper;
 	
@@ -46,9 +46,9 @@ class BidListServiceGetListTest {
     
     private static BidList testBidList1, testBidList2;
     
-    private static List<BidListDTO> BidListDTOList;
+    private static List<BidListDTO> bidListDTOList;
     
-    private static List<BidList> BidListList;
+    private static List<BidList> bidListList;
 
     
     @BeforeEach
@@ -68,7 +68,7 @@ class BidListServiceGetListTest {
         		.bidQuantity(20.0)
         		.build();
                  
-        BidListDTOList = Arrays.asList(testBidListDTO1, testBidListDTO2);   
+        bidListDTOList = Arrays.asList(testBidListDTO1, testBidListDTO2);   
         
         testBidList1 = BidList.builder()
         		.bidListId(1)
@@ -84,7 +84,7 @@ class BidListServiceGetListTest {
         		.bidQuantity(20.0)
         		.build();
             
-        BidListList = Arrays.asList(testBidList1, testBidList2);   
+        bidListList = Arrays.asList(testBidList1, testBidList2);   
         
     }
     
@@ -100,15 +100,15 @@ class BidListServiceGetListTest {
         	
         	
             // GIVEN
-            when(BidListRepository
+            when(bidListRepository
             		.findAll())
-            .thenReturn(BidListList);
+            .thenReturn(bidListList);
             
-            when(BidListMapper
+            when(bidListMapper
             		.toBidListDTO(testBidList1))
             .thenReturn(testBidListDTO1);
             
-            when(BidListMapper
+            when(bidListMapper
             		.toBidListDTO(testBidList2))
             .thenReturn(testBidListDTO2);
             
@@ -125,17 +125,17 @@ class BidListServiceGetListTest {
         public void testGetBidListsListExecutionOrderCheck() throws Exception {
    	
            // WHEN
-           BidListService.getAllBidList();
+           bidListService.getAllBidList();
            
            // THEN
-           InOrder inOrder = inOrder(BidListRepository, BidListMapper);
-           inOrder.verify(BidListRepository).findAll();
-           inOrder.verify(BidListMapper).toBidListDTO(testBidList1);
-           inOrder.verify(BidListMapper).toBidListDTO(testBidList2);
+           InOrder inOrder = inOrder(bidListRepository, bidListMapper);
+           inOrder.verify(bidListRepository).findAll();
+           inOrder.verify(bidListMapper).toBidListDTO(testBidList1);
+           inOrder.verify(bidListMapper).toBidListDTO(testBidList2);
            
-           verify(BidListRepository, times(1)).findAll();
-           verify(BidListMapper, times(1)).toBidListDTO(testBidList1);
-           verify(BidListMapper, times(1)).toBidListDTO(testBidList2);
+           verify(bidListRepository, times(1)).findAll();
+           verify(bidListMapper, times(1)).toBidListDTO(testBidList1);
+           verify(bidListMapper, times(1)).toBidListDTO(testBidList2);
        
         }
         
@@ -153,7 +153,7 @@ class BidListServiceGetListTest {
            // GIVEN
 
            // WHEN
-           List<BidListDTO> result = BidListService
+           List<BidListDTO> result = bidListService
         		   .getAllBidList();
            
            // THEN
@@ -176,11 +176,11 @@ class BidListServiceGetListTest {
            // GIVEN
 
            // WHEN
-           List<BidListDTO> result = BidListService
+           List<BidListDTO> result =bidListService
         		   .getAllBidList();
            
            // THEN
-           assertEquals(BidListDTOList, result);
+           assertEquals(bidListDTOList, result);
        
         }
    	
@@ -199,10 +199,10 @@ class BidListServiceGetListTest {
            // GIVEN
 
            // WHEN
-           List<BidListDTO> result = BidListService.getAllBidList();
+           List<BidListDTO> result = bidListService.getAllBidList();
            
            // THEN
-           assertEquals(BidListDTOList.size(), result.size());
+           assertEquals(bidListDTOList.size(), result.size());
            assertEquals(2, result.size());
 
         }    
