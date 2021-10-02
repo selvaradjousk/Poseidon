@@ -142,10 +142,19 @@ public class BidListService implements IBidListService {
 	// *******************************************************************
 
 	@Override
-	public void deleteBidList(int bidListId) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteBidList(final int bidListId) {
+
+
+        bidListRepository.findById(bidListId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("BidListID NOT FOUND"));
+
+        bidListRepository.deleteById(bidListId);
+    }
+
+
+	// *******************************************************************
+
 
 
 	// *******************************************************************
