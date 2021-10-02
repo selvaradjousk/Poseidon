@@ -89,7 +89,7 @@ class TradeServiceGetListTest {
    	// *******************************************************************	
     @DisplayName("Test List Trades")
     @Nested
-    class TestAddNewTrade {  
+    class TestGetListTrade {  
     	
         @BeforeEach
         public void init() {

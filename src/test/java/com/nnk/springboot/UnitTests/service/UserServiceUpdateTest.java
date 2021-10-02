@@ -96,7 +96,7 @@ class UserServiceUpdateTest {
 
     @DisplayName("Test UPDATE New USER")
     @Nested
-    class TestUpdateNewUser {  
+    class TestUpdateExistingUser {  
     	
         @BeforeEach
         public void init() {

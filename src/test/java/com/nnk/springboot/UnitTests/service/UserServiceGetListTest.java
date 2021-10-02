@@ -96,7 +96,7 @@ class UserServiceGetListTest {
    	// *******************************************************************	
     @DisplayName("Test List Users")
     @Nested
-    class TestAddNewUser {  
+    class TestUserList {  
     	
         @BeforeEach
         public void init() {
