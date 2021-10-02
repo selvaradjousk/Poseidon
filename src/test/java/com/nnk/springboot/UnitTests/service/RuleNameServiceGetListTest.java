@@ -195,7 +195,28 @@ class RuleNameServiceGetListTest {
    	
         
       // *******************************************************************    
-    
+
+        
+        @DisplayName("Check <Execution Order>"
+          		+ " - Given a RuleName List,"
+          		+ " when Get RuleName List action request,"
+          		+ " then return expected Number of RuleNames")    
+          @Test
+          public void testGetRuleNamesListRecordsNumberMatchCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<RuleNameDTO> result = RuleNameService
+            		 .getAllRuleName();
+             
+             // THEN
+             assertEquals(RuleNameDTOList.size(), result.size());
+             assertEquals(2, result.size());
+
+          }    
+          
+          // *******************************************************************    
     
     } 
    
