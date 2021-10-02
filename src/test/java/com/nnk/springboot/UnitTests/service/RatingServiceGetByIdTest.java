@@ -1,5 +1,7 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -71,7 +73,7 @@ class RatingServiceGetByIdTest {
   
     // ***********************************************************************************
 
-    @DisplayName("Test GET USER BY IDENTITY")
+    @DisplayName("Test GET RATING BY IDENTITY")
     @Nested
     class TestGetRatingById  {  
     	
@@ -127,6 +129,23 @@ class RatingServiceGetByIdTest {
 	    }
 
 	// ******************************************************************		
+	   
+    
+	 @Test
+	 @DisplayName("Check <Validate> match of both same record instance "
+	 		+ " - Given a existing Rating,"
+	 		+ " when GET RATING By ID action request,"
+	 		+ " then RATING ID same as test record")
+	 	public void testRatingByIReturnResultMatch() {
+				
+	 		RatingDTO result = ratingService
+	 			.getRatingById(1);
+	
+	 		assertEquals(result, testRatingDTO1);
+		    assertThat(result).usingRecursiveComparison().isEqualTo(testRatingDTO1);
+		    assertEquals("MoodyRating1", result.getMoodysRating());
+		    assertEquals(1, result.getId());
+	 }
  
   }
 

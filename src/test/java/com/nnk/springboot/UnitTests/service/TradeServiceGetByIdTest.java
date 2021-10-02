@@ -73,7 +73,7 @@ class TradeServiceGetByIdTest {
   
     // ***********************************************************************************
 
-    @DisplayName("Test GET USER BY IDENTITY")
+    @DisplayName("Test GET TRADE BY IDENTITY")
     @Nested
     class TestGetTradeById  {  
     	
@@ -135,7 +135,7 @@ class TradeServiceGetByIdTest {
     		+ " - Given a existing Trade,"
     		+ " when GET TRADE By ID action request,"
     		+ " then TRADE ID same as test record")
-    public void testAddNewPersonReturnResultMatch() {
+    public void testGetTradeByIdReturnResultMatch() {
 			
     	TradeDTO result = tradeService
     			.getTradeById(1);
