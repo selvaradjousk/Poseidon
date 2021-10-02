@@ -136,7 +136,24 @@ class CurvePointServiceUpdateTest {
     }
 
 	// *******************************************************************	
- 
+
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new CurvePoint,"
+		+ " when UPDATE CURVEPOINT action request,"
+		+ " then CURVEPOINT should not be null")	    
+    @Test
+    public void testUpdateExistingCurvePointNotNullCheck() {
+		
+
+        CurvePointDTO curvePointSaved = curvePointService
+        		.updateCurvePoint(2, curvePointUpdatedDTO);
+
+        assertNotNull(curvePointSaved);
+    }
+
+	// *******************************************************************			
+    
     
     }
     
