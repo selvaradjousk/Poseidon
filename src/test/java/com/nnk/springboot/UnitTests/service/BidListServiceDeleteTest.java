@@ -95,5 +95,23 @@ class BidListServiceDeleteTest {
    
 
 	// *******************************************************************	
+	
+    @DisplayName("Check <Exception>"
+		+ "GIVEN a BidList not exist "
+		+ "WHEN Requested DELETE BidList "
+		+ "THEN throws Exception")	    
+	@Test
+	public void testDeleteBidListNotExists() throws Exception {
+
+    	when(bidListRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> bidListService.deleteBidList(anyInt()));
+	} 
+
+	// *******************************************************************	
 
 }
