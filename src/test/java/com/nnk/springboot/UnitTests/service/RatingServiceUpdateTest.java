@@ -197,7 +197,6 @@ class RatingServiceUpdateTest {
     
   }
 
-
 	
     @DisplayName("ERROR UPDATE RATING for non existing RATING data"
     		+ " - Given a non existing RATING,"
