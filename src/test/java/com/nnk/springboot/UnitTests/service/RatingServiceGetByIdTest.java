@@ -3,6 +3,7 @@ package com.nnk.springboot.UnitTests.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.inOrder;
@@ -23,6 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.service.RatingService;
 import com.nnk.springboot.util.RatingMapper;
@@ -149,6 +151,27 @@ class RatingServiceGetByIdTest {
  
   }
 
-  
+
+	
+  	// *******************************************************************	
+  	
+      @DisplayName("ERROR GET EXISTING RATING by ID for non existing RATING data"
+      		+ " - Given a non existing RATING,"
+      		+ " when GET RATING By ID action request,"
+      		+ " then RATING entry should respond"
+      		+ " with Data Not Found Exception")
+  	@Test
+  	public void testGetRatingByIdNonExistingRatingData() throws Exception {
+
+      	when(ratingRepository
+      			.findById(anyInt()))
+      	.thenReturn(java.util.Optional.empty());
+      
+      	// WHEN // THEN
+      	assertThrows(DataNotFoundException.class, ()
+          		-> ratingService.getRatingById(1));
+  	}
+      
+  	// *******************************************************************	   
 
 }
