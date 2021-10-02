@@ -108,10 +108,26 @@ public class BidListService implements IBidListService {
 
 
 	@Override
-	public BidListDTO updateBidList(int bidListId, BidListDTO bidList) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public BidListDTO updateBidList(
+    		final int bidListId,
+    		final BidListDTO bidListDTO) {
+
+
+        bidListRepository.findById(bidListId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("BidList ID Not FOUND"));
+
+        BidList bidListToUpdate = bidListMapper
+        		.toBidList(bidListDTO);
+
+        bidListToUpdate.setBidListId(bidListId);
+
+        BidList bidListUpdated = bidListRepository
+        		.save(bidListToUpdate);
+
+        return bidListMapper
+        		.toBidListDTO(bidListUpdated);
+    }
 
 
 	// *******************************************************************
