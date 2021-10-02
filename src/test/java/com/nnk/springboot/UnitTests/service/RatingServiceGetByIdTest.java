@@ -57,7 +57,7 @@ class RatingServiceGetByIdTest {
         		.id(1)
         		.moodysRating("MoodyRating1")
         		.sandPRating("MoodyRating1")
-        		.fitchRating("MoodyRating1")
+        		.fitchRating("FitchRating1")
         		.orderNumber(1)
         		.build();
         
@@ -66,7 +66,7 @@ class RatingServiceGetByIdTest {
         		.id(1)
         		.moodysRating("MoodyRating1")
         		.sandPRating("MoodyRating1")
-        		.fitchRating("MoodyRating1")
+        		.fitchRating("FitchRating1")
         		.orderNumber(1)
         		.build();
         

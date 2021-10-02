@@ -68,13 +68,18 @@ public class RatingService implements IRatingService {
     public RatingDTO getRatingById(final int ratingId) {
 
 
-        Rating rating = ratingRepository
+        Rating ratingById = ratingRepository
         		.findById(ratingId)
         		.orElseThrow(() ->
                 new DataNotFoundException("No ID FOUND"));
 
+        log.info("Request: ratingRepository.findById(ratingId)"
+        		+ "rating FitchRating: {} & MoodysRating: {} ",
+        		ratingById.getFitchRating(),
+        		ratingById.getMoodysRating());
+
         return ratingMapper
-        		.toRatingDTO(rating);
+        		.toRatingDTO(ratingById);
     }
 
     // ******************************************************************
