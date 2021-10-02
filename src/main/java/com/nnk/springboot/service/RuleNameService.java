@@ -129,7 +129,7 @@ public class RuleNameService implements IRuleNameService {
         RuleName ruleNameUpdated = ruleNameRepository
         		.save(ruleNameToUpdate);
 
-        log.info("Request: RuleName UPDATEED  "
+        log.info("Request: RuleName UPDATED SUCCESSFULLY "
         		+ "Name: {} & Description: {} ",
         		ruleNameId, ruleNameUpdated.getDescription());
 
@@ -149,7 +149,13 @@ public class RuleNameService implements IRuleNameService {
         	.orElseThrow(() ->
                 new DataNotFoundException("ID Not Found"));
 
+        log.info("Request: RuleName to Delete FOUND  "
+        		+ "Rule Name Id: {}",
+        		ruleNameId);
+
         ruleNameRepository.deleteById(ruleNameId);
+
+        log.info("Request: RuleName Deleted SUCCESSFULLY  ");
 
     }
 
