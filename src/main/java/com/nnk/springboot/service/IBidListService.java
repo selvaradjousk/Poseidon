@@ -12,4 +12,6 @@ public interface IBidListService {
 
 	BidListDTO addBidList(final BidListDTO bidList);
 
+	BidListDTO updateBidList(final int bidListId, final BidListDTO bidList);
+
 }

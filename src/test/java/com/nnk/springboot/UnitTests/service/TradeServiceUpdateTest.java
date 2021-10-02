@@ -197,7 +197,7 @@ class TradeServiceUpdateTest {
     @DisplayName("ERROR UPDATE TRADE for non existing TRADE data"
     		+ " - Given a non existing TRADE,"
     		+ " when UPDATE TRADEaction request,"
-    		+ " then USER entry should respond"
+    		+ " then TRADE entry should respond"
     		+ " with Data Not Found Exception")
 	@Test
 	public void testGetTradeByIdNonExistingTradeData() throws Exception {
