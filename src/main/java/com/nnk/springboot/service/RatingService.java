@@ -114,10 +114,24 @@ public class RatingService implements IRatingService {
 
 
 	@Override
-	public RatingDTO updateRating(int ratingId, RatingDTO rating) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public RatingDTO updateRating(
+    		final int ratingId,
+    		final RatingDTO ratingDTO) {
+
+        ratingRepository.findById(ratingId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID NOT FOUND"));
+
+        Rating ratingToUpdate = ratingMapper
+        		.toRating(ratingDTO);
+
+        ratingToUpdate.setId(ratingId);
+
+        Rating ratingUpdated = ratingRepository
+        		.save(ratingToUpdate);
+
+        return ratingMapper.toRatingDTO(ratingUpdated);
+    }
 
     // ******************************************************************
 
