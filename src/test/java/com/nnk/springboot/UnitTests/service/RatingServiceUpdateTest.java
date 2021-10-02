@@ -169,7 +169,7 @@ class RatingServiceUpdateTest {
 		
 
         RatingDTO ratingSaved = ratingService
-        		.updateRating(2, ratingUpdatedDTO);
+        		.updateRating(1, ratingUpdatedDTO);
 
         assertNotNull(ratingSaved);
     }
@@ -187,7 +187,7 @@ class RatingServiceUpdateTest {
    			
 
    	        RatingDTO ratingSaved = ratingService
-   	        		.updateRating(2, ratingUpdatedDTO);
+   	        		.updateRating(1, ratingUpdatedDTO);
 
    	        assertEquals(ratingUpdatedDTO.toString(), ratingSaved.toString());
    	        assertThat(ratingSaved).usingRecursiveComparison().isEqualTo(ratingUpdatedDTO);

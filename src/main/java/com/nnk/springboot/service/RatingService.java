@@ -118,9 +118,19 @@ public class RatingService implements IRatingService {
     		final int ratingId,
     		final RatingDTO ratingDTO) {
 
-        ratingRepository.findById(ratingId)
+
+        log.info("Request: Rating ID requested for UPDATE"
+        		+ "Rating ID: {}",
+        		ratingId);
+
+		ratingRepository.findById(ratingId)
         	.orElseThrow(() ->
                 new DataNotFoundException("ID NOT FOUND"));
+
+        log.info("Request: to UPDATE RATING FOUND"
+        		+ "Rating ID: {} & MoodysRating: {} ",
+        		ratingDTO.getId(),
+        		ratingDTO.getMoodysRating());
 
         Rating ratingToUpdate = ratingMapper
         		.toRating(ratingDTO);
@@ -129,6 +139,11 @@ public class RatingService implements IRatingService {
 
         Rating ratingUpdated = ratingRepository
         		.save(ratingToUpdate);
+
+        log.info("Request: RATING UPDATED SUCCESSFULLY"
+        		+ "Rating ID: {} & MoodysRating: {} ",
+        		ratingDTO.getId(),
+        		ratingDTO.getMoodysRating());
 
         return ratingMapper.toRatingDTO(ratingUpdated);
     }
