@@ -86,11 +86,21 @@ public class RuleNameService implements IRuleNameService {
 	@Override
     public RuleNameDTO addRuleName(final RuleNameDTO ruleNameDTO) {
 
-        RuleName ruleName = ruleNameMapper.toRuleName(ruleNameDTO);
+        RuleName ruleNameToAdd = ruleNameMapper
+        		.toRuleName(ruleNameDTO);
 
-        RuleName ruleNameSaved = ruleNameRepository.save(ruleName);
+        log.info("Request: RuleName to ADD  "
+        		+ "Name: {} & Description: {} ",
+        		ruleNameToAdd.getName(), ruleNameToAdd.getDescription());
 
-        return ruleNameMapper.toRuleNameDTO(ruleNameSaved);
+        RuleName ruleNameAdded = ruleNameRepository.save(ruleNameToAdd);
+
+        log.info("Request: RuleName ADDED "
+        		+ "Name: {} & Description: {} ",
+        		ruleNameToAdd.getName(), ruleNameToAdd.getDescription());
+
+        return ruleNameMapper
+        		.toRuleNameDTO(ruleNameAdded);
     }
 
 
