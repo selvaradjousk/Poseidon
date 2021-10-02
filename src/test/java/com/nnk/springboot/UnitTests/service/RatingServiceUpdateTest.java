@@ -198,5 +198,24 @@ class RatingServiceUpdateTest {
   }
 
 
+	
+    @DisplayName("ERROR UPDATE RATING for non existing RATING data"
+    		+ " - Given a non existing RATING,"
+    		+ " when UPDATE RATINGaction request,"
+    		+ " then RATING entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetRatingByIdNonExistingRatingData() throws Exception {
+
+    	when(ratingRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> ratingService.updateRating(5, ratingUpdatedDTO));
+	}
+    
+	// *******************************************************************	
 
 }
