@@ -1,5 +1,8 @@
 package com.nnk.springboot.UnitTests.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -125,12 +128,25 @@ class BidListServiceGetByIdTest {
 
 	// ******************************************************************		
 	   
-    
-    
-    
-    
-    } 
-   
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a existing BidList,"
+    		+ " when GET BIDLIST By ID action request,"
+    		+ " then BIDLIST ID same as test record")
+    public void testAddNewPersonReturnResultMatch() {
+			
+    	BidListDTO result = bidListService
+    			.getBidListById(1);
+
+    	assertEquals(result, testBidListDTO1);
+	    assertThat(result).usingRecursiveComparison().isEqualTo(testBidListDTO1);
+	    assertEquals("Account1", result.getAccount());
+	    assertEquals(1, result.getBidListId());
+    }  
+
+  } 
+	// ******************************************************************		  
 
 
 }
