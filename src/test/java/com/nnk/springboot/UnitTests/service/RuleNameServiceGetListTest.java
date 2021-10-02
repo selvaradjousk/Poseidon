@@ -148,8 +148,33 @@ class RuleNameServiceGetListTest {
         }
    	
         
-      	// *******************************************************************	
-               
+      	// *******************************************************************
+
+        
+        @DisplayName("Check Check <NotNull>"
+        		+ " - Given a RuleName List,"
+        		+ " when Get RuleName List action request,"
+        		+ " then returns RuleNameslist not null")    
+        @Test
+        public void testGetRuleNamesListNotNullCheck() throws Exception {
+   	
+           // GIVEN
+
+           // WHEN
+           List<RuleNameDTO> result = RuleNameService
+          		 .getAllRuleName();
+           
+           // THEN
+           assertNotNull(result);
+       
+        }
+        
+
+      // *******************************************************************               
+
+    
+    
+    
     } 
    
 }
