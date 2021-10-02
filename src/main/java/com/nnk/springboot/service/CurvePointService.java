@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.util.CurvePointMapper;
 
@@ -65,10 +66,17 @@ public class CurvePointService implements ICurvePointService {
 
 
 	@Override
-	public CurvePointDTO getCurvePointById(int curvePointId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public CurvePointDTO getCurvePointById(final int curvePointId) {
+
+
+        CurvePoint curvePoint = curvePointRepository
+        		.findById(curvePointId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("ID Not Found"));
+
+        return curvePointMapper
+        		.toCurvePointDTO(curvePoint);
+    }
 
     // ******************************************************************
 
