@@ -77,16 +77,16 @@ class CurvePointServiceAddTest {
         public void init() {
         	
  	       curvePointToAdd = CurvePoint.builder()
-        		.curveId(2)
-        		.term(20.0)
-        		.value(20.0)
-        		.build();
+ 	         		.curveId(1)
+ 	        		.term(10.0)
+ 	        		.value(10.0)
+ 	        		.build();
 	        
 	        curvePointToAddDTO = CurvePointDTO.builder()
-        		.curveId(2)
-        		.term(20.0)
-        		.value(20.0)
-        		.build();
+	           		.curveId(1)
+	        		.term(10.0)
+	        		.value(10.0)
+	        		.build();
        
        when(curvePointMapper
     		   .toCurvePoint(any(CurvePointDTO.class)))
@@ -145,10 +145,26 @@ class CurvePointServiceAddTest {
 
 	// *******************************************************************    
     
-    
-    
-    
-    
-    }
+	    
+	    @Test
+	    @DisplayName("Check <Validate> match of both same record instance "
+	    		+ " - Given a new CurvePoint,"
+	    		+ " when ADD CURVEPOINT action request,"
+	    		+ " then CURVEPOINT added should be added and same as test record")
+	    public void testAddNewPersonReturnResultMatch() {
+	   			
+
+	   	        CurvePointDTO curvePointSaved = curvePointService
+	   	        		.addCurvePoint(curvePointToAddDTO);
+
+	   	        assertEquals(curvePointToAddDTO.toString(), curvePointSaved.toString());
+	   	        assertThat(curvePointSaved).usingRecursiveComparison().isEqualTo(curvePointToAddDTO);
+	   	    }
+	    
+	    }
+	    
+	// *******************************************************************	
+
+ 
 
 }
