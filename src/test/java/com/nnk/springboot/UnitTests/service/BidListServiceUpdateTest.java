@@ -156,6 +156,26 @@ class BidListServiceUpdateTest {
 	// *******************************************************************	
     
  
+    
+    @DisplayName("Check <NotNull>"
+		+ " - Given a new BidList,"
+		+ " when UPDATE BIDLIST action request,"
+		+ " then BIDLIST should not be null")	    
+    @Test
+    public void testUpdateExistingBidListNotNullCheck() {
+		
+
+        BidListDTO bidListSaved = bidListService
+        		.updateBidList(2, bidListUpdatedDTO);
+
+        assertNotNull(bidListSaved);
+    }
+
+	// *******************************************************************			
+    
+    
+    
+    
 	}
     
 	// *******************************************************************	   
