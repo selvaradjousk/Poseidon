@@ -112,6 +112,8 @@ class BidListServiceGetListTest {
         @BeforeEach
         public void init() {
         	
+        	
+            // GIVEN
             when(BidListRepository
             		.findAll())
             .thenReturn(BidListList);
@@ -136,8 +138,6 @@ class BidListServiceGetListTest {
         @Test
         public void testGetBidListsListExecutionOrderCheck() throws Exception {
    	
-           // GIVEN
-
            // WHEN
            BidListService.getAllBidList();
            
@@ -155,7 +155,31 @@ class BidListServiceGetListTest {
         
     	// *******************************************************************	
      	
-                   
+
+        
+        @DisplayName("Check Check <NotNull>"
+        		+ " - Given a BidList List,"
+        		+ " when Get BidList List action request,"
+        		+ " then returns BidListslist not null")    
+        @Test
+        public void testGetBidListsListNotNullCheck() throws Exception {
+   	
+           // GIVEN
+
+           // WHEN
+           List<BidListDTO> result = BidListService
+        		   .getAllBidList();
+           
+           // THEN
+           assertNotNull(result);
+       
+        }
+        
+
+      // *******************************************************************	          
+                
+
+    
     } 
    
 }
