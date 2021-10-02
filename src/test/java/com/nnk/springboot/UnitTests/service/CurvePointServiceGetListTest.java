@@ -181,7 +181,27 @@ class CurvePointServiceGetListTest {
          // *******************************************************************	
              
         
-        
+
+
+           @DisplayName("Check <Execution Order>"
+           		+ " - Given a CurvePoint List,"
+           		+ " when Get CurvePoint List action request,"
+           		+ " then return expected Number of CurvePoints")    
+           @Test
+           public void testGetCurvePointsListRecordsNumberMatchCheck() throws Exception {
+      	
+              // GIVEN
+
+              // WHEN
+              List<CurvePointDTO> result = CurvePointService.getAllCurvePoint();
+              
+              // THEN
+              assertEquals(CurvePointDTOList.size(), result.size());
+              assertEquals(2, result.size());
+
+           }    
+           
+           // *******************************************************************	       
         
     } 
 }
