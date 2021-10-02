@@ -1,9 +1,11 @@
 package com.nnk.springboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.util.CurvePointMapper;
@@ -35,10 +37,23 @@ public class CurvePointService implements ICurvePointService {
 
 
 	@Override
-	public List<CurvePointDTO> getAllCurvePoint() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public List<CurvePointDTO> getAllCurvePoint() {
+
+        List<CurvePoint> curvePoints = curvePointRepository
+        		.findAll();
+
+        List<CurvePointDTO> curvePointList = new ArrayList<>();
+
+
+        for (CurvePoint curvePoint : curvePoints) {
+            CurvePointDTO curvePointDTO = curvePointMapper
+            		.toCurvePointDTO(curvePoint);
+            curvePointList.add(curvePointDTO);
+        }
+
+
+        return curvePointList;
+    }
 
     // ******************************************************************
 
