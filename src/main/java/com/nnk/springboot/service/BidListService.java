@@ -67,13 +67,17 @@ public class BidListService implements IBidListService {
     public BidListDTO getBidListById(final int bidListId) {
 
 
-        BidList bidList = bidListRepository
+        BidList bidListById = bidListRepository
         		.findById(bidListId)
         		.orElseThrow(() ->
                 new DataNotFoundException("BIDLIST ID NOT FOUND"));
 
+        log.info("Request: bidListRepository.findById(bidListId)"
+        		+ "BIDLIST ID: {} & Account: {} ",
+        		bidListById.getBidListId(), bidListById.getAccount());
+
         return bidListMapper
-        		.toBidListDTO(bidList);
+        		.toBidListDTO(bidListById);
     }
 
    	// *******************************************************************
