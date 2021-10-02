@@ -69,13 +69,17 @@ public class CurvePointService implements ICurvePointService {
     public CurvePointDTO getCurvePointById(final int curvePointId) {
 
 
-        CurvePoint curvePoint = curvePointRepository
+        CurvePoint curvePointById = curvePointRepository
         		.findById(curvePointId)
         		.orElseThrow(() ->
                 new DataNotFoundException("ID Not Found"));
 
+        log.info("Request: curvePointRepository.findById(curvePointId)"
+        		+ "CurvePoint ID: {} & Value: {} ",
+        		curvePointById.getCurveId(), curvePointById.getValue());
+
         return curvePointMapper
-        		.toCurvePointDTO(curvePoint);
+        		.toCurvePointDTO(curvePointById);
     }
 
     // ******************************************************************

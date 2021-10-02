@@ -74,7 +74,6 @@ public class TradeService implements ITradeService {
 
     // ******************************************************************
 
-
 	@Override
     public TradeDTO addTrade(final TradeDTO tradeDTO) {
 
