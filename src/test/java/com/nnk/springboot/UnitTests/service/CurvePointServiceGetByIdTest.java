@@ -148,5 +148,24 @@ class CurvePointServiceGetByIdTest {
 	   
   }
 
- 
+ 	
+    @DisplayName("ERROR GET EXISTING CURVEPOINT by ID for non existing CURVEPOINT data"
+    		+ " - Given a non existing CURVEPOINT,"
+    		+ " when GET CURVEPOINT By ID action request,"
+    		+ " then CURVEPOINT entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetCurvePointByIdNonExistingCurvePointData() throws Exception {
+
+    	when(curvePointRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> curvePointService.getCurvePointById(1));
+	}
+    
+	// *******************************************************************	  
+
 }
