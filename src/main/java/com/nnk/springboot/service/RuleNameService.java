@@ -84,10 +84,14 @@ public class RuleNameService implements IRuleNameService {
 	// *******************************************************************	
 
 	@Override
-	public RuleNameDTO addRuleName(RuleNameDTO ruleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public RuleNameDTO addRuleName(final RuleNameDTO ruleNameDTO) {
+
+        RuleName ruleName = ruleNameMapper.toRuleName(ruleNameDTO);
+
+        RuleName ruleNameSaved = ruleNameRepository.save(ruleName);
+
+        return ruleNameMapper.toRuleNameDTO(ruleNameSaved);
+    }
 
 
 	// *******************************************************************	
