@@ -191,8 +191,26 @@ class BidListServiceUpdateTest {
    	// *******************************************************************	
 
     
+	}
+
+	
+    @DisplayName("ERROR UPDATE BIDLIST for non existing BIDLIST data"
+    		+ " - Given a non existing BIDLIST,"
+    		+ " when UPDATE BIDLISTaction request,"
+    		+ " then BIDLIST entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetBidListByIdNonExistingBidListData() throws Exception {
+
+    	when(bidListRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
     
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> bidListService.updateBidList(5, bidListUpdatedDTO));
 	}
     
 	// *******************************************************************	   
+  
 }
