@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
+import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.util.RuleNameMapper;
 
@@ -64,10 +65,16 @@ public class RuleNameService implements IRuleNameService {
 	// *******************************************************************	
 
 	@Override
-	public RuleNameDTO getRuleNameById(int ruleNameId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public RuleNameDTO getRuleNameById(final int ruleNameId) {
+
+
+        RuleName ruleName = ruleNameRepository
+        		.findById(ruleNameId)
+        		.orElseThrow(() ->
+                new DataNotFoundException("ID Not Found"));
+
+        return ruleNameMapper.toRuleNameDTO(ruleName);
+    }
 
 
 	// *******************************************************************	
