@@ -98,5 +98,23 @@ class RatingServiceDeleteTest {
 
 	// *******************************************************************	
 
+	
+    @DisplayName("Check <Exception>"
+		+ "GIVEN a Rating not exist "
+		+ "WHEN Requested DELETE Rating "
+		+ "THEN throws Exception")	    
+	@Test
+	public void testDeleteRatingNotExists() throws Exception {
+
+    	when(ratingRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> ratingService.deleteRating(anyInt()));
+	} 
+
+	// *******************************************************************	
 
 }
