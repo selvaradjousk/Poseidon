@@ -190,7 +190,8 @@ class BidListServiceGetListTest {
            // GIVEN
 
            // WHEN
-           List<BidListDTO> result = BidListService.getAllBidList();
+           List<BidListDTO> result = BidListService
+        		   .getAllBidList();
            
            // THEN
            assertEquals(BidListDTOList, result);
@@ -201,6 +202,27 @@ class BidListServiceGetListTest {
       // *******************************************************************	
                     
 
+
+        @DisplayName("Check <Execution Order>"
+        		+ " - Given a BidList List,"
+        		+ " when Get BidList List action request,"
+        		+ " then return expected Number of BidLists")    
+        @Test
+        public void testGetBidListsListRecordsNumberMatchCheck() throws Exception {
+   	
+           // GIVEN
+
+           // WHEN
+           List<BidListDTO> result = BidListService.getAllBidList();
+           
+           // THEN
+           assertEquals(BidListDTOList.size(), result.size());
+           assertEquals(2, result.size());
+
+        }    
+        
+        // *******************************************************************	
+            
     
     } 
    
