@@ -110,7 +110,23 @@ class CurvePointServiceGetByIdTest {
 
     
 	// *******************************************************************	
- 
+    
+    @DisplayName("Check <NotNull>"
+    		+ " - Given a existing CurvePoint,"
+    		+ " when GET CURVEPOINT By ID action request,"
+    		+ " then CURVEPOINT should not be null")	    
+	    @Test
+	    public void testCurvePointByIdNotNullCheck() {
+			
+
+    		CurvePointDTO result = curvePointService
+    				.getCurvePointById(1);
+
+	        assertNotNull(result);
+	    }
+
+	// ******************************************************************		
+	   
   }
 
  
