@@ -46,7 +46,8 @@ public class CurvePointService implements ICurvePointService {
         List<CurvePoint> curvePoints = curvePointRepository
         		.findAll();
 
-		log.info("Request: CurevePointService.curevePointRepository.findAll()"
+		log.info("Request: CurvePointService"
+				+ ".curvePointRepository.findAll()"
 				+ " - ListSize: {} curvePoints", curvePoints.size());
 
 
@@ -57,7 +58,7 @@ public class CurvePointService implements ICurvePointService {
         }
 
         log.info("Request: curvePointList.add(tradeDTO)"
-        		+ " after curvePointMapper.toCurevePointDTO(curvePoint)"
+        		+ " after curvePointMapper.toCurvePointDTO(curvePoint)"
 				+ " - ListSize: {} curvePoints", curvePointList.size());
 
         return curvePointList;

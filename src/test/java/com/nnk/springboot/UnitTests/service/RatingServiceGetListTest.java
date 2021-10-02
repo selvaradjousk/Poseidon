@@ -192,7 +192,7 @@ class RatingServiceGetListTest {
           
 
 
-		@DisplayName("Check <Execution Order>"
+		@DisplayName("Check <List Count >"
 				+ " - Given a Rating List,"
 				+ " when Get Rating List action request,"
 				+ " then return expected Number of Ratings")    
