@@ -179,6 +179,28 @@ class BidListServiceGetListTest {
       // *******************************************************************	          
                 
 
+        
+        @DisplayName("Check <Validate> match of both same record instance "
+        		+ " - Given a BidList List,"
+        		+ " when Get BidList List action request,"
+        		+ " then BidList added should be added and same as test record")   
+        @Test
+        public void testGetBidListsListREsultMatchCheck() throws Exception {
+   	
+           // GIVEN
+
+           // WHEN
+           List<BidListDTO> result = BidListService.getAllBidList();
+           
+           // THEN
+           assertEquals(BidListDTOList, result);
+       
+        }
+   	
+        
+      // *******************************************************************	
+                    
+
     
     } 
    
