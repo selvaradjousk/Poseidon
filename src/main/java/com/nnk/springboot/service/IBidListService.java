@@ -14,4 +14,6 @@ public interface IBidListService {
 
 	BidListDTO updateBidList(final int bidListId, final BidListDTO bidList);
 
+	 void deleteBidList(final int bidListId);
+
 }

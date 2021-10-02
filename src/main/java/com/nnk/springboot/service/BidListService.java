@@ -141,5 +141,13 @@ public class BidListService implements IBidListService {
 
 	// *******************************************************************
 
+	@Override
+	public void deleteBidList(int bidListId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	// *******************************************************************
 
 }
