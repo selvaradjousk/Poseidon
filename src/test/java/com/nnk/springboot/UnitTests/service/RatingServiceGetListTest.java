@@ -173,7 +173,7 @@ class RatingServiceGetListTest {
           		+ " when Get Rating List action request,"
           		+ " then Rating added should be added and same as test record")   
           @Test
-          public void testGetRatingsListREsultMatchCheck() throws Exception {
+          public void testGetRatingsListResultMatchCheck() throws Exception {
      	
              // GIVEN
 
@@ -189,7 +189,30 @@ class RatingServiceGetListTest {
           
         // *******************************************************************	
   
-               
+          
+
+
+		@DisplayName("Check <Execution Order>"
+				+ " - Given a Rating List,"
+				+ " when Get Rating List action request,"
+				+ " then return expected Number of Ratings")    
+		@Test
+		public void testGetRatingsListRecordsNumberMatchCheck() throws Exception {
+		
+		   // GIVEN
+		
+		   // WHEN
+		   List<RatingDTO> result = RatingService
+		  		 .getAllRating();
+		   
+		   // THEN
+		   assertEquals(RatingDTOList.size(), result.size());
+		   assertEquals(2, result.size());
+		
+		}    
+
+		// *******************************************************************	
+     
     } 
    
 }
