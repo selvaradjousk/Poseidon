@@ -3,11 +3,17 @@ package com.nnk.springboot.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.util.RuleNameMapper;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
+@Service
 public class RuleNameService implements IRuleNameService {
 
 
@@ -35,12 +41,21 @@ public class RuleNameService implements IRuleNameService {
 
 		List<RuleName> ruleNames = ruleNameRepository.findAll();
 
+		log.info("Request: RuleNameService"
+				+ ".ruleNameRepository.findAll()"
+				+ " - ListSize: {} ruleNames",
+				ruleNames.size());
+
 
         for (RuleName ruleName : ruleNames) {
             RuleNameDTO ruleNameDTO = ruleNameMapper
             		.toRuleNameDTO(ruleName);
             ruleNameList.add(ruleNameDTO);
         }
+
+        log.info("Request: ruleNameList.add(ruleNameDTO)"
+        		+ " after ruleNameMapper.toRuleNameeDTO(ruleName)"
+				+ " - ListSize: {} ruleNames", ruleNameList.size());
 
         return ruleNameList;
     }
