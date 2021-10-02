@@ -185,6 +185,24 @@ class RuleNameServiceUpdateTest {
 
 	// *******************************************************************			
     
+
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new RuleName,"
+    		+ " when UPDATE RULENAME action request,"
+    		+ " then RULENAME updateed should be updateed and same as test record")
+    public void testUpdateExistingRuleNameReturnResultMatch() {
+   			
+
+   	        RuleNameDTO ruleNameSaved = ruleNameService
+   	        		.updateRuleName(2, ruleNameUpdatedDTO);
+
+   	        assertEquals(ruleNameUpdatedDTO.toString(), ruleNameSaved.toString());
+   	        assertThat(ruleNameSaved).usingRecursiveComparison().isEqualTo(ruleNameUpdatedDTO);
+   	    }
+
+   	// *******************************************************************	
     
  
   }
