@@ -172,9 +172,30 @@ class CurvePointServiceUpdateTest {
    	    }
 
    	// *******************************************************************	
-    
+
     
     }
     
 	// *******************************************************************	   
+
+	
+    @DisplayName("ERROR UPDATE CURVEPOINT for non existing CURVEPOINT data"
+    		+ " - Given a non existing CURVEPOINT,"
+    		+ " when UPDATE CURVEPOINTaction request,"
+    		+ " then CURVEPOINT entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetCurvePointByIdNonExistingCurvePointData() throws Exception {
+
+    	when(curvePointRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> curvePointService.updateCurvePoint(5, curvePointUpdatedDTO));
+	}
+    
+	// *******************************************************************	  
+
 }
