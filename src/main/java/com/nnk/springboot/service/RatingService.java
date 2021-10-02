@@ -44,12 +44,18 @@ public class RatingService implements IRatingService {
 		List<Rating> ratings = ratingRepository
         		.findAll();
 
+		log.info("Request: RatingService.ratingRepository.findAll()"
+				+ " - ListSize: {} ratings", ratings.size());
 
         for (Rating rating : ratings) {
             RatingDTO ratingDTO = ratingMapper
             		.toRatingDTO(rating);
             ratingList.add(ratingDTO);
         }
+
+        log.info("Request: ratingList.add(ratingDTO)"
+        		+ " after ratingMapper.toRatingDTO(rating)"
+				+ " - ListSize: {} ratings", ratingList.size());
 
         return ratingList;
     }
