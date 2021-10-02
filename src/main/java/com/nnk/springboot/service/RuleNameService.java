@@ -1,7 +1,9 @@
 package com.nnk.springboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.util.RuleNameMapper;
@@ -27,10 +29,21 @@ public class RuleNameService implements IRuleNameService {
 	// *******************************************************************	
 
 	@Override
-	public List<RuleNameDTO> getAllRuleName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	   	public List<RuleNameDTO> getAllRuleName() {
+
+        List<RuleNameDTO> ruleNameList = new ArrayList<>();
+
+		List<RuleName> ruleNames = ruleNameRepository.findAll();
+
+
+        for (RuleName ruleName : ruleNames) {
+            RuleNameDTO ruleNameDTO = ruleNameMapper
+            		.toRuleNameDTO(ruleName);
+            ruleNameList.add(ruleNameDTO);
+        }
+
+        return ruleNameList;
+    }
 
 
 	// *******************************************************************	
