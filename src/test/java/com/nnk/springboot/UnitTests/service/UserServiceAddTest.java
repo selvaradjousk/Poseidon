@@ -180,7 +180,7 @@ class UserServiceAddTest {
  		+ " - Given a new User,"
  		+ " when ADD USER action request,"
  		+ " then USER added should be added and same as test record")
- public void testAddNewPersonReturnResultMatch() {
+ public void testAddNewUserReturnResultMatch() {
 			
 
 	        UserDTO userSaved = userService

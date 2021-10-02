@@ -197,7 +197,7 @@ class UserServiceUpdateTest {
 	 		+ " - Given a existing User,"
 	 		+ " when UPDATE USER action request,"
 	 		+ " then USER added should be added and same as test record")
-	 public void testAddNewPersonReturnResultMatch() {
+	 public void testAddNewUserReturnResultMatch() {
 				
 	
 	     UserDTO userUpdated = userService

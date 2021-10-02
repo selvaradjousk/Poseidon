@@ -178,7 +178,7 @@ class TradeServiceUpdateTest {
     		+ " - Given a new Trade,"
     		+ " when UPDATE TRADE action request,"
     		+ " then TRADE updateed should be updateed and same as test record")
-    public void testUpdateExistingPersonReturnResultMatch() {
+    public void testUpdateExistingTradeReturnResultMatch() {
    			
 
    	        TradeDTO tradeSaved = tradeService.updateTrade(2, tradeUpdatedDTO);
@@ -200,7 +200,7 @@ class TradeServiceUpdateTest {
     		+ " then USER entry should respond"
     		+ " with Data Not Found Exception")
 	@Test
-	public void testGetUserByIdNonExistingUserData() throws Exception {
+	public void testGetTradeByIdNonExistingTradeData() throws Exception {
 
     	when(tradeRepository
     			.findById(anyInt()))

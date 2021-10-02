@@ -10,4 +10,6 @@ public interface IBidListService {
 
 	BidListDTO getBidListById(final int bidListId);
 
+	BidListDTO addBidList(final BidListDTO bidList);
+
 }
