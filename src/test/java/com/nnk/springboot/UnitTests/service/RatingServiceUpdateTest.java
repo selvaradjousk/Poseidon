@@ -168,13 +168,32 @@ class RatingServiceUpdateTest {
     public void testUpdateExistingRatingNotNullCheck() {
 		
 
-        RatingDTO ratingSaved = ratingService.updateRating(2, ratingUpdatedDTO);
+        RatingDTO ratingSaved = ratingService
+        		.updateRating(2, ratingUpdatedDTO);
 
         assertNotNull(ratingSaved);
     }
 
 	// *******************************************************************			
     
+
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new Rating,"
+    		+ " when UPDATE RATING action request,"
+    		+ " then RATING updateed should be updateed and same as test record")
+    public void testUpdateExistingRatingReturnResultMatch() {
+   			
+
+   	        RatingDTO ratingSaved = ratingService
+   	        		.updateRating(2, ratingUpdatedDTO);
+
+   	        assertEquals(ratingUpdatedDTO.toString(), ratingSaved.toString());
+   	        assertThat(ratingSaved).usingRecursiveComparison().isEqualTo(ratingUpdatedDTO);
+   	    }
+
+   	// *******************************************************************	
     
   }
 
