@@ -107,12 +107,25 @@ public class RuleNameService implements IRuleNameService {
 	// *******************************************************************	
 
 	@Override
-	public RuleNameDTO updateRuleName(
-			int ruleNameId,
-			RuleNameDTO ruleName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public RuleNameDTO updateRuleName(
+    		final int ruleNameId,
+    		final RuleNameDTO ruleNameDTO) {
+
+        ruleNameRepository.findById(ruleNameId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID not FOUND"));
+
+        RuleName ruleNameToUpdate = ruleNameMapper
+        		.toRuleName(ruleNameDTO);
+
+        ruleNameToUpdate.setId(ruleNameId);
+
+        RuleName ruleNameUpdated = ruleNameRepository
+        		.save(ruleNameToUpdate);
+
+        return ruleNameMapper
+        		.toRuleNameDTO(ruleNameUpdated);
+    }
 
 
 	// *******************************************************************	
