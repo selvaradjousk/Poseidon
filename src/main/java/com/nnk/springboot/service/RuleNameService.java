@@ -111,9 +111,21 @@ public class RuleNameService implements IRuleNameService {
     		final int ruleNameId,
     		final RuleNameDTO ruleNameDTO) {
 
-        ruleNameRepository.findById(ruleNameId)
+
+        log.info("Request: RuleName to UPDATE requested  "
+        		+ "ID: {} & Description: {} ",
+        		ruleNameId, ruleNameDTO.getDescription());
+
+
+		ruleNameRepository.findById(ruleNameId)
         	.orElseThrow(() ->
                 new DataNotFoundException("ID not FOUND"));
+
+
+        log.info("Request: RuleName to UPDATE FOUND  "
+        		+ "Name: {} & Description: {} ",
+        		ruleNameId, ruleNameDTO.getDescription());
+
 
         RuleName ruleNameToUpdate = ruleNameMapper
         		.toRuleName(ruleNameDTO);
@@ -122,6 +134,11 @@ public class RuleNameService implements IRuleNameService {
 
         RuleName ruleNameUpdated = ruleNameRepository
         		.save(ruleNameToUpdate);
+
+        log.info("Request: RuleName UPDATEED  "
+        		+ "Name: {} & Description: {} ",
+        		ruleNameId, ruleNameUpdated.getDescription());
+
 
         return ruleNameMapper
         		.toRuleNameDTO(ruleNameUpdated);
