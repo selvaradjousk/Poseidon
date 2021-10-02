@@ -42,9 +42,9 @@ class BidListServiceGetListTest {
     
     private ObjectMapper objectMapper;
 	
-    private static BidListDTO testBidListDTO1, testBidListDTO2, bidListUpdatedDTO;
+    private static BidListDTO testBidListDTO1, testBidListDTO2;
     
-    private static BidList testBidList1, testBidList2, bidListUpdated;
+    private static BidList testBidList1, testBidList2;
     
     private static List<BidListDTO> BidListDTOList;
     
@@ -67,14 +67,7 @@ class BidListServiceGetListTest {
         		.type("Type2")
         		.bidQuantity(20.0)
         		.build();
-        
-        bidListUpdatedDTO = BidListDTO.builder()
-        		.bidListId(2)
-        		.account("Account updated")
-        		.type("Type updated")
-        		.bidQuantity(50.0)
-        		.build();
-                
+                 
         BidListDTOList = Arrays.asList(testBidListDTO1, testBidListDTO2);   
         
         testBidList1 = BidList.builder()
@@ -89,13 +82,6 @@ class BidListServiceGetListTest {
         		.account("Account2")
         		.type("Type2")
         		.bidQuantity(20.0)
-        		.build();
-        
-        bidListUpdated = BidList.builder()
-        		.bidListId(2)
-        		.account("Account updated")
-        		.type("Type updated")
-        		.bidQuantity(50.0)
         		.build();
             
         BidListList = Arrays.asList(testBidList1, testBidList2);   

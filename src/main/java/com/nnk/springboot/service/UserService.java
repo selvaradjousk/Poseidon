@@ -53,7 +53,7 @@ public class UserService implements IUserService {
 		List<UserDTO> userList = new ArrayList<>();
 
 		log.info("Request: UserService.userRepository.findAll()"
-				+ " - ListSize: {} users", users.size());		
+				+ " - ListSize: {} users", users.size());
 
         if (users.isEmpty()) {
 
@@ -69,7 +69,7 @@ public class UserService implements IUserService {
 
         log.info("Request: userList.add(userDTO)"
         		+ " after userMapper.toUserDTO(user)"
-				+ " - ListSize: {} users", userList.size());	
+				+ " - ListSize: {} users", userList.size());
 
         return userList;
 	    }

@@ -43,7 +43,8 @@ public class BidListService implements IBidListService {
     	List<BidList> bidLists = bidListRepository
         		.findAll();
         
-
+		log.info("Request: BidListService.bitListRepository.findAll()"
+				+ " - ListSize: {} BidLists",bidLists.size());
 
         for (BidList bidList : bidLists) {
             BidListDTO bidListDTO = bidListMapper
@@ -51,6 +52,10 @@ public class BidListService implements IBidListService {
             
             bidListList.add(bidListDTO);
         }
+
+        log.info("Request: bidListList.add(bidListDTO)"
+        		+ " after bidListMapper.toBidListDTO(user)"
+				+ " - ListSize: {} bidLists", bidListList.size());
 
         return bidListList;
     }
