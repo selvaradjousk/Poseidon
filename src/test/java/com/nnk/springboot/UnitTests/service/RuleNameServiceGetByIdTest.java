@@ -133,7 +133,23 @@ class RuleNameServiceGetByIdTest {
 	    }
 
 	// ******************************************************************		
-	   
+
+    
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a existing RuleName,"
+    		+ " when GET RULENAME By ID action request,"
+    		+ " then RULENAME ID same as test record")
+    public void testGetRuleNameByIdReturnResultMatch() {
+			
+    	RuleNameDTO result = ruleNameService
+    			.getRuleNameById(1);
+
+    	assertEquals(result, testRuleNameDTO1);
+	    assertThat(result).usingRecursiveComparison().isEqualTo(testRuleNameDTO1);
+	    assertEquals("RuleName1", result.getName());
+	    assertEquals("Description1", result.getDescription());
+    }  	   
   }
 
   
