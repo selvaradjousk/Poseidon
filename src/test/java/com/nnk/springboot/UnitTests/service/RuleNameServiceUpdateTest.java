@@ -203,10 +203,28 @@ class RuleNameServiceUpdateTest {
    	    }
 
    	// *******************************************************************	
-    
+ 
  
   }
 
+	
+    @DisplayName("ERROR UPDATE RULENAME for non existing RULENAME data"
+    		+ " - Given a non existing RULENAME,"
+    		+ " when UPDATE RULENAMEaction request,"
+    		+ " then RULENAME entry should respond"
+    		+ " with Data Not Found Exception")
+	@Test
+	public void testGetRuleNameByIdNonExistingRuleNameData() throws Exception {
 
+    	when(ruleNameRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> ruleNameService.updateRuleName(5, ruleNameUpdatedDTO));
+	}
+    
+	// *******************************************************************	 
 	   
 }
