@@ -69,8 +69,7 @@ class RatingServiceGetByIdTest {
         		.fitchRating("FitchRating1")
         		.orderNumber(1)
         		.build();
-        
-       
+
     }
   
     // ***********************************************************************************
