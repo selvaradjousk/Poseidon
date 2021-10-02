@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,10 +87,20 @@ public class CurvePointService implements ICurvePointService {
 
 
 	@Override
-	public CurvePointDTO addCurvePoint(CurvePointDTO curvePoint) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public CurvePointDTO addCurvePoint(final CurvePointDTO curvePointDTO) {
+
+
+        CurvePoint curvePointToAdd = curvePointMapper
+        		.toCurvePoint(curvePointDTO);
+
+        curvePointToAdd.setCreationDate(LocalDateTime.now());
+
+        CurvePoint curvePointAdded = curvePointRepository
+        		.save(curvePointToAdd);
+
+        return curvePointMapper
+        		.toCurvePointDTO(curvePointAdded);
+    }
 
     // ******************************************************************
 
