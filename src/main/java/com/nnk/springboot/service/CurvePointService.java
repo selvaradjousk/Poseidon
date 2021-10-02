@@ -155,12 +155,22 @@ public class CurvePointService implements ICurvePointService {
     public void deleteCurvePoint(final int curvePointId) {
 
 
+		log.info("Request: CurvePointToDelete ID => {}",
+				curvePointId);
+
         curvePointRepository.findById(curvePointId)
         	.orElseThrow(() ->
                 new DataNotFoundException("ID NOT FOUND"));
 
+		log.info("Request: CurvePointToDelete ID => {} FOUND",
+				curvePointId);
+
         curvePointRepository.deleteById(curvePointId);
-    }
+
+		log.info("Request: CurvePointToDelete ID => {} DELETED",
+				curvePointId);
+
+	}
 
 	// ******************************************************************
 
