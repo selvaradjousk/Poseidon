@@ -68,12 +68,16 @@ public class RuleNameService implements IRuleNameService {
     public RuleNameDTO getRuleNameById(final int ruleNameId) {
 
 
-        RuleName ruleName = ruleNameRepository
+        RuleName ruleNameById = ruleNameRepository
         		.findById(ruleNameId)
         		.orElseThrow(() ->
                 new DataNotFoundException("ID Not Found"));
 
-        return ruleNameMapper.toRuleNameDTO(ruleName);
+        log.info("Request: ruleNameRepository.findById(ruleNameId)"
+        		+ "Name: {} & Description: {} ",
+        		ruleNameById.getName(), ruleNameById.getDescription());
+
+        return ruleNameMapper.toRuleNameDTO(ruleNameById);
     }
 
 
