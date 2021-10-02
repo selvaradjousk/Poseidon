@@ -94,6 +94,7 @@ class CurvePointServiceGetListTest {
         @BeforeEach
         public void init() {
         	
+        	// GIVEN
             when(CurvePointRepository
             		.findAll())
             .thenReturn(CurvePointList);
@@ -118,7 +119,6 @@ class CurvePointServiceGetListTest {
         @Test
         public void testGetCurvePointsListExecutionOrderCheck() throws Exception {
    	
-           // GIVEN
 
            // WHEN
            CurvePointService.getAllCurvePoint();
@@ -136,7 +136,29 @@ class CurvePointServiceGetListTest {
         }
    	
         
-      	// *******************************************************************	
+        
+       	// *******************************************************************	
+           
+           @DisplayName("Check Check <NotNull>"
+           		+ " - Given a CurvePoint List,"
+           		+ " when Get CurvePoint List action request,"
+           		+ " then returns CurvePointslist not null")    
+           @Test
+           public void testGetCurvePointsListNotNullCheck() throws Exception {
+      	
 
+              // WHEN
+              List<CurvePointDTO> result = CurvePointService.getAllCurvePoint();
+              
+              // THEN
+              assertNotNull(result);
+          
+           }
+           
+   
+         // *******************************************************************	          
+    
+
+        
     } 
 }
