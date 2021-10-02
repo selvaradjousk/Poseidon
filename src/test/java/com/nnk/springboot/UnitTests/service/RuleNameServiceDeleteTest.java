@@ -97,6 +97,26 @@ class RuleNameServiceDeleteTest {
     
 	}
 
+
+	// *******************************************************************	
+	
+    @DisplayName("Check <Exception>"
+		+ "GIVEN a RuleName not exist "
+		+ "WHEN Requested DELETE RuleName "
+		+ "THEN throws Exception")	    
+	@Test
+	public void testDeleteRuleNameNotExists() throws Exception {
+
+    	when(ruleNameRepository
+    			.findById(anyInt()))
+    	.thenReturn(java.util.Optional.empty());
+    
+    	// WHEN // THEN
+    	assertThrows(DataNotFoundException.class, ()
+        		-> ruleNameService.deleteRuleName(anyInt()));
+	} 
+
+	// *******************************************************************	
 	
 
 }
