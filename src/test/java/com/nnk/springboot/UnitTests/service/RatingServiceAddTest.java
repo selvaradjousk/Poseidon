@@ -150,10 +150,29 @@ class RatingServiceAddTest {
 
         assertNotNull(ratingSaved);
     }
+
+
+	// *******************************************************************			
+    
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new Rating,"
+    		+ " when ADD RATING action request,"
+    		+ " then RATING added should be added and same as test record")
+    public void testAddNewPersonReturnResultMatch() {
+   			
+
+   	        RatingDTO ratingSaved = ratingService.addRating(ratingToAddDTO);
+
+   	        assertEquals(ratingToAddDTO.toString(), ratingSaved.toString());
+   	        assertThat(ratingSaved).usingRecursiveComparison().isEqualTo(ratingToAddDTO);
+   	    }
     
     }
     
    	// *******************************************************************	
+
+
 
 
 }
