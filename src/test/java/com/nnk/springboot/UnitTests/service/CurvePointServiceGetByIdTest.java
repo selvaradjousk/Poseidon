@@ -125,7 +125,26 @@ class CurvePointServiceGetByIdTest {
 	        assertNotNull(result);
 	    }
 
-	// ******************************************************************		
+	// *******************************************************************	
+ 
+    
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a existing CurvePoint,"
+    		+ " when GET CURVEPOINT By ID action request,"
+    		+ " then CURVEPOINT ID same as test record")
+    public void testAddNewPersonReturnResultMatch() {
+			
+    	CurvePointDTO result = curvePointService
+    			.getCurvePointById(1);
+
+    	assertEquals(result, testCurvePointDTO1);
+	    assertThat(result).usingRecursiveComparison().isEqualTo(testCurvePointDTO1);
+	    assertEquals(testCurvePointDTO1.getValue(), result.getValue());
+	    assertEquals(testCurvePointDTO1.getCurveId(), result.getCurveId());
+    }  
+    
+    // ******************************************************************		
 	   
   }
 
