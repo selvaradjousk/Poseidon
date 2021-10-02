@@ -148,7 +148,8 @@ class CurvePointServiceGetListTest {
       	
 
               // WHEN
-              List<CurvePointDTO> result = CurvePointService.getAllCurvePoint();
+              List<CurvePointDTO> result = CurvePointService
+            		  .getAllCurvePoint();
               
               // THEN
               assertNotNull(result);
@@ -159,6 +160,28 @@ class CurvePointServiceGetListTest {
          // *******************************************************************	          
     
 
+           
+           @DisplayName("Check <Validate> match of both same record instance "
+           		+ " - Given a CurvePoint List,"
+           		+ " when Get CurvePoint List action request,"
+           		+ " then CurvePoint added should be added and same as test record")   
+           @Test
+           public void testGetCurvePointsListResultMatchCheck() throws Exception {
+      	
+              // WHEN
+              List<CurvePointDTO> result = CurvePointService
+            		  .getAllCurvePoint();
+              
+              // THEN
+              assertEquals(CurvePointDTOList, result);
+          
+           }
+      	
+           
+         // *******************************************************************	
+             
+        
+        
         
     } 
 }
