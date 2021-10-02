@@ -157,7 +157,8 @@ class RatingServiceGetListTest {
              // GIVEN
 
              // WHEN
-             List<RatingDTO> result = RatingService.getAllRating();
+             List<RatingDTO> result = RatingService
+            		 .getAllRating();
              
              // THEN
              assertNotNull(result);
@@ -166,7 +167,28 @@ class RatingServiceGetListTest {
           
   
         // *******************************************************************	          
-   
+          
+          @DisplayName("Check <Validate> match of both same record instance "
+          		+ " - Given a Rating List,"
+          		+ " when Get Rating List action request,"
+          		+ " then Rating added should be added and same as test record")   
+          @Test
+          public void testGetRatingsListREsultMatchCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<RatingDTO> result = RatingService
+            		 .getAllRating();
+             
+             // THEN
+             assertEquals(RatingDTOList, result);
+         
+          }
+     	
+          
+        // *******************************************************************	
+  
                
     } 
    
