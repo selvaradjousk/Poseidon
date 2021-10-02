@@ -124,6 +124,11 @@ public class CurvePointService implements ICurvePointService {
         	.orElseThrow(() ->
                 new DataNotFoundException("ID NOT FOUND"));
 
+        log.info("Request: to UPDATE CURVEPOINT FOUND"
+        		+ "Curve ID: {} & Value: {} ",
+        		curvePointDTO.getCurveId(),
+        		curvePointDTO.getValue());
+
         CurvePoint curvePoint = curvePointMapper
         		.toCurvePoint(curvePointDTO);
 
@@ -133,6 +138,11 @@ public class CurvePointService implements ICurvePointService {
 
         CurvePoint curvePointUpdated = curvePointRepository
         		.save(curvePoint);
+
+        log.info("Request: CURVEPOINT ADDED SUCESSFULLY - "
+        		+ "Curve ID: {} & Value: {} ",
+        		curvePointUpdated.getCurveId(),
+        		curvePointUpdated.getValue());
 
         return curvePointMapper
         		.toCurvePointDTO(curvePointUpdated);
