@@ -1,9 +1,11 @@
 package com.nnk.springboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.repository.BidListRepository;
 import com.nnk.springboot.util.BidListMapper;
@@ -33,10 +35,25 @@ public class BidListService implements IBidListService {
 
 
     @Override
-	public List<BidListDTO> getAllBidList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public List<BidListDTO> getAllBidList() {
+
+
+        List<BidListDTO> bidListList = new ArrayList<>();
+
+    	List<BidList> bidLists = bidListRepository
+        		.findAll();
+        
+
+
+        for (BidList bidList : bidLists) {
+            BidListDTO bidListDTO = bidListMapper
+            		.toBidListDTO(bidList);
+            
+            bidListList.add(bidListDTO);
+        }
+
+        return bidListList;
+    }
 
    	// *******************************************************************
 
