@@ -111,12 +111,6 @@ public class RuleNameService implements IRuleNameService {
     		final int ruleNameId,
     		final RuleNameDTO ruleNameDTO) {
 
-
-        log.info("Request: RuleName to UPDATE requested  "
-        		+ "ID: {} & Description: {} ",
-        		ruleNameId, ruleNameDTO.getDescription());
-
-
 		ruleNameRepository.findById(ruleNameId)
         	.orElseThrow(() ->
                 new DataNotFoundException("ID not FOUND"));
@@ -148,10 +142,16 @@ public class RuleNameService implements IRuleNameService {
 	// *******************************************************************	
 
 	@Override
-	public void deleteRuleName(int ruleNameId) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void deleteRuleName(final int ruleNameId) {
+
+
+        ruleNameRepository.findById(ruleNameId)
+        	.orElseThrow(() ->
+                new DataNotFoundException("ID Not Found"));
+
+        ruleNameRepository.deleteById(ruleNameId);
+
+    }
 
 
 	// *******************************************************************	

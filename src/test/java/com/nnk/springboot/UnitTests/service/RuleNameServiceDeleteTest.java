@@ -96,6 +96,7 @@ class RuleNameServiceDeleteTest {
 	       verify(ruleNameRepository, times(1)).deleteById(anyInt());
     
 	}
-   
+
+	
 
 }
