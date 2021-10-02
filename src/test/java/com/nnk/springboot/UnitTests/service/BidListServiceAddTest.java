@@ -148,6 +148,23 @@ class BidListServiceAddTest {
 
 	// *******************************************************************			
        
+
+    @Test
+    @DisplayName("Check <Validate> match of both same record instance "
+    		+ " - Given a new BidList,"
+    		+ " when ADD BIDLIST action request,"
+    		+ " then BIDLIST added should be added and same as test record")
+    public void testAddNewBidListReturnResultMatch() {
+   			
+
+   	        BidListDTO bidListSaved = bidListService
+   	        		.addBidList(bidListToAddDTO);
+
+   	        assertEquals(bidListToAddDTO.toString(), bidListSaved.toString());
+   	        assertThat(bidListSaved).usingRecursiveComparison().isEqualTo(bidListToAddDTO);
+   	    }
+   
+   	// *******************************************************************	
     
     
     }
