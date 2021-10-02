@@ -152,5 +152,27 @@ class RuleNameServiceGetByIdTest {
     }  	   
   }
 
-  
+    
+	
+   	// *******************************************************************	
+   	
+       @DisplayName("ERROR GET EXISTING RULENAME by ID for non existing RULENAME data"
+       		+ " - Given a non existing RULENAME,"
+       		+ " when GET RULENAME By ID action request,"
+       		+ " then RULENAME entry should respond"
+       		+ " with Data Not Found Exception")
+   	@Test
+   	public void testGetRuleNameByIdNonExistingRuleNameData() throws Exception {
+
+       	when(ruleNameRepository
+       			.findById(anyInt()))
+       	.thenReturn(java.util.Optional.empty());
+       
+       	// WHEN // THEN
+       	assertThrows(DataNotFoundException.class, ()
+           		-> ruleNameService.getRuleNameById(1));
+   	}
+       
+   	// *******************************************************************	  
+
 }
