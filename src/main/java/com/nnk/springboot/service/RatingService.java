@@ -1,9 +1,11 @@
 package com.nnk.springboot.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.util.RatingMapper;
@@ -34,10 +36,23 @@ public class RatingService implements IRatingService {
 
 
 	@Override
-	public List<RatingDTO> getAllRating() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public List<RatingDTO> getAllRating() {
+
+
+        List<RatingDTO> ratingList = new ArrayList<>();
+
+		List<Rating> ratings = ratingRepository
+        		.findAll();
+
+
+        for (Rating rating : ratings) {
+            RatingDTO ratingDTO = ratingMapper
+            		.toRatingDTO(rating);
+            ratingList.add(ratingDTO);
+        }
+
+        return ratingList;
+    }
 
     // ******************************************************************
 
