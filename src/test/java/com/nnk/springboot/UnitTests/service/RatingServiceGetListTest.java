@@ -145,6 +145,28 @@ class RatingServiceGetListTest {
    	
         
       	// *******************************************************************	
+
+          
+          @DisplayName("Check Check <NotNull>"
+          		+ " - Given a Rating List,"
+          		+ " when Get Rating List action request,"
+          		+ " then returns Ratingslist not null")    
+          @Test
+          public void testGetRatingsListNotNullCheck() throws Exception {
+     	
+             // GIVEN
+
+             // WHEN
+             List<RatingDTO> result = RatingService.getAllRating();
+             
+             // THEN
+             assertNotNull(result);
+         
+          }
+          
+  
+        // *******************************************************************	          
+   
                
     } 
    
