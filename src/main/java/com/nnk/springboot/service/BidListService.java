@@ -117,6 +117,10 @@ public class BidListService implements IBidListService {
         		.orElseThrow(() ->
                 new DataNotFoundException("BidList ID Not FOUND"));
 
+        log.info("Request: to UPDATE BIDLIST "
+        		+ "BidList ID: {} & Account: {} ",
+        		bidListDTO.getBidListId(), bidListDTO.getAccount());
+
         BidList bidListToUpdate = bidListMapper
         		.toBidList(bidListDTO);
 
@@ -124,6 +128,11 @@ public class BidListService implements IBidListService {
 
         BidList bidListUpdated = bidListRepository
         		.save(bidListToUpdate);
+
+        log.info("Request: UPDATED BIDLIST SUCCESSFULLY "
+        		+ "Trade ID: {} & Account: {} ",
+        		bidListUpdated.getBidListId(),
+        		bidListUpdated.getAccount());
 
         return bidListMapper
         		.toBidListDTO(bidListUpdated);
