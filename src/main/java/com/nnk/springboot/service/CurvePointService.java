@@ -39,10 +39,13 @@ public class CurvePointService implements ICurvePointService {
 	@Override
     public List<CurvePointDTO> getAllCurvePoint() {
 
+        List<CurvePointDTO> curvePointList = new ArrayList<>();
+
         List<CurvePoint> curvePoints = curvePointRepository
         		.findAll();
 
-        List<CurvePointDTO> curvePointList = new ArrayList<>();
+		log.info("Request: CurevePointService.curevePointRepository.findAll()"
+				+ " - ListSize: {} curvePoints", curvePoints.size());
 
 
         for (CurvePoint curvePoint : curvePoints) {
@@ -51,6 +54,9 @@ public class CurvePointService implements ICurvePointService {
             curvePointList.add(curvePointDTO);
         }
 
+        log.info("Request: curvePointList.add(tradeDTO)"
+        		+ " after curvePointMapper.toCurevePointDTO(curvePoint)"
+				+ " - ListSize: {} curvePoints", curvePointList.size());
 
         return curvePointList;
     }
