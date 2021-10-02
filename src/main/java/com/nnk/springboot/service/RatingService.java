@@ -92,8 +92,19 @@ public class RatingService implements IRatingService {
         Rating ratingToAdd = ratingMapper
         		.toRating(ratingDTO);
 
+        log.info("Request: Rating to ADD"
+        		+ "rating FitchRating: {} & MoodysRating: {} ",
+        		ratingToAdd.getFitchRating(),
+        		ratingToAdd.getMoodysRating());
+
         Rating ratingAdded = ratingRepository
         		.save(ratingToAdd);
+
+
+        log.info("Request: Rating ADDED SUCCESFULLY"
+        		+ "rating FitchRating: {} & MoodysRating: {} ",
+        		ratingToAdd.getFitchRating(),
+        		ratingToAdd.getMoodysRating());
 
         return ratingMapper
         		.toRatingDTO(ratingAdded);
