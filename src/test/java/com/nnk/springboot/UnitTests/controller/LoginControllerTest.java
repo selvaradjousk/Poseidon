@@ -1,18 +1,16 @@
 package com.nnk.springboot.UnitTests.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,59 +18,85 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.nnk.springboot.controller.HomeController;
+import com.nnk.springboot.controller.LoginController;
+import com.nnk.springboot.repository.UserRepository;
+import com.nnk.springboot.service.UserService;
 
-@DisplayName("Controller <HOME> - UNIT TESTS")
+@DisplayName("Controller <LOGIN> - UNIT TESTS")
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(HomeController.class)
-class HomeControllerTest {
+@WebMvcTest(LoginController.class)
+class LoginControllerTest {
 
     @MockBean
+    private UserService userService;
+
+    @MockBean
+    private UserRepository userRepository;
+    
+    @MockBean
     private UserDetailsService userDetailsService;
+    
+//    @MockBean
+//    private MyUserDetailsService userDetailsService;
+
+    @MockBean
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private MockMvc mockMvc;
 
-
     @Autowired
     private WebApplicationContext context;
-    
-    
-    
+
+
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }    
+    }
     
- 
+    
 	// ********************************************************************
     
-    @DisplayName("HOME Url request"
-    		+ " - Given home url / request,"
-    		+ " when GET / or /home request,"
-    		+ " then return home page")	
+    @DisplayName("Login Url request"
+    		+ " - Given login url /login request,"
+    		+ " when GET /login request,"
+    		+ " then return login page")	
     @Test
     public void testHomePage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-        		.get("/"))
-                .andExpect(view().name("home"))
+        		.get("/login"))
+                .andExpect(view().name("login"))
                 .andExpect(status().isOk());
     }    
    
     
 
 	// ********************************************************************
-
+  
     
-    @DisplayName("HOME Admin Url request"
-    		+ " - Given adminHome url /admin/home request,"
-    		+ " when GET /admin/home request,"
-    		+ " then redirect to /bidList/list")	
+	// ********************************************************************
+    
+    @DisplayName("Error Url request"
+    		+ " - Given Error url /error request,"
+    		+ " when GET /error request,"
+    		+ " then return error page")	
     @Test
-    public void testAdminHomeRequest() throws Exception {
+    public void testError() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-        		.get("/admin/home"))
-                .andExpect(redirectedUrl("/bidList/list"));
-    }
+        		.get("/error"))
+                .andExpect(view().name("403"))
+                .andExpect(status().isOk());
+    }    
+   
+    
 
+	// ********************************************************************
+  
+        
+    
+    
+    
+    
+    
+    
 }

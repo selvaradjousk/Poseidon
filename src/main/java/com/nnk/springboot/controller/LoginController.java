@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
-@RequestMapping("app")
+//@RequestMapping("app")
 public class LoginController {
 
     @Autowired
@@ -28,13 +28,13 @@ public class LoginController {
     // ******************************************************************
     // what way article-details link to user list ???? Need clarity!!!!
     // ******************************************************************    
-    @GetMapping("secure/article-details")
-    public ModelAndView getAllUserArticles() {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("users", userRepository.findAll());
-        mav.setViewName("user/list");
-        return mav;
-    }
+//    @GetMapping("secure/article-details")
+//    public ModelAndView getAllUserArticles() {
+//        ModelAndView mav = new ModelAndView();
+//        mav.addObject("users", userRepository.findAll());
+//        mav.setViewName("user/list");
+//        return mav;
+//    }
 
     @GetMapping("error")
     public ModelAndView error() {

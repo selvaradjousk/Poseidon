@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+<meta charset="UTF-8">
+<title>Contact / Connections in PayMyBuddy</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/my.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+	<div class="container-outer">
+
+		<div class="container">
+			<div class="header">
+				<a href="#default" class="logo"><img alt="logo"
+					src="img/logo.png"></a>
+				<div class="header-right">
+					<a href="#" th:href="@{/home}">Home</a> <a href="#" 
+						th:href="@{/transaction}">Buddy-Transfer </a> <a href="#"
+						th:href="@{/profile}">Profile</a> <a href="#"
+						th:href="@{/contact}">Contact</a> <a href="#" class="active"
+						 th:href="@{/logout}">Log off</a>
+				</div>
+			</div>
+
+<!------ Include the above in your HEAD tag ---------->
+
+
+<div>
+<center>
+  </br> </br> </br> </br>
+  <div class="container-error">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="error-template">
+          <h1>
+            Oops!</h1>
+          <h2>
+            404 Not Found</h2>
+          <div class="error-details">
+            Sorry, an error has occured, Requested page not found!
+          </div>
+          <div class="error-actions">
+            <a th:href="@{/home}" class="btn btn-primary btn-lg">
+            <span class="glyphicon glyphicon-home"></span>
+              Take Me Home </a> <!-- th:href="@{/login}" -->
+                           <div class="error-details">
+            If the problem persist, Sign out and Sign In again!..
+          	</div>
+          	                          <div class="error-details" style="color:rgb(0, 101, 202); font-size:1.0em; font-weight: normal;">
+            Still struggling !!! ==> Contact Support line : contact@paymybuddy.com..
+          	</div>
+              
+            <a th:href="" class="btn btn-default btn-lg">
+              <span class="glyphicon glyphicon-envelope"></span>
+               Contact Support </a>
+          </div>
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+</center>
+</div>
+</body>
+
+</div>
+</html>
