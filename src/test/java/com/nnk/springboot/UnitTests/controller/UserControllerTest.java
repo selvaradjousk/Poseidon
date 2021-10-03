@@ -24,6 +24,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -122,9 +123,6 @@ class UserControllerTest {
 
     // ********************************************************************
 
-
-
-    
     @DisplayName(" Url request /user/validate - "
     		+ " - Given a User,"
     		+ " when POST /user/validate action request,"
@@ -152,5 +150,34 @@ class UserControllerTest {
 
     // ********************************************************************
 
+
+    @DisplayName(" Url request /user/validate - "
+    		+ " - Given a User - empty username,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns error & redirect /user/add page")    
+    @Test
+    public void testPostUserValidateEmptyUserName() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
         
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username", "")
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).addUser(any(UserDTO.class));
+    }
+
+    // ********************************************************************
+
+           
 }
