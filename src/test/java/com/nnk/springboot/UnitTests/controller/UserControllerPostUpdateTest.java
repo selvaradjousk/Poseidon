@@ -262,6 +262,41 @@ class UserControllerPostUpdateTest {
 
     // ********************************************************************
     
-    
+
+
+    @DisplayName("Url request /user/update/{id} - Password WithoutLowerCase- "
+    		+ " - Given a User - Password No WithoutLowerCase-,"
+    		+ " when POST /user/update/{id} action request,"
+    		+ " then returns error & redirect /user/update page")    
+    @Test
+    public void testPostUserUpdateWithPasswordWithoutLowerCase() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/update/1")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username",  testUserDTO1.getUsername())
+        .param("password", "PASSWORD&1")
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).updateUser(anyInt(), any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+              
+    }
+
+    // ********************************************************************
+ 
     
 }
