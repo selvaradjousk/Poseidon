@@ -37,7 +37,7 @@ import com.nnk.springboot.service.UserService;
 @DisplayName("Controller < USER > - UNIT TESTS")
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
-class UserControllerTest {
+class UserControllerPostUpdateTest {
 
 
     @MockBean
