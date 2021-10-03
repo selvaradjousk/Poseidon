@@ -1,6 +1,7 @@
 package com.nnk.springboot.controller;
 
-import com.nnk.springboot.domain.RuleName;
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import com.nnk.springboot.domain.RuleName;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Controller
 public class RuleNameController {
     // TODO: Inject RuleName service

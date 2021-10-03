@@ -1,7 +1,6 @@
 package com.nnk.springboot.controller;
 
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repository.UserRepository;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,8 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.repository.UserRepository;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Controller
 public class UserController {
     @Autowired

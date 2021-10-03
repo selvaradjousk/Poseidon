@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.nnk.springboot.repository.UserRepository;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @Controller
 @RequestMapping("app")
 public class LoginController {
