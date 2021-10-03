@@ -52,8 +52,8 @@ class UserControllerGetDeleteTest {
   	// ********************************************************************
 
     
-    @DisplayName(" Url request user/delete - "
-    		+ " - Given a User Delete,"
+    @DisplayName(" Url request user/delete/{id} valid id- "
+    		+ " - Given a user/delete/{id} valid id, "
     		+ " when GET user/delete action request,"
     		+ " then returns delete page")    
     @Test
@@ -71,5 +71,23 @@ class UserControllerGetDeleteTest {
     }
 
     // ********************************************************************
- 
+
+    
+    @DisplayName(" Url request user/delete/{id} invalid id- "
+    		+ " - Given a User user/delete/{id} invalid id,"
+    		+ " when GET user/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetUserDeleteNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(userService, times(0)).deleteUser(1);
+    }
+
+    // ********************************************************************
+   
+   
 }
