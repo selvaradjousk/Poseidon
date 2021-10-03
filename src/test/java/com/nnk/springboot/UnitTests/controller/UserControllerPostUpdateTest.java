@@ -1,8 +1,8 @@
 package com.nnk.springboot.UnitTests.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,7 +34,7 @@ import com.nnk.springboot.controller.UserController;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.service.UserService;
 
-@DisplayName("Controller < USER > - UNIT TESTS")
+@DisplayName("Controller < USER POST UPDATE> - UNIT TESTS")
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
 class UserControllerPostUpdateTest {
@@ -54,7 +54,7 @@ class UserControllerPostUpdateTest {
 
     private ObjectMapper objectMapper;
 	
-    private static UserDTO testUserDTO1, testUserDTO2;
+    private static UserDTO testUserDTO1, testUserDTO2,testUserDTOupdate;
  
     private static List<UserDTO> userDTOList;
 
@@ -77,62 +77,31 @@ class UserControllerPostUpdateTest {
         		.build();
 
         userDTOList = Arrays.asList(testUserDTO1, testUserDTO2); 
+ 
+        
+        testUserDTOupdate = UserDTO.builder()
+        		.username("Username")
+        		.password("Password&1")
+        		.fullname("Fullname")
+        		.role("USER")
+        		.build();
         
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
     
-  	// ********************************************************************
-
-    
-    @DisplayName(" Url request /user/list - "
-    		+ " - Given a User List,"
-    		+ " when GET /user/list action request,"
-    		+ " then returns userslist page")    
-    @Test
-    public void testGetUserList() throws Exception {
-        when(userService.getAllUser()).thenReturn(userDTOList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
-                .andExpect(model().attributeExists("users"))
-                .andExpect(model().size(1))
-                .andExpect(view().name("user/list"))
-                .andExpect(status().isOk());
-
-        verify(userService, times(1)).getAllUser();
-        assertEquals(2, (userService.getAllUser()).size());
-        assertThat(userDTOList).usingRecursiveComparison().isEqualTo(userService.getAllUser()).toString();
-    }
 
     // ********************************************************************
 
-
-    
-    @DisplayName(" Url request /user/add - "
+    @DisplayName(" Url request /user/update/{id} - "
     		+ " - Given a User,"
-    		+ " when GET /user/add action request,"
-    		+ " then returns user ADD page")    
+    		+ " when POST /user/update/{id} action request,"
+    		+ " then returns redirect /user/update/{id} page")    
     @Test
-    public void testGetUserAdd() throws Exception {
-//    	 when(userService.getAllUser()).thenReturn(userDTOList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/add"))
-                .andExpect(model().attributeExists("userDTO"))
-                .andExpect(model().size(1))
-                .andExpect(view().name("user/add"))
-                .andExpect(status().isOk());
-
-    }
-
-    // ********************************************************************
-
-    @DisplayName(" Url request /user/validate - "
-    		+ " - Given a User,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns redirect /user/validate page")    
-    @Test
-    public void testPostUserValidate() throws Exception {
+    public void testPostUserUpdate() throws Exception {
     	when(userService.getAllUser()).thenReturn(userDTOList);
-    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        when(userService.updateUser(1, testUserDTO1)).thenReturn(testUserDTOupdate);
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/update/1")
         .sessionAttr("userDTO", testUserDTO1)
         .param("username", testUserDTO1.getUsername())
         .param("password", testUserDTO1.getPassword())
@@ -145,530 +114,13 @@ class UserControllerPostUpdateTest {
         .andExpect(status().is(302));
 
         verify(userService, times(1)).getAllUser();
-        verify(userService, times(1)).addUser(any(UserDTO.class));
-    }
-
-    // ********************************************************************
-
-
-    @DisplayName(" Url request /user/validate - "
-    		+ " - Given a User - empty username,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateEmptyUserName() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username", "")
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Username is mandatory");
+        verify(userService, times(1)).updateUser(anyInt(), any(UserDTO.class));
     }
 
     // ********************************************************************
 
 
 
-    @DisplayName("Url request /user/validate - UserName  Non Alphanumeric characters - "
-    		+ " - Given a User - username with Non Alphanumeric characters,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithUserNameHavingSymbols() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username", "Username!&&&")
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-        
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
-    }
-
-    // ********************************************************************
-
-
-    @DisplayName("Url request /user/validate - Empty Password - "
-    		+ " - Given a User - Empty Password,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordEmpty() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-        
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Password is mandatory");
-
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - Password No capital Letters- "
-    		+ " - Given a User - Password No capital Letters-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordyWithoutCapitalLetters() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "password&1")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-        
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-        
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - Password WithoutSmallLetters- "
-    		+ " - Given a User - Password No WithoutSmallLetters-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordWithoutSmallLetters() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "PASSWORD&1")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-        
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-              
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - Password WithoutAlphabets- "
-    		+ " - Given a User - Password No WithoutAlphabets-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordWithoutAlphabets() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "!!!!!!!!!!!!&1")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-       
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - Password No NumericValues- "
-    		+ " - Given a User - Password No NumericValues-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordWithOutNumberValues() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "Password&!!!")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-       
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - Password < 8 Characters- "
-    		+ " - Given a User - Password  < 8 Characters-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordLessThan8Characters() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "P&!1")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-       
-    }
-
-    // ********************************************************************
-
-
-    @DisplayName("Url request /user/validate - Password No Symbols- "
-    		+ " - Given a User - Password No Symbols-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithPasswordWithoutSymbols() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", "passwordddd1")
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
-       
-    }
-
-    // ********************************************************************
-
-
-
-    @DisplayName("Url request /user/validate - FullNameEmpty- "
-    		+ " - Given a User - FullNameEmpty-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithFullNameEmpty() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", "")
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-
-
-    @DisplayName("Url request /user/validate - FullNameWithSymbol- "
-    		+ " - Given a User - FullNameWithSymbol-,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithFullNameWithSymbol() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", "Fullname&&&&")
-        .param("role", testUserDTO1.getRole()))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-
-
-    @DisplayName("Url request /user/validate - RoleEmpty- "
-    		+ " - Given a User - RoleEmpty -,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithRoleEmpty() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", ""))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphabets and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-
-    @DisplayName("Url request /user/validate - RoleWithNumericValues- "
-    		+ " - Given a User - RoleWithNumericValues -,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithRoleWithNumericValues() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", "Role123455"))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphabets and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-
-    @DisplayName("Url request /user/validate - Role WithoutAlphabets- "
-    		+ " - Given a User - Role WithoutAlphabets -,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithRoleWithoutAlphabets() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", "12345555555"))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphabets and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-  
-    
-    
-
-    @DisplayName("Url request /user/validate - Role WithSymbols- "
-    		+ " - Given a User - Role WithSymbols -,"
-    		+ " when POST /user/validate action request,"
-    		+ " then returns error & redirect /user/add page")    
-    @Test
-    public void testPostUserValidateWithRoleWithSymbols() throws Exception {
-    	when(userService.getAllUser()).thenReturn(userDTOList);
-//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
-        .sessionAttr("userDTO", testUserDTO1)
-        .param("username",  testUserDTO1.getUsername())
-        .param("password", testUserDTO1.getPassword())
-        .param("fullname", testUserDTO1.getFullname())
-        .param("role", "Role!!&&&"))
-        .andExpect(model().hasErrors())
-        .andExpect(model().size(1))
-        .andExpect(model().attributeExists("userDTO"))
-        .andExpect(view().name("user/add"))
-        .andExpect(status().is(200))
-        .andReturn();
-
-        verify(userService, times(0)).getAllUser();
-        verify(userService, times(0)).addUser(any(UserDTO.class));
-
-        String content = result.getResponse().getContentAsString();
-        
-        assertThat(content).contains("Should be alphabets and minimum more than 2 characters");
-       
-    }
-
-    // ********************************************************************
-   
     
     
 }
