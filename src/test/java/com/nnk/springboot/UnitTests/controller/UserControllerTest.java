@@ -2,10 +2,12 @@ package com.nnk.springboot.UnitTests.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -104,8 +106,8 @@ class UserControllerTest {
 
     
     @DisplayName(" Url request /user/add - "
-    		+ " - Given a User List,"
-    		+ " when GET /user/list action request,"
+    		+ " - Given a User,"
+    		+ " when GET /user/add action request,"
     		+ " then returns user ADD page")    
     @Test
     public void testGetUserAdd() throws Exception {
@@ -120,5 +122,35 @@ class UserControllerTest {
 
     // ********************************************************************
 
-         
+
+
+    
+    @DisplayName(" Url request /user/validate - "
+    		+ " - Given a User,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns redirect /user/validate page")    
+    @Test
+    public void testPostUserValidate() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username", testUserDTO1.getUsername())
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasNoErrors())
+        .andExpect(model().size(0))
+        .andExpect(model().attributeDoesNotExist("userDTO"))
+        .andExpect(redirectedUrl("/user/list"))
+        .andExpect(status().is(302));
+
+        verify(userService, times(1)).getAllUser();
+        verify(userService, times(1)).addUser(any(UserDTO.class));
+    }
+
+    // ********************************************************************
+
+        
 }
