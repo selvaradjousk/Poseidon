@@ -175,6 +175,10 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Username is mandatory");
     }
 
     // ********************************************************************
@@ -205,6 +209,11 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
     }
 
     // ********************************************************************
@@ -234,6 +243,12 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Password is mandatory");
+
     }
 
     // ********************************************************************
@@ -245,7 +260,7 @@ class UserControllerTest {
     		+ " when POST /user/validate action request,"
     		+ " then returns error & redirect /user/add page")    
     @Test
-    public void testPostUserValidateWithPasswordWithOnlyWithoutCapitalLetters() throws Exception {
+    public void testPostUserValidateWithPasswordyWithoutCapitalLetters() throws Exception {
     	when(userService.getAllUser()).thenReturn(userDTOList);
 //    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
         
@@ -264,6 +279,12 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+        
     }
 
     // ********************************************************************
@@ -275,7 +296,7 @@ class UserControllerTest {
     		+ " when POST /user/validate action request,"
     		+ " then returns error & redirect /user/add page")    
     @Test
-    public void testPostUserValidateWithPasswordWithOnlyWithoutSmallLetters() throws Exception {
+    public void testPostUserValidateWithPasswordWithoutSmallLetters() throws Exception {
     	when(userService.getAllUser()).thenReturn(userDTOList);
 //    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
         
@@ -294,6 +315,12 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+              
     }
 
     // ********************************************************************
@@ -305,7 +332,7 @@ class UserControllerTest {
     		+ " when POST /user/validate action request,"
     		+ " then returns error & redirect /user/add page")    
     @Test
-    public void testPostUserValidateWithPasswordWithOnlyWithoutAlphabets() throws Exception {
+    public void testPostUserValidateWithPasswordWithoutAlphabets() throws Exception {
     	when(userService.getAllUser()).thenReturn(userDTOList);
 //    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
         
@@ -324,6 +351,11 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+       
     }
 
     // ********************************************************************
@@ -354,6 +386,11 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+       
     }
 
     // ********************************************************************
@@ -384,9 +421,82 @@ class UserControllerTest {
 
         verify(userService, times(0)).getAllUser();
         verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+       
     }
 
     // ********************************************************************
 
-           
+
+    @DisplayName("Url request /user/validate - Password No Symbols- "
+    		+ " - Given a User - Password No Symbols-,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns error & redirect /user/add page")    
+    @Test
+    public void testPostUserValidateWithPasswordWithoutSymbols() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username",  testUserDTO1.getUsername())
+        .param("password", "passwordddd1")
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The password must contain at least 8 characters that includes any one uppercase letter, any one number and any one symbol ( &amp; ~ # @ = * - + € ^ $ £ µ % )");
+       
+    }
+
+    // ********************************************************************
+
+
+
+    @DisplayName("Url request /user/validate - FullNameEmpty- "
+    		+ " - Given a User - FullNameEmpty-,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns error & redirect /user/add page")    
+    @Test
+    public void testPostUserValidateWithFullNameEmpty() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username",  testUserDTO1.getUsername())
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", "")
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).addUser(any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+       
+    }
+
+    // ********************************************************************
+        
 }
