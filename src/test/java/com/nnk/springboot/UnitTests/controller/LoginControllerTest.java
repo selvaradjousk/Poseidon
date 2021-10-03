@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.nnk.springboot.controller.LoginController;
-import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 
 @DisplayName("Controller <LOGIN> - UNIT TESTS")
@@ -30,8 +29,8 @@ class LoginControllerTest {
     @MockBean
     private UserService userService;
 
-    @MockBean
-    private UserRepository userRepository;
+//    @MockBean
+//    private UserRepository userRepository;
     
     @MockBean
     private UserDetailsService userDetailsService;
@@ -72,9 +71,7 @@ class LoginControllerTest {
     
 
 	// ********************************************************************
-  
-    
-	// ********************************************************************
+ 
     
     @DisplayName("Error Url request"
     		+ " - Given Error url /error request,"
@@ -92,11 +89,6 @@ class LoginControllerTest {
 
 	// ********************************************************************
   
-        
-    
-    
-    
-    
     
     
 }
