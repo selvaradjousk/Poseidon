@@ -154,6 +154,43 @@ class UserControllerPostUpdateTest {
     // ********************************************************************
 
 
+
+
+    @DisplayName("Url request /user/update/{id} - UserName  Non Alphanumeric characters - "
+    		+ " - Given a User - username with Non Alphanumeric characters,"
+    		+ " when POST /user/update/{id} action request,"
+    		+ " then returns error & redirect /user/update page")    
+    @Test
+    public void testPostUserUpdateWithUserNameHavingSymbols() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/update/1")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username", "Username!&&&")
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).updateUser(anyInt(), any(UserDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
+
+    
+    
     
     
 }
