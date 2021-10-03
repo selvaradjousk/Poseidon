@@ -540,5 +540,38 @@ class UserControllerPostUpdateTest {
 
     // ********************************************************************
 
+    @DisplayName("Url request /user/update/{id} - RoleWithNumericValues- "
+    		+ " - Given a User - RoleWithNumericValues -,"
+    		+ " when POST /user/update/{id} action request,"
+    		+ " then returns error & redirect /user/update page")    
+    @Test
+    public void testPostUserUpdateWithRoleWithNumericValues() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/update/1")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username",  testUserDTO1.getUsername())
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", "Role123455"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).updateUser(anyInt(), any(UserDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphabets and minimum more than 2 characters");
+       
+    }
+
+    // ********************************************************************
+
     
 }
