@@ -30,7 +30,7 @@ import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.UserService;
 import com.nnk.springboot.util.UserMapper;
 
-@DisplayName("User Service GetUser List - UNIT TESTS")
+@DisplayName("Service ==> User Get List - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class UserServiceGetListTest {
 

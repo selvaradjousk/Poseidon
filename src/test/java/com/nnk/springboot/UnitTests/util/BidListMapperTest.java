@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListDTO;
 import com.nnk.springboot.util.BidListMapper;
 
-@DisplayName("BidList Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> BidList - UNIT TESTS")
 class BidListMapperTest {
 
 	

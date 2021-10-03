@@ -127,7 +127,7 @@ public class UserController {
 //        user.setPassword(encoder.encode(user.getPassword()));
 //        user.setId(id);
 
-        try {
+//        try {
         	userService.updateUser(id, userDTO);
 
 			model.addAttribute(
@@ -135,13 +135,13 @@ public class UserController {
 					userService.getAllUser());
 
         	return "redirect:/user/list";
-
-        } catch (DataAlreadyExistsException e){
-
-        	model.addAttribute("error", e);
-
-        	return "/user/update";
-        }
+//
+//        } catch (DataAlreadyExistsException e){
+//
+//        	model.addAttribute("error", e);
+//
+//        	return "/user/update";
+//        }
     }
 
 

@@ -24,7 +24,7 @@ import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.TradeService;
 import com.nnk.springboot.util.TradeMapper;
 
-@DisplayName("Trade Service DELETE - UNIT TESTS")
+@DisplayName("Service ==> Trade DELETE - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class TradeServiceDeleteTest {
 

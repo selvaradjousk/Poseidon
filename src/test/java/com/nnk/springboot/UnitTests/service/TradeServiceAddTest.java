@@ -26,7 +26,7 @@ import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.TradeService;
 import com.nnk.springboot.util.TradeMapper;
 
-@DisplayName("Trade Service Add Trade- UNIT TESTS")
+@DisplayName("Service ==> Trade Add - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class TradeServiceAddTest {
 

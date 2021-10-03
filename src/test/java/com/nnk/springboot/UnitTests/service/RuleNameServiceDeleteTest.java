@@ -24,7 +24,7 @@ import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.service.RuleNameService;
 import com.nnk.springboot.util.RuleNameMapper;
 
-@DisplayName("RuleName Service DELETE - UNIT TESTS")
+@DisplayName("Service ==> RuleName DELETE - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RuleNameServiceDeleteTest {
 

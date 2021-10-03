@@ -29,7 +29,7 @@ import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.service.CurvePointService;
 import com.nnk.springboot.util.CurvePointMapper;
 
-@DisplayName("CurvePoint Service GET BY ID - UNIT TESTS")
+@DisplayName("Service ==> CurvePoint GET BY ID - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class CurvePointServiceGetByIdTest {
 

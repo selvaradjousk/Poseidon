@@ -29,7 +29,7 @@ import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.service.RatingService;
 import com.nnk.springboot.util.RatingMapper;
 
-@DisplayName("Rating Service GET BY ID - UNIT TESTS")
+@DisplayName("Service ==> Rating GET BY ID - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RatingServiceGetByIdTest {
 

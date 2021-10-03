@@ -24,7 +24,7 @@ import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.service.CurvePointService;
 import com.nnk.springboot.util.CurvePointMapper;
 
-@DisplayName("CurvePoint Service DELETE - UNIT TESTS")
+@DisplayName("Service ==> CurvePoint DELETE - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class CurvePointServiceDeleteTest {
 

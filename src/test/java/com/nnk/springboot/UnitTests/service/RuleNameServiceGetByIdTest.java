@@ -29,7 +29,7 @@ import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.service.RuleNameService;
 import com.nnk.springboot.util.RuleNameMapper;
 
-@DisplayName("RuleName Service GET BY ID - UNIT TESTS")
+@DisplayName("Service ==> RuleName GET BY ID - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RuleNameServiceGetByIdTest {
 

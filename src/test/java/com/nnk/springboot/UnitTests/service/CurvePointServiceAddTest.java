@@ -26,7 +26,7 @@ import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.service.CurvePointService;
 import com.nnk.springboot.util.CurvePointMapper;
 
-@DisplayName("CurvePoint Service Add CurvePoint- UNIT TESTS")
+@DisplayName("Service ==> CurvePoint Add - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class CurvePointServiceAddTest {
 

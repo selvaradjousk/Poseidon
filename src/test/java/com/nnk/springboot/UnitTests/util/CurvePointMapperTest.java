@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.util.CurvePointMapper;
 
-@DisplayName("CurvePoint Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> CurvePoint - UNIT TESTS")
 class CurvePointMapperTest {
 
 	CurvePointDTO curvePointDTO = new CurvePointDTO(10, 10d, 30d);

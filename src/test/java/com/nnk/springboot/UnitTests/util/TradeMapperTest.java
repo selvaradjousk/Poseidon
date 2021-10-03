@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.util.TradeMapper;
 
-@DisplayName("Trade Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> Trade - UNIT TESTS")
 class TradeMapperTest {
 
 	TradeDTO tradeDTO = new TradeDTO("Trade Account", "Type", 10.0);

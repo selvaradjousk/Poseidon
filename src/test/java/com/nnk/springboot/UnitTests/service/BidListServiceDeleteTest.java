@@ -24,7 +24,7 @@ import com.nnk.springboot.repository.BidListRepository;
 import com.nnk.springboot.service.BidListService;
 import com.nnk.springboot.util.BidListMapper;
 
-@DisplayName("BidList Service DELETE - UNIT TESTS")
+@DisplayName("Service ==>  BidList DELETE - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class BidListServiceDeleteTest {
 

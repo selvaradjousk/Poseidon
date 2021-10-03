@@ -26,7 +26,7 @@ import com.nnk.springboot.repository.BidListRepository;
 import com.nnk.springboot.service.BidListService;
 import com.nnk.springboot.util.BidListMapper;
 
-@DisplayName("BidList Service Add BidList- UNIT TESTS")
+@DisplayName("Service ==>  BidList Add- UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class BidListServiceAddTest {
 

@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.util.UserMapper;
 
-@DisplayName("User Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> User - UNIT TESTS")
 class UserMapperTest {
 
 	User user = new User("Username", "Password", "Fullname", "Role");

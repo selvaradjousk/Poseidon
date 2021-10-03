@@ -24,7 +24,7 @@ import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.service.RatingService;
 import com.nnk.springboot.util.RatingMapper;
 
-@DisplayName("Rating Service DELETE - UNIT TESTS")
+@DisplayName("Service ==> Rating DELETE - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RatingServiceDeleteTest {
 

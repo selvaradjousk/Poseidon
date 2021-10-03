@@ -26,7 +26,7 @@ import com.nnk.springboot.repository.RuleNameRepository;
 import com.nnk.springboot.service.RuleNameService;
 import com.nnk.springboot.util.RuleNameMapper;
 
-@DisplayName("RuleName Service Add RuleName- UNIT TESTS")
+@DisplayName("Service ==> RuleName Add - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RuleNameServiceAddTest {
 

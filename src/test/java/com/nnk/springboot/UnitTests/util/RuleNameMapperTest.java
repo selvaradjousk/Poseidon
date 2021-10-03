@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.util.RuleNameMapper;
 
-@DisplayName("RuleName Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> RuleName - UNIT TESTS")
 class RuleNameMapperTest {
 
 	RuleNameDTO ruleNameDTO = new RuleNameDTO("Rule Name", "Description", "Json", "Template", "SQL", "SQL Part");

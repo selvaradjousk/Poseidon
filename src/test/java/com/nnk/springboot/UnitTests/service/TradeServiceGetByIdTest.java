@@ -29,7 +29,7 @@ import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.TradeService;
 import com.nnk.springboot.util.TradeMapper;
 
-@DisplayName("Trade Service GET BY ID - UNIT TESTS")
+@DisplayName("Service ==> Trade GET BY ID - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class TradeServiceGetByIdTest {
 

@@ -29,7 +29,7 @@ import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.service.RatingService;
 import com.nnk.springboot.util.RatingMapper;
 
-@DisplayName("Rating Service Update Rating- UNIT TESTS")
+@DisplayName("Service ==> Rating Update - UNIT TESTS")
 @ExtendWith(MockitoExtension.class)
 class RatingServiceUpdateTest {
 

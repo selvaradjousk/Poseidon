@@ -10,7 +10,7 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.util.RatingMapper;
 
-@DisplayName("Rating Mapper - UNIT TESTS")
+@DisplayName("Mapper ==> Rating - UNIT TESTS")
 class RatingMapperTest {
 
 	Rating rating = new Rating("Moodys Rating", "Sand PRating", "Fitch Rating", 10);
