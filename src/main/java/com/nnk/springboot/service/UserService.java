@@ -3,6 +3,7 @@ package com.nnk.springboot.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +20,26 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class UserService implements IUserService {
 
+	@Autowired
 	private final UserRepository userRepository;
 
+	@Autowired
 	private final UserMapper userMapper;
 
-	private final BCryptPasswordEncoder passwordEncoder;
+	BCryptPasswordEncoder passwordEncoder;
 
 
 
 
 	// *******************************************************************	
 
-
+	
 	public UserService(
 			final UserRepository userRepository,
-			final UserMapper userMapper,
-			final BCryptPasswordEncoder passwordEncoder) {
+			final UserMapper userMapper) {
 
 		this.userRepository = userRepository;
 		this.userMapper = userMapper;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 
@@ -126,6 +127,8 @@ public class UserService implements IUserService {
 		log.info("Request: UserPassword Before Encoding => {}",
 				userToAdd.getPassword());
 
+		passwordEncoder = new BCryptPasswordEncoder();
+
 		userToAdd.setPassword(passwordEncoder
         		.encode(userDTO.getPassword()));
 
@@ -169,6 +172,8 @@ public class UserService implements IUserService {
 
         userToUpdate.setId(userId);
         
+        passwordEncoder = new BCryptPasswordEncoder();
+
         userToUpdate.setPassword(passwordEncoder
         		.encode(userDTO.getPassword()));
         

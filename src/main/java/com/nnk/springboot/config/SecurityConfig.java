@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     	log.info("auth.userDetailsService(userDetailsService) - function called");
 
-    	auth.userDetailsService(userDetailsService);
+    	auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
     	log.info("auth.userDetailsService(userDetailsService) - function executed");
 

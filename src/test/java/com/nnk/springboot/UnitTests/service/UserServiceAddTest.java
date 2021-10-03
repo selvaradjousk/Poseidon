@@ -108,9 +108,9 @@ class UserServiceAddTest {
     		   .toUser(any(UserDTO.class)))
        .thenReturn(new User("Username", "Password&1", "Fullname", "USER"));
        
-       when(passwordEncoder
-    		   .encode(anyString()))
-       .thenReturn("PasswordEncoded");
+//       when(passwordEncoder
+//    		   .encode(anyString()))
+//       .thenReturn("PasswordEncoded");
        
        when(userRepository
     		   .save(any(User.class)))
@@ -138,14 +138,15 @@ class UserServiceAddTest {
                 "Fullname",
                 "USER"));
 
-        InOrder inOrder = inOrder(userRepository, passwordEncoder, userMapper);
+//        InOrder inOrder = inOrder(userRepository, passwordEncoder, userMapper);
+        InOrder inOrder = inOrder(userRepository, userMapper);
         inOrder.verify(userRepository).findByUsername(anyString());
-        inOrder.verify(passwordEncoder).encode(anyString());
+//        inOrder.verify(passwordEncoder).encode(anyString());
         inOrder.verify(userRepository).save(any(User.class));
         inOrder.verify(userMapper).toUserDTO(any(User.class));
         
         verify(userRepository, times(1)).findByUsername(anyString());
-        verify(passwordEncoder, times(1)).encode(anyString());
+//        verify(passwordEncoder, times(1)).encode(anyString());
         verify(userRepository, times(1)).save(any(User.class));
         verify(userMapper, times(1)).toUserDTO(any(User.class));
     }
