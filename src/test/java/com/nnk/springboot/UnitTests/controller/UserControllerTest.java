@@ -267,5 +267,36 @@ class UserControllerTest {
     }
 
     // ********************************************************************
-          
+
+
+
+    @DisplayName("Url request /user/validate - Password WithoutSmallLetters- "
+    		+ " - Given a User - Password No WithoutSmallLetters-,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns error & redirect /user/add page")    
+    @Test
+    public void testPostUserValidateWithPasswordWithOnlyWithoutSmallLetters() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username",  testUserDTO1.getUsername())
+        .param("password", "PASSWORD&1")
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).addUser(any(UserDTO.class));
+    }
+
+    // ********************************************************************
+
+           
 }
