@@ -179,5 +179,34 @@ class UserControllerTest {
 
     // ********************************************************************
 
-           
+
+
+    @DisplayName("Url request /user/validate - UserName  Non Alphanumeric characters - "
+    		+ " - Given a User - username with Non Alphanumeric characters,"
+    		+ " when POST /user/validate action request,"
+    		+ " then returns error & redirect /user/add page")    
+    @Test
+    public void testPostUserValidateWithUserNameHavingSymbols() throws Exception {
+    	when(userService.getAllUser()).thenReturn(userDTOList);
+//    	when(userService.addUser(any(UserDTO.class))).thenReturn(any(UserDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/user/validate")
+        .sessionAttr("userDTO", testUserDTO1)
+        .param("username", "Username!&&&")
+        .param("password", testUserDTO1.getPassword())
+        .param("fullname", testUserDTO1.getFullname())
+        .param("role", testUserDTO1.getRole()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("userDTO"))
+        .andExpect(view().name("user/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(userService, times(0)).getAllUser();
+        verify(userService, times(0)).addUser(any(UserDTO.class));
+    }
+
+    // ********************************************************************
+        
 }
