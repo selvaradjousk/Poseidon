@@ -25,6 +25,9 @@ public class LoginController {
         return mav;
     }
 
+    // ******************************************************************
+    // what way article-details link to user list ???? Need clarity!!!!
+    // ******************************************************************    
     @GetMapping("secure/article-details")
     public ModelAndView getAllUserArticles() {
         ModelAndView mav = new ModelAndView();
