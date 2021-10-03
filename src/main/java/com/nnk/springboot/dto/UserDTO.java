@@ -52,7 +52,7 @@ public class UserDTO {
 
 	@NotBlank(message = "Role is mandatory")
     @Pattern(regexp = GeneralConstraints.PATTERN_ALPHABETCHARACTERS,
-	message = "Should be alphanumeric and minimum more than 2 characters")
+	message = "Should be alphabets and minimum more than 2 characters")
 	private String role;
 
 
