@@ -81,10 +81,10 @@ class UserControllerTest {
   	// ********************************************************************
 
     
-    @DisplayName(" Url request /listist - "
+    @DisplayName(" Url request /user/list - "
     		+ " - Given a User List,"
-    		+ " when Get /list action request,"
-    		+ " then returns userslist")    
+    		+ " when GET /user/list action request,"
+    		+ " then returns userslist page")    
     @Test
     public void testGetUserList() throws Exception {
         when(userService.getAllUser()).thenReturn(userDTOList);
@@ -101,5 +101,24 @@ class UserControllerTest {
 
     // ********************************************************************
 
-       
+
+    
+    @DisplayName(" Url request /user/add - "
+    		+ " - Given a User List,"
+    		+ " when GET /user/list action request,"
+    		+ " then returns user ADD page")    
+    @Test
+    public void testGetUserAdd() throws Exception {
+//    	 when(userService.getAllUser()).thenReturn(userDTOList);
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/add"))
+                .andExpect(model().attributeExists("userDTO"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("user/add"))
+                .andExpect(status().isOk());
+
+    }
+
+    // ********************************************************************
+
+         
 }
