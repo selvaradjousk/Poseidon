@@ -48,6 +48,10 @@ public class TradeController {
     @GetMapping("/trade/add")
     public String addUser(TradeDTO tradeDTO) {
 
+    	log.info("Request GET for trade/add received");
+
+    	log.info("Request GET for trade/add reponse SUCCESS(200 OK)");
+
     	return "trade/add";
     }
 
