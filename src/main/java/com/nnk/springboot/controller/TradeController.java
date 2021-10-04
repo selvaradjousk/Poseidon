@@ -32,7 +32,12 @@ public class TradeController {
 	@RequestMapping("/trade/list")
     public String home(Model model)
     {
-        model.addAttribute("trades", tradeService.getAllTrade());
+
+    	log.info("Request GET for trade/list received");
+
+		model.addAttribute("trades", tradeService.getAllTrade());
+
+    	log.info("Request GET for trade/list reponse SUCCESS");
 
         return "trade/list";
     }

@@ -42,11 +42,16 @@ public class UserController {
     @GetMapping("/list")
     public String home(Model model)
     {
-        model.addAttribute(
+
+    	log.info("Request GET for user/list received");
+
+    	model.addAttribute(
         		"users",
         		userService.getAllUser());
 
-        return "user/list";
+    	log.info("Request GET for user/list reponse SUCCESS");
+
+    	return "user/list";
     }
 
     
