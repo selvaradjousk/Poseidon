@@ -70,10 +70,14 @@ public class BidListController {
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
+       	log.info("Request GET bidList/update/{id} received - ID: {}", id);
+
         BidListDTO bidListDTO = bidListService
         		.getBidListById(id);
 
         model.addAttribute("bidListDTO", bidListDTO);
+
+    	log.info("Request GET for bidList/update{id} SUCCESS");
 
     	return "bidList/update";
     }
