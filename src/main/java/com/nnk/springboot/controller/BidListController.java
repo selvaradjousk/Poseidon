@@ -87,7 +87,11 @@ public class BidListController {
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
+       	log.info("Request DELETE bidList/delete/{id} received - ID: {}", id);
+
     	bidListService.deleteBidList(id);
+
+    	log.info("Request DELETE for bidList/delete/{} SUCCESS", id);
 
     	return "redirect:/bidList/list";
     }
