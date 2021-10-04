@@ -1,14 +1,13 @@
 package com.nnk.springboot.UnitTests.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,14 +28,13 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.TradeController;
-import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.service.TradeService;
 
-@DisplayName("Controller < TRADE > GET LIST - UNIT TESTS")
+@DisplayName("Controller < TRADE > POST UPDATE - UNIT TESTS")
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(TradeController.class)
-class TradeControllerGetListTest {
+class TradeControllerPostUpdateTest {
 
 
     @MockBean
@@ -44,7 +42,7 @@ class TradeControllerGetListTest {
 
     @MockBean
     private UserDetailsService userDetailsService;
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -53,16 +51,13 @@ class TradeControllerGetListTest {
 
     private ObjectMapper objectMapper;
 	
-    private static TradeDTO testTradeDTO1, testTradeDTO2;
-    
-    private static Trade testTrade1, testTrade2;
-    
+    private static TradeDTO testTradeDTO1, testTradeDTO2, tradeUpdateDTO;
+ 
     private static List<TradeDTO> tradeDTOList;
-    
-    private static List<Trade> tradeList;
 
     @BeforeEach
     public void setUp() {
+
         objectMapper = new ObjectMapper();
         testTradeDTO1 = TradeDTO.builder()
         		.tradeId(1)
@@ -78,66 +73,47 @@ class TradeControllerGetListTest {
         		.buyQuantity(10.0)
         		.build();
         
-        tradeDTOList = Arrays.asList(testTradeDTO1, testTradeDTO2);   
-        
-        testTrade1 = Trade.builder()
+        tradeDTOList = Arrays.asList(testTradeDTO1, testTradeDTO2); 
+
+       tradeUpdateDTO = TradeDTO.builder()
+        		.tradeId(2)
         		.account("Account")
         		.type("Type")
         		.buyQuantity(10.0)
         		.build();
         
-        testTrade2 = Trade.builder()
-        		.account("Account")
-        		.type("Type")
-        		.buyQuantity(10.0)
-        		.build();
-        
-        tradeList = Arrays.asList(testTrade1, testTrade2);   
-    
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
     
   	// ********************************************************************
 
-    
-    @DisplayName(" Url request /trade/list - "
-    		+ " - Given a Trade List,"
-    		+ " when GET /trade/list action request,"
-    		+ " then returns tradeslist page")
-    @Test
-    public void testGetTradeList() throws Exception {
-        when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/trade/list"))
-                .andExpect(model().attributeExists("trades"))
-                .andExpect(model().size(1))
-                .andExpect(view().name("trade/list"))
-                .andExpect(status().isOk());
 
-        verify(tradeService, times(1)).getAllTrade();
-        assertEquals(2, (tradeService.getAllTrade()).size());
-        assertThat(tradeDTOList).usingRecursiveComparison().isEqualTo(tradeService.getAllTrade()).toString();
+    @DisplayName(" Url request /trade/update/{id} - VALID "
+    		+ " - Given a Trade,"
+    		+ " when POST /trade/update/{id} action request,"
+    		+ " then returns redirect /trade/update/{id} page")    
+    @Test
+    public void testPostTradeUpdate() throws Exception {
+
+    	when(tradeService
+    			.updateTrade(anyInt(), any(TradeDTO.class)))
+    	.thenReturn(any(TradeDTO.class));
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/trade/update/1")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasNoErrors())
+        .andExpect(model().size(0))
+        .andExpect(model().attributeDoesNotExist("tradeDTO"))
+        .andExpect(redirectedUrl("/trade/list"))
+        .andExpect(status().is(302));
+
+        verify(tradeService, times(1)).updateTrade(anyInt(), any(TradeDTO.class));
     }
 
     // ********************************************************************
-
-    
-    @DisplayName(" Url request /trade/list - "
-    		+ " - Given a Trade List,"
-    		+ " when GET /trade/list action request,"
-    		+ " then returns tradeslist page")    
-    @Test
-    public void testGetTradeListNull() throws Exception {
-        when(tradeService.getAllTrade()).thenReturn(null);
-        mockMvc.perform(MockMvcRequestBuilders.get("/trade/list"))
-//                .andExpect(model().attributeExists("trades"))
-                .andExpect(model().size(1))
-                .andExpect(view().name("trade/list"))
-                .andExpect(status().isOk());
-
-        verify(tradeService, times(1)).getAllTrade();
-        assertNull((tradeService.getAllTrade()));
-    }
-
-    // ********************************************************************
+ 
     
 }

@@ -86,9 +86,13 @@ public class TradeController {
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
+       	log.info("Request GET trade/update/{id} received - ID: {}", id);
+
     	TradeDTO tradeDTO = tradeService.getTradeById(id);
 
     	model.addAttribute("tradeDTO", tradeDTO);
+
+    	log.info("Request GET for trade/update{id} SUCCESS");
 
     	return "trade/update";
     }
