@@ -218,6 +218,41 @@ class TradeControllerPostUpdateTest {
     }
 
     // ********************************************************************
+
+
+    @DisplayName("Url request /trade/update/{id} - TypeEmpty - "
+    		+ " - Given a Trade - TypeEmpty,"
+    		+ " when POST /trade/update/{id} action request,"
+    		+ " then returns error & redirect /trade/update/{id} page")    
+    @Test
+    public void testPostTradeUpdateWithTypeEmpty() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.updateTrade(anyInt(), any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/update/1")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", "")
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).updateTrade(anyInt(), any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("Type is mandatory");
+      assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+
+    }
+
+    // ********************************************************************
  
     
 }
