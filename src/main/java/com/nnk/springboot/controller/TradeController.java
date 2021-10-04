@@ -63,12 +63,17 @@ public class TradeController {
     		final BindingResult result,
     		final Model model) {
 
+    	log.info("Request post for trade/validate received");
 
-        if (result.hasErrors()) {
+    	if (result.hasErrors()) {
 
-            return "trade/add";
+        	log.error("Request post for trade/validate Error(s) {} ", result);
+
+    		return "trade/add";
         }
         tradeService.addTrade(tradeDTO);
+
+       	log.info("Request post for trade/validate SUCCESS");
 
         return "redirect:/trade/list";
     }
