@@ -101,9 +101,23 @@ public class BidListController {
     // ********************************************************************
 
     @PostMapping("/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidListDTO bidList,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+    public String updateBid(
+    		@PathVariable("id") final Integer id,
+    		@Valid final BidListDTO bidListDTO,
+    		final BindingResult result,
+    		final Model model) {
+
+        if(result.hasErrors()){
+
+            model.addAttribute("bidListDTO", bidListDTO);
+
+            model.addAttribute(id);
+
+            return "bidList/update";
+        }
+
+        bidListService.updateBidList(id, bidListDTO);
+
         return "redirect:/bidList/list";
     }
 
