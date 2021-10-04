@@ -106,15 +106,21 @@ public class TradeController {
     		final BindingResult result,
     		final Model model) {
 
+       	log.info("Request POST trade/update/{id} received - ID: {}", id);
+
         if (result.hasErrors()) {
 
             model.addAttribute("tradeDTO", tradeDTO);
             model.addAttribute(id);
 
+        	log.error("Request post for trade/update{id} Error(s) {} ", result);
+
         	return "trade/update";
         }
 
         tradeService.updateTrade(id, tradeDTO);
+
+    	log.info("Request POST for trade/update{id} SUCCESS");
 
         return "redirect:/trade/list";
     }
