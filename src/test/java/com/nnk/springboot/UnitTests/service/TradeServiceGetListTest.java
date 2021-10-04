@@ -46,9 +46,9 @@ class TradeServiceGetListTest {
     
     private static Trade testTrade1, testTrade2;
     
-    private static List<TradeDTO> TradeDTOList;
+    private static List<TradeDTO> tradeDTOList;
     
-    private static List<Trade> TradeList;
+    private static List<Trade> tradeList;
 
     
     @BeforeEach
@@ -66,7 +66,7 @@ class TradeServiceGetListTest {
         		.buyQuantity(10.0)
         		.build();
         
-        TradeDTOList = Arrays.asList(testTradeDTO1, testTradeDTO2);   
+        tradeDTOList = Arrays.asList(testTradeDTO1, testTradeDTO2);   
         
         testTrade1 = Trade.builder()
         		.account("Account")
@@ -80,7 +80,7 @@ class TradeServiceGetListTest {
         		.buyQuantity(10.0)
         		.build();
         
-        TradeList = Arrays.asList(testTrade1, testTrade2);   
+        tradeList = Arrays.asList(testTrade1, testTrade2);   
         
     }
     
@@ -96,7 +96,7 @@ class TradeServiceGetListTest {
         	
             when(TradeRepository
             		.findAll())
-            .thenReturn(TradeList);
+            .thenReturn(tradeList);
             
             when(TradeMapper
             		.toTradeDTO(testTrade1))
@@ -172,7 +172,7 @@ class TradeServiceGetListTest {
              List<TradeDTO> result = TradeService.getAllTrade();
              
              // THEN
-             assertEquals(TradeDTOList, result);
+             assertEquals(tradeDTOList, result);
          
           }
      	
@@ -194,7 +194,7 @@ class TradeServiceGetListTest {
              List<TradeDTO> result = TradeService.getAllTrade();
              
              // THEN
-             assertEquals(TradeDTOList.size(), result.size());
+             assertEquals(tradeDTOList.size(), result.size());
              assertEquals(2, result.size());
 
           }    
