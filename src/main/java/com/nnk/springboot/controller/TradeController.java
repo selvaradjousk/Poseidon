@@ -100,9 +100,22 @@ public class TradeController {
     // ********************************************************************
 
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Trade and return Trade list
+    public String updateTrade(
+    		@PathVariable("id") final Integer id,
+    		@Valid final TradeDTO tradeDTO,
+    		final BindingResult result,
+    		final Model model) {
+
+        if (result.hasErrors()) {
+
+            model.addAttribute("tradeDTO", tradeDTO);
+            model.addAttribute(id);
+
+        	return "trade/update";
+        }
+
+        tradeService.updateTrade(id, tradeDTO);
+
         return "redirect:/trade/list";
     }
 

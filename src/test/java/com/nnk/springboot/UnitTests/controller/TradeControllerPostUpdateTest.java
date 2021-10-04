@@ -97,7 +97,7 @@ class TradeControllerPostUpdateTest {
 
     	when(tradeService
     			.updateTrade(anyInt(), any(TradeDTO.class)))
-    	.thenReturn(any(TradeDTO.class));
+    	.thenReturn(tradeUpdateDTO);
         
         mockMvc.perform(MockMvcRequestBuilders.post("/trade/update/1")
         .sessionAttr("tradeDTO", testTradeDTO1)
