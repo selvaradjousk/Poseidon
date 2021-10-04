@@ -87,4 +87,22 @@ class BidListControllerGetDeleteTest {
     // ********************************************************************
 
 
+    
+    @DisplayName(" Url request bidList/delete/{id} invalid id- "
+    		+ " - Given a BidList bidList/delete/{id} invalid id,"
+    		+ " when GET bidList/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetBidListDeleteNull() throws Exception {
+    	when(bidListService.getBidListById(1)).thenReturn(testBidListDTO1);
+        mockMvc.perform(MockMvcRequestBuilders.get("/bidList/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(bidListService, times(0)).deleteBidList(1);
+    }
+
+    // ********************************************************************
+
 }
