@@ -351,6 +351,41 @@ class TradeControllerPostValidateTest {
 
     // ********************************************************************
 
-  
+
+
+    @DisplayName("Url request /trade/validate - BuyQuantityMoreThan10Digits - "
+    		+ " - Given a Trade - BuyQuantityMoreThan10Digits -,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithBuyQuantityMoreThan10Digits() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", "100000000000000.00"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Invalid number input value : Maximum digits allowed are 10 and with 2 decimals fractions");
+              
+    }
+
+    // ********************************************************************
+
+    
     
 }
