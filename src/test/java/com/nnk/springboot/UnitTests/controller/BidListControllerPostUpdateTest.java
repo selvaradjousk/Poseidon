@@ -118,5 +118,38 @@ class BidListControllerPostUpdateTest {
 
     // ********************************************************************
 
+
+    @DisplayName(" Url request /bidList/update/{id} - EmptyAccount "
+    		+ " - Given a BidList - EmptyAccount,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateEmptyAccount() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.updateBidList(anyInt(), any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).updateBidList(anyInt(), any(BidListDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
+
     
 }
