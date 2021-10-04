@@ -1,7 +1,6 @@
 package com.nnk.springboot.UnitTests.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
@@ -151,6 +150,41 @@ class TradeControllerPostUpdateTest {
     }
 
     // ********************************************************************
+
+
+
+    @DisplayName(" Url request /trade/update/{id} - AccountMoreThanThiryCharacters "
+    		+ " - Given a Trade - AccountMoreThanThiryCharacters,"
+    		+ " when POST /trade/update/{id} action request,"
+    		+ " then returns error & redirect /trade/update/{id} page")    
+    @Test
+    public void testPostTradeUpdateWithAccountMoreThanThiryCharacters() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.updateTrade(anyInt(), any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/update/1")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", "AccountAccountAccountAccountAccount")
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).updateTrade(anyInt(), any(TradeDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+//        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("The maximum length for account should be 30 characters");
+    }
+
+    // ********************************************************************
+
  
     
 }
