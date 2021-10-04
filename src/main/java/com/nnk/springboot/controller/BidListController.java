@@ -63,12 +63,18 @@ public class BidListController {
     		final BindingResult result,
     		final Model model) {
 
+    	log.info("Request post for bidList/validate received");
 
     	if(result.hasErrors()){
-            return "bidList/add";
+
+        	log.error("Request post for bidList/validate Error(s) {} ", result);
+
+    		return "bidList/add";
         }
 
     	bidListService.addBidList(bidListDTO);
+
+       	log.info("Request post for bidList/validate SUCCESS");
 
         return "redirect:/bidList/list";
     }
