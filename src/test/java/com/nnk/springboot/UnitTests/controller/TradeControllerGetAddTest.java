@@ -19,17 +19,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nnk.springboot.controller.UserController;
-import com.nnk.springboot.service.UserService;
+import com.nnk.springboot.controller.TradeController;
+import com.nnk.springboot.service.TradeService;
 
-@DisplayName("Controller < USER > GET ADD - UNIT TESTS")
+@DisplayName("Controller < TRADE > GET ADD - UNIT TESTS")
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
-class UserControllerGetAddTest {
+@WebMvcTest(TradeController.class)
+class TradeControllerGetAddTest {
 
 
     @MockBean
-    private UserService userService;
+    private TradeService tradeService;
 
     @MockBean
     private UserDetailsService userDetailsService;
@@ -52,17 +52,17 @@ class UserControllerGetAddTest {
 
 
     
-    @DisplayName(" Url request /user/add - "
-    		+ " - Given a User,"
-    		+ " when GET /user/add action request,"
-    		+ " then returns user ADD page")    
+    @DisplayName(" Url request /trade/add - "
+    		+ " - Given a Trade,"
+    		+ " when GET /trade/add action request,"
+    		+ " then returns trade ADD page")    
     @Test
-    public void testGetUserAdd() throws Exception {
-//    	 when(userService.getAllUser()).thenReturn(userDTOList);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/add"))
-                .andExpect(model().attributeExists("userDTO"))
+    public void testGetTradeAdd() throws Exception {
+//    	 when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+        mockMvc.perform(MockMvcRequestBuilders.get("/trade/add"))
+                .andExpect(model().attributeExists("tradeDTO"))
                 .andExpect(model().size(1))
-                .andExpect(view().name("user/add"))
+                .andExpect(view().name("trade/add"))
                 .andExpect(status().isOk());
 
     }
