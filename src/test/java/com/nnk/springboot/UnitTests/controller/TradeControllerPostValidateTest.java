@@ -1,7 +1,6 @@
 package com.nnk.springboot.UnitTests.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -386,6 +385,41 @@ class TradeControllerPostValidateTest {
 
     // ********************************************************************
 
-    
+
+
+    @DisplayName("Url request /trade/validate - BuyQuantityWithSymbols - "
+    		+ " - Given a Trade - BuyQuantityWithSymbols -,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithBuyQuantityWithSymbols() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", "100000&!-."))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Failed to convert property value of type java.lang.String to required type java.lang.Double for property buyQuantity");
+              
+    }
+
+    // ********************************************************************
+
+        
     
 }
