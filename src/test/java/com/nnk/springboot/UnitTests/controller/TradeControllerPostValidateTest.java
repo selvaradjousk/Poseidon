@@ -214,6 +214,41 @@ class TradeControllerPostValidateTest {
 
 
 
+    @DisplayName("Url request /trade/validate - Type MoreThanThiryCharacters - "
+    		+ " - Given a Trade - Type MoreThanThiryCharacters,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithMoreThanThiryCharacters() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", "TypeTypeTypeTypeTypeTypeTypeType")
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("The maximum length for type should be 30 characters");
+
+    }
+
+    // ********************************************************************
+
+
+
     @DisplayName("Url request /trade/validate - TypeEmpty - "
     		+ " - Given a Trade - TypeEmpty,"
     		+ " when POST /trade/validate action request,"
@@ -247,7 +282,6 @@ class TradeControllerPostValidateTest {
     }
 
     // ********************************************************************
-
-    
+   
     
 }
