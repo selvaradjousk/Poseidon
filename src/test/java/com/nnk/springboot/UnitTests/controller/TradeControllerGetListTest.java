@@ -118,5 +118,24 @@ class TradeControllerGetListTest {
 
     // ********************************************************************
 
- 
+    
+    @DisplayName(" Url request /trade/list - "
+    		+ " - Given a Trade List,"
+    		+ " when GET /trade/list action request,"
+    		+ " then returns tradeslist page")    
+    @Test
+    public void testGetTradeListNull() throws Exception {
+        when(tradeService.getAllTrade()).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.get("/trade/list"))
+//                .andExpect(model().attributeExists("trades"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("trade/list"))
+                .andExpect(status().isOk());
+
+        verify(tradeService, times(1)).getAllTrade();
+        assertNull((tradeService.getAllTrade()));
+    }
+
+    // ********************************************************************
+    
 }
