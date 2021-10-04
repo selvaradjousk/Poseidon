@@ -60,6 +60,10 @@ public class UserController {
     @GetMapping("/add")
     public String addUser(UserDTO bid) {
 
+    	log.info("Request GET for user/add received");
+
+    	log.info("Request GET for user/add reponse SUCCESS(200 OK)");
+
     	return "user/add";
     }
     

@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
+@RequestMapping("/bidList")
 public class BidListController {
 
 	private final IBidListService bidListService;
@@ -30,7 +31,7 @@ public class BidListController {
 
     // ********************************************************************
 
-	@RequestMapping("/bidList/list")
+	@GetMapping("/list")
     public String home(final Model model)
     {
 
@@ -45,7 +46,7 @@ public class BidListController {
 
     // ********************************************************************
 
-    @GetMapping("/bidList/add")
+    @GetMapping("/add")
     public String addBidForm(BidListDTO bid) {
 
     	log.info("Request GET for bidList/add received");
@@ -57,7 +58,7 @@ public class BidListController {
 
     // ********************************************************************
 
-    @PostMapping("/bidList/validate")
+    @PostMapping("/validate")
     public String validate(@Valid BidListDTO bid, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return bid list
         return "bidList/add";
@@ -65,7 +66,7 @@ public class BidListController {
 
     // ********************************************************************
 
-    @GetMapping("/bidList/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
         return "bidList/update";
@@ -73,7 +74,7 @@ public class BidListController {
 
     // ********************************************************************
 
-    @PostMapping("/bidList/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidListDTO bidList,
                              BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
@@ -82,7 +83,7 @@ public class BidListController {
 
     // ********************************************************************
 
-    @GetMapping("/bidList/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
         return "redirect:/bidList/list";

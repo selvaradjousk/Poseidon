@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
+@RequestMapping("/trade")
 public class TradeController {
 
 	private final ITradeService tradeService;
@@ -30,7 +31,7 @@ public class TradeController {
 
     // ********************************************************************
 
-	@RequestMapping("/trade/list")
+	@GetMapping("/list")
     public String home(final Model model)
     {
 
@@ -45,7 +46,7 @@ public class TradeController {
 
     // ********************************************************************
 
-    @GetMapping("/trade/add")
+    @GetMapping("/add")
     public String addUser(final TradeDTO tradeDTO) {
 
     	log.info("Request GET for trade/add received");
@@ -57,7 +58,7 @@ public class TradeController {
 
     // ********************************************************************
 
-    @PostMapping("/trade/validate")
+    @PostMapping("/validate")
     public String validate(
     		@Valid final TradeDTO tradeDTO,
     		final BindingResult result,
@@ -81,7 +82,7 @@ public class TradeController {
 
     // ********************************************************************
 
-    @GetMapping("/trade/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
@@ -99,7 +100,7 @@ public class TradeController {
 
     // ********************************************************************
 
-    @PostMapping("/trade/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateTrade(
     		@PathVariable("id") final Integer id,
     		@Valid final TradeDTO tradeDTO,
@@ -127,7 +128,7 @@ public class TradeController {
 
     // ********************************************************************
 
-    @GetMapping("/trade/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteTrade(
     		@PathVariable("id") final Integer id,
     		final Model model) {
