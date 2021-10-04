@@ -355,8 +355,6 @@ class BidListControllerPostUpdateTest {
     // ********************************************************************
 
 
-
-
     @DisplayName("Url request /bidList/update/{id} - BidQuantityMoreThan10Digits - "
     		+ " - Given a BidList - BidQuantityMoreThan10Digits -,"
     		+ " when POST /bidList/update/{id} action request,"
@@ -423,9 +421,6 @@ class BidListControllerPostUpdateTest {
     }
 
     // ********************************************************************
-
-    
-
 
     
 }
