@@ -179,6 +179,39 @@ class TradeControllerPostValidateTest {
     // ********************************************************************
 
 
+
+    @DisplayName("Url request /trade/validate - Account  Non Alphanumeric characters - "
+    		+ " - Given a Trade - Account with Non Alphanumeric characters,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithTradeAccountWithSymbols() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", "Account!&&&")
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
+
     
     
 }
