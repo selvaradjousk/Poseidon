@@ -151,5 +151,39 @@ class BidListControllerPostUpdateTest {
 
     // ********************************************************************
 
+
+    @DisplayName(" Url request /bidList/update/{id} - AccountMoreThanThiryCharacters "
+    		+ " - Given a BidList - AccountMoreThanThiryCharacters,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithAccountMoreThanThiryCharacters() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.updateBidList(anyInt(), any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "AccountAccountAccountAccountAccount")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).updateBidList(anyInt(), any(BidListDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+//        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("The maximum length for account should be 30 characters");
+    }
+
+    // ********************************************************************
+
+
     
 }
