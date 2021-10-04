@@ -38,7 +38,7 @@ public class TradeController {
 
 		model.addAttribute("trades", tradeService.getAllTrade());
 
-    	log.info("Request GET for trade/list reponse SUCCESS");
+    	log.info("Request GET for trade/list reponse SUCCESS(200 OK)");
 
         return "trade/list";
     }
@@ -47,7 +47,8 @@ public class TradeController {
 
     @GetMapping("/trade/add")
     public String addUser(TradeDTO tradeDTO) {
-        return "trade/add";
+
+    	return "trade/add";
     }
 
     // ********************************************************************
