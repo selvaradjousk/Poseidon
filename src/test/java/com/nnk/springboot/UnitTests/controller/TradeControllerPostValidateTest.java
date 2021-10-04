@@ -33,7 +33,7 @@ import com.nnk.springboot.controller.TradeController;
 import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.service.TradeService;
 
-@DisplayName("Controller < TRADE > - UNIT TESTS")
+@DisplayName("Controller < TRADE > -VALIDATE UNIT TESTS")
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(TradeController.class)
 class TradeControllerPostValidateTest {
