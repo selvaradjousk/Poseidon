@@ -211,5 +211,41 @@ class BidListControllerPostValidateTest {
     }
 
     // ********************************************************************
+
+
+    @DisplayName("Url request /bidList/validate - TypeEmpty - "
+    		+ " - Given a BidList - TypeEmpty,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithTypeEmpty() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.addBidList(any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", "")
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).addBidList(any(BidListDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("Type is mandatory");
+      assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+
+    }
+
+    // ********************************************************************
+
     
 }
