@@ -82,9 +82,15 @@ public class TradeController {
     // ********************************************************************
 
     @GetMapping("/trade/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Trade by Id and to model then show to the form
-        return "trade/update";
+    public String showUpdateForm(
+    		@PathVariable("id") final Integer id,
+    		final Model model) {
+
+    	TradeDTO tradeDTO = tradeService.getTradeById(id);
+
+    	model.addAttribute("tradeDTO", tradeDTO);
+
+    	return "trade/update";
     }
 
     // ********************************************************************
