@@ -90,8 +90,10 @@ class TradeControllerPostValidateTest {
     		+ " then returns redirect /trade/validate page")    
     @Test
     public void testPostTradeValidate() throws Exception {
-    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
-    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+
+    	when(tradeService
+    			.addTrade(any(TradeDTO.class)))
+    	.thenReturn(any(TradeDTO.class));
         
         mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
         .sessionAttr("tradeDTO", testTradeDTO1)
@@ -104,7 +106,6 @@ class TradeControllerPostValidateTest {
         .andExpect(redirectedUrl("/trade/list"))
         .andExpect(status().is(302));
 
-        verify(tradeService, times(1)).getAllTrade();
         verify(tradeService, times(1)).addTrade(any(TradeDTO.class));
     }
 

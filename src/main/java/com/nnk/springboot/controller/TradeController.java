@@ -31,7 +31,7 @@ public class TradeController {
     // ********************************************************************
 
 	@RequestMapping("/trade/list")
-    public String home(Model model)
+    public String home(final Model model)
     {
 
     	log.info("Request GET for trade/list received");
@@ -46,7 +46,7 @@ public class TradeController {
     // ********************************************************************
 
     @GetMapping("/trade/add")
-    public String addUser(TradeDTO tradeDTO) {
+    public String addUser(final TradeDTO tradeDTO) {
 
     	log.info("Request GET for trade/add received");
 
@@ -58,10 +58,21 @@ public class TradeController {
     // ********************************************************************
 
     @PostMapping("/trade/validate")
-    public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Trade list
-        return "trade/add";
+    public String validate(
+    		@Valid final TradeDTO tradeDTO,
+    		final BindingResult result,
+    		final Model model) {
+
+
+        if (result.hasErrors()) {
+
+            return "trade/add";
+        }
+        tradeService.addTrade(tradeDTO);
+
+        return "redirect:/trade/list";
     }
+
 
     // ********************************************************************
 
