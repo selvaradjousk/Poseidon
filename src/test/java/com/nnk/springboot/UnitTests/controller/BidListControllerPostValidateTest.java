@@ -316,5 +316,39 @@ class BidListControllerPostValidateTest {
 
     // ********************************************************************
 
+
+    @DisplayName("Url request /bidList/validate - BidQuantityNegative - "
+    		+ " - Given a BidList - BidQuantityNegative-,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithBidQuantityNegative() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.addBidList(any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", "-1000"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).addBidList(any(BidListDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The bidQuantity must be positive");
+              
+    }
+
+    // ********************************************************************
+
     
 }
