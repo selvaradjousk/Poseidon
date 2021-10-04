@@ -213,6 +213,41 @@ class TradeControllerPostValidateTest {
     // ********************************************************************
 
 
+    @DisplayName("Url request /trade/validate - TypeEmpty - "
+    		+ " - Given a Trade - TypeEmpty,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithTypeEmpty() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", "")
+        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("Type is mandatory");
+      assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+
+    }
+
+    // ********************************************************************
+
+
 
     @DisplayName("Url request /trade/validate - Type MoreThanThiryCharacters - "
     		+ " - Given a Trade - Type MoreThanThiryCharacters,"
@@ -249,19 +284,19 @@ class TradeControllerPostValidateTest {
 
 
 
-    @DisplayName("Url request /trade/validate - TypeEmpty - "
-    		+ " - Given a Trade - TypeEmpty,"
+    @DisplayName("Url request /trade/validate - TypeWithSymbols - "
+    		+ " - Given a Trade - TypeWithSymbols-,"
     		+ " when POST /trade/validate action request,"
     		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeValidateWithTypeEmpty() throws Exception {
+    public void testPostTradeValidateTypeWithSymbols() throws Exception {
     	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
 //    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
         
     	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
         .sessionAttr("tradeDTO", testTradeDTO1)
         .param("account", testTradeDTO1.getAccount())
-        .param("type", "")
+        .param("type", "Type!!&&")
         .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
         .andExpect(model().hasErrors())
         .andExpect(model().size(1))
@@ -276,12 +311,46 @@ class TradeControllerPostValidateTest {
 
         String content = result.getResponse().getContentAsString();
         
-      assertThat(content).contains("Type is mandatory");
-      assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
-
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+        
     }
 
     // ********************************************************************
-   
+
+
+    @DisplayName("Url request /trade/validate - BuyQuantityNegative - "
+    		+ " - Given a Trade - BuyQuantityNegative-,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
+    @Test
+    public void testPostTradeValidateWithBuyQuantityNegative() throws Exception {
+    	when(tradeService.getAllTrade()).thenReturn(tradeDTOList);
+//    	when(tradeService.addTrade(any(TradeDTO.class))).thenReturn(any(TradeDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+        .sessionAttr("tradeDTO", testTradeDTO1)
+        .param("account", testTradeDTO1.getAccount())
+        .param("type", testTradeDTO1.getType())
+        .param("buyQuantity", "-1000"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("tradeDTO"))
+        .andExpect(view().name("trade/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(tradeService, times(0)).getAllTrade();
+        verify(tradeService, times(0)).addTrade(any(TradeDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The value must be positive");
+              
+    }
+
+    // ********************************************************************
+
+  
     
 }
