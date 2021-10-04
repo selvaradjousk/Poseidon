@@ -51,7 +51,7 @@ class BidListControllerGetAddTest {
 
 
     
-    @DisplayName(" Url request /bidList/add - "
+    @DisplayName(" Url request /bidList/add - VALID "
     		+ " - Given a BidList,"
     		+ " when GET /bidList/add action request,"
     		+ " then returns bidList ADD page")    
