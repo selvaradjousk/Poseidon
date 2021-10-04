@@ -33,7 +33,11 @@ public class BidListController {
     public String home(final Model model)
     {
 
+    	log.info("Request GET for bidList/list received");
+
 		model.addAttribute("bids", bidListService.getAllBidList());
+
+    	log.info("Request GET for bidList/list reponse SUCCESS(200 OK)");
 
 		return "bidList/list";
     }
