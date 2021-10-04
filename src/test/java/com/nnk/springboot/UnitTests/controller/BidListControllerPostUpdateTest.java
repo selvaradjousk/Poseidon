@@ -348,7 +348,7 @@ class BidListControllerPostUpdateTest {
 
         String content = result.getResponse().getContentAsString();
         
-        assertThat(content).contains("The value must be positive");
+        assertThat(content).contains("The bidQuantity must be positive");
               
     }
 

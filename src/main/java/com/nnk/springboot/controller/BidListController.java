@@ -107,16 +107,22 @@ public class BidListController {
     		final BindingResult result,
     		final Model model) {
 
+       	log.info("Request POST bidList/update/{id} received - ID: {}", id);
+
         if(result.hasErrors()){
 
             model.addAttribute("bidListDTO", bidListDTO);
 
             model.addAttribute(id);
 
+        	log.error("Request post for bidList/update{id} Error(s) {} ", result);
+
             return "bidList/update";
         }
 
         bidListService.updateBidList(id, bidListDTO);
+
+        log.info("Request POST bidList/update/{id} SUCCESS for - ID: {}", id);
 
         return "redirect:/bidList/list";
     }

@@ -110,10 +110,12 @@ public class TradeController {
 
         if (result.hasErrors()) {
 
-            model.addAttribute("tradeDTO", tradeDTO);
+        	log.error("Request post for trade/update{id} Error(s) {} ", result);
+
+        	model.addAttribute("tradeDTO", tradeDTO);
             model.addAttribute(id);
 
-        	log.error("Request post for trade/update{id} Error(s) {} ", result);
+          	log.info("Request POST trade/update/{id} SUCCESS for - ID: {}", id);
 
         	return "trade/update";
         }
