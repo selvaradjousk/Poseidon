@@ -47,7 +47,12 @@ public class BidListController {
 
     @GetMapping("/bidList/add")
     public String addBidForm(BidListDTO bid) {
-        return "bidList/add";
+
+    	log.info("Request GET for bidList/add received");
+
+    	log.info("Request GET for bidList/add reponse SUCCESS(200 OK)");
+
+    	return "bidList/add";
     }
 
     // ********************************************************************
