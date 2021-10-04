@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.dto.TradeDTO;
 import com.nnk.springboot.service.ITradeService;
 
 import lombok.extern.log4j.Log4j2;
@@ -45,7 +46,7 @@ public class TradeController {
     // ********************************************************************
 
     @GetMapping("/trade/add")
-    public String addUser(Trade bid) {
+    public String addUser(TradeDTO tradeDTO) {
         return "trade/add";
     }
 
