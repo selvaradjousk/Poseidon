@@ -176,5 +176,40 @@ class BidListControllerPostValidateTest {
     }
 
     // ********************************************************************
+
+
+
+
+    @DisplayName("Url request /bidList/validate - Account  Non Alphanumeric characters - "
+    		+ " - Given a BidList - Account with Non Alphanumeric characters,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithBidListAccountWithSymbols() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.addBidList(any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "Account!&&&")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).addBidList(any(BidListDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
     
 }
