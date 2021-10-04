@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -7,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -107,6 +110,39 @@ class BidListControllerPostValidateTest {
 
     // ********************************************************************
 
+
+
+    @DisplayName(" Url request /bidList/validate - EmptyAccount "
+    		+ " - Given a BidList - EmptyAccount,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateEmptyAccount() throws Exception {
+    	when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
+//    	when(bidListService.addBidList(any(BidListDTO.class))).thenReturn(any(BidListDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(bidListService, times(0)).getAllBidList();
+        verify(bidListService, times(0)).addBidList(any(BidListDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
         
     
 }
