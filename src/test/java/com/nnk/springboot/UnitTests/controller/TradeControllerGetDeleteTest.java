@@ -84,8 +84,7 @@ class TradeControllerGetDeleteTest {
             		.andExpect(status().is(302));
 
         verify(tradeService, times(1)).deleteTrade(1);
-
-        
+       
     }
 
     // ********************************************************************
