@@ -89,4 +89,24 @@ class TradeControllerGetDeleteTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request trade/delete/{id} invalid id- "
+    		+ " - Given a Trade trade/delete/{id} invalid id,"
+    		+ " when GET trade/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetTradeDeleteNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/trade/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(tradeService, times(0)).deleteTrade(1);
+    }
+
+    // ********************************************************************
+   
+   
+
+
 }
