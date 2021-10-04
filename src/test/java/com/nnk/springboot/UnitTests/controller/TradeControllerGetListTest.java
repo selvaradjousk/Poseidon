@@ -91,7 +91,8 @@ class TradeControllerGetListTest {
         		.build();
         
         tradeList = Arrays.asList(testTrade1, testTrade2);   
-        
+    
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
     
   	// ********************************************************************
