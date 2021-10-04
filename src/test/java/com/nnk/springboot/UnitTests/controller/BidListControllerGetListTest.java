@@ -108,7 +108,7 @@ class BidListControllerGetListTest {
     public void testGetBidListList() throws Exception {
         when(bidListService.getAllBidList()).thenReturn(bidListDTOList);
         mockMvc.perform(MockMvcRequestBuilders.get("/bidList/list"))
-                .andExpect(model().attributeExists("bidLists"))
+                .andExpect(model().attributeExists("bids"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("bidList/list"))
                 .andExpect(status().isOk());

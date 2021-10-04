@@ -11,25 +11,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.service.IBidListService;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
 
-    @RequestMapping("/bidList/list")
-    public String home(Model model)
-    {
-        // TODO: call service find all bids to show to the view
-        return "bidList/list";
+	private final IBidListService bidListService;
+
+    // ********************************************************************
+
+	public BidListController(final IBidListService bidListService) {
+        this.bidListService = bidListService;
     }
+
+    // ********************************************************************
+
+	@RequestMapping("/bidList/list")
+    public String home(final Model model)
+    {
+
+		model.addAttribute("bids", bidListService.getAllBidList());
+
+		return "bidList/list";
+    }
+
+    // ********************************************************************
 
     @GetMapping("/bidList/add")
     public String addBidForm(BidList bid) {
         return "bidList/add";
     }
+
+    // ********************************************************************
 
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
@@ -37,11 +53,15 @@ public class BidListController {
         return "bidList/add";
     }
 
+    // ********************************************************************
+
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
         return "bidList/update";
     }
+
+    // ********************************************************************
 
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
@@ -50,9 +70,14 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
+    // ********************************************************************
+
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
         return "redirect:/bidList/list";
     }
+
+    // ********************************************************************
+
 }
