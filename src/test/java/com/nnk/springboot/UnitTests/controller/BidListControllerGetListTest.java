@@ -120,5 +120,25 @@ class BidListControllerGetListTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request /bidList/list - "
+    		+ " - Given a BidList List,"
+    		+ " when GET /bidList/list action request,"
+    		+ " then returns bidListslist page")    
+    @Test
+    public void testGetBidListListNull() throws Exception {
+        when(bidListService.getAllBidList()).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.get("/bidList/list"))
+//                .andExpect(model().attributeExists("bids"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("bidList/list"))
+                .andExpect(status().isOk());
+
+        verify(bidListService, times(1)).getAllBidList();
+        assertNull((bidListService.getAllBidList()));
+    }
+
+    // ********************************************************************
+    
 
 }
