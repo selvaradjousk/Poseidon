@@ -29,7 +29,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.RatingController;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.service.RatingService;
 
@@ -128,5 +127,5 @@ class RatingControllerGetListTest {
     }
 
     // ********************************************************************
-    
+
 }
