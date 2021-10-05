@@ -392,4 +392,44 @@ import com.nnk.springboot.service.RatingService;
 
 	    // ********************************************************************
 
+
+		@DisplayName(" Url request /rating/update/{id} - EmptyFitchRating "
+				+ " - Given a Rating - EmptyFitchRating,"
+				+ " when POST /rating/update/{id} action request,"
+				+ " then returns error & redirect /rating/add page")    
+		@Test
+		public void testPostRatingValidateEmptyFitchRating() throws Exception {
+
+			when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+
+	    	when(ratingService
+	    			.updateRating(anyInt(), any(RatingDTO.class)))
+	    	.thenReturn(testRatingDTO1);
+	        
+		    
+			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/1")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", testRatingDTO1.getMoodysRating())
+			        .param("SandPRating", testRatingDTO1.getSandPRating())
+			        .param("fitchRating", ""))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(2))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/update"))
+			        .andExpect(status().is(200))
+			        .andReturn();
+
+		
+		    verify(ratingService, times(0)).getAllRating();
+		    verify(ratingService, times(0)).updateRating(anyInt(), any(RatingDTO.class));
+		
+		    String content = result.getResponse().getContentAsString();
+		    
+		    assertThat(content).contains("FitchRating is mandatory");
+		    assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+		}
+
+		// ********************************************************************
+
 }
