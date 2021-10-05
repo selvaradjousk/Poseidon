@@ -134,7 +134,7 @@ class RuleNameControllerPostValidateTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
-		        .param("id", testRuleNameDTO1.getId().toString())
+		        .param("id", "-1")
 		        .param("name", testRuleNameDTO1.getName())
 		        .param("description", testRuleNameDTO1.getDescription())
 		        .param("json", testRuleNameDTO1.getJson())
