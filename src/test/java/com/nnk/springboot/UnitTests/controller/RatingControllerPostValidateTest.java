@@ -247,39 +247,73 @@ import com.nnk.springboot.service.RatingService;
 	    // ********************************************************************
 	    
 
-@DisplayName(" Url request /rating/validate - EmptySandPRating "
-		+ " - Given a Rating - EmptySandPRating,"
-		+ " when POST /rating/validate action request,"
-		+ " then returns error & redirect /rating/add page")    
-@Test
-public void testPostRatingValidateEmptySandPRating() throws Exception {
-	when(ratingService.getAllRating()).thenReturn(ratingDTOList);
-//	when(ratingService.addRating(any(RatingDTO.class))).thenReturn(any(RatingDTO.class));
-    
-	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
-	        .sessionAttr("ratingDTO", testRatingDTO1)
-	        .param("id", testRatingDTO1.getId().toString())
-	        .param("moodysRating", testRatingDTO1.getMoodysRating())
-	        .param("sandPRating", "")
-	        .param("fitchRating", testRatingDTO1.getFitchRating()))
-	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(1))
-	        .andExpect(model().attributeExists("ratingDTO"))
-	        .andExpect(view().name("rating/add"))
-	        .andExpect(status().is(200))
-	        .andReturn();
+		@DisplayName(" Url request /rating/validate - EmptySandPRating "
+				+ " - Given a Rating - EmptySandPRating,"
+				+ " when POST /rating/validate action request,"
+				+ " then returns error & redirect /rating/add page")    
+		@Test
+		public void testPostRatingValidateEmptySandPRating() throws Exception {
+			when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+		//	when(ratingService.addRating(any(RatingDTO.class))).thenReturn(any(RatingDTO.class));
+		    
+			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", testRatingDTO1.getMoodysRating())
+			        .param("sandPRating", "")
+			        .param("fitchRating", testRatingDTO1.getFitchRating()))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(1))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/add"))
+			        .andExpect(status().is(200))
+			        .andReturn();
+		
+		    verify(ratingService, times(0)).getAllRating();
+		    verify(ratingService, times(0)).addRating(any(RatingDTO.class));
+		
+		    String content = result.getResponse().getContentAsString();
+		    
+		    assertThat(content).contains("SandPRating is mandatory");
+		    assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+		}
+		
+		// ********************************************************************
 
-    verify(ratingService, times(0)).getAllRating();
-    verify(ratingService, times(0)).addRating(any(RatingDTO.class));
 
-    String content = result.getResponse().getContentAsString();
-    
-    assertThat(content).contains("SandPRating is mandatory");
-    assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
-}
 
-// ********************************************************************
+	    @DisplayName(" Url request /rating/validate - SandPRating With Symbols "
+	    		+ " - Given a Rating - SandPRating With Symols,"
+	    		+ " when POST /rating/validate action request,"
+	    		+ " then returns error & redirect /rating/add page")    
+	    @Test
+	    public void testPostRatingValidateSandPRatingWithSymbols() throws Exception {
+	    	when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+//	    	when(ratingService.addRating(any(RatingDTO.class))).thenReturn(any(RatingDTO.class));
+	        
+	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", testRatingDTO1.getMoodysRating())
+			        .param("sandPRating", "&&&aaa")
+			        .param("fitchRating", testRatingDTO1.getFitchRating()))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(1))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/add"))
+			        .andExpect(status().is(200))
+			        .andReturn();
 
+	        verify(ratingService, times(0)).getAllRating();
+	        verify(ratingService, times(0)).addRating(any(RatingDTO.class));
+
+	        String content = result.getResponse().getContentAsString();
+	        
+	        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+	    }
+
+	    // ********************************************************************
+		
 
 	    
 }
