@@ -429,7 +429,44 @@ class CurvePointControllerPostValidateTest {
     }
 
     // ********************************************************************
-      
+
+
+
+
+    @DisplayName("Url request /curvePoint/validate - Value With Symbols - "
+    		+ " - Given a CurvePoint - Value With Symbols -,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithValueWithSymbols() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService.addCurvePoint(any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/validate")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", testCurvePointDTO1.getCurveId().toString())
+        .param("term", testCurvePointDTO1.getTerm().toString())
+        .param("value", "&&&&&&"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).addCurvePoint(any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Failed to convert property value of type java.lang.String to required type java.lang.Double for property value");
+              
+    }
+
+    // ********************************************************************
+
+        
              
          
 }
