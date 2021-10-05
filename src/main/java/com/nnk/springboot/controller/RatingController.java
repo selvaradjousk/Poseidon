@@ -62,6 +62,8 @@ public class RatingController {
     	return "rating/add";
     }
 
+    // ********************************************************************
+
     @PostMapping("/validate")
     public String validate(
     		@Valid final RatingDTO ratingDTO,
@@ -71,13 +73,26 @@ public class RatingController {
         return "rating/add";
     }
 
+    // ********************************************************************
+
     @GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
-        // TODO: get Rating by Id and to model then show to the form
-        return "rating/update";
+
+       	log.info("Request GET rating/update/{id} received - ID: {}", id);
+
+    	RatingDTO ratingDTO = ratingService.getRatingById(id);
+
+    	model.addAttribute("ratingDTO", ratingDTO);
+
+    	log.info("Request GET for rating/update/{id} SUCCESS");
+
+    	return "rating/update";
     }
+
+    // ********************************************************************
+
 
     @PostMapping("/update/{id}")
     public String updateRating(
@@ -88,6 +103,8 @@ public class RatingController {
         // TODO: check required fields, if valid call service to update Rating and return Rating list
         return "redirect:/rating/list";
     }
+
+    // ********************************************************************
 
     @GetMapping("/delete/{id}")
     public String deleteRating(

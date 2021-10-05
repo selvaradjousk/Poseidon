@@ -65,16 +65,16 @@ class RatingControllerGetListTest {
         testRatingDTO1 = RatingDTO.builder()
         		.id(1)
         		.moodysRating("MoodyRating1")
-        		.sandPRating("MoodyRating1")
-        		.fitchRating("MoodyRating1")
+        		.sandPRating("SandPRating1")
+        		.fitchRating("FitchRating1")
         		.orderNumber(1)
         		.build();
         
         testRatingDTO2 = RatingDTO.builder()
         		.id(2)
         		.moodysRating("MoodyRating2")
-        		.sandPRating("MoodyRating2")
-        		.fitchRating("MoodyRating2")
+        		.sandPRating("SandPRating2")
+        		.fitchRating("FitchRating2")
         		.orderNumber(2)
         		.build();
         

@@ -56,8 +56,8 @@ class RatingControllerGetUpdateTest {
         testRatingDTO1 = RatingDTO.builder()
         		.id(1)
         		.moodysRating("MoodyRating1")
-        		.sandPRating("MoodyRating1")
-        		.fitchRating("MoodyRating1")
+        		.sandPRating("SandPRating1")
+        		.fitchRating("FitchRating1")
         		.orderNumber(1)
         		.build();
         
