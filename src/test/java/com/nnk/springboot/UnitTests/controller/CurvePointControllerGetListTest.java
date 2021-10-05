@@ -123,4 +123,24 @@ class CurvePointControllerGetListTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request /curvePoint/list - NULL LIST "
+    		+ " - Given a CurvePoint List NULL,"
+    		+ " when GET /curvePoint/list action request,"
+    		+ " then returns curvePointslist page")    
+    @Test
+    public void testGetCurvePointListNull() throws Exception {
+        when(curvePointService.getAllCurvePoint()).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.get("/curvePoint/list"))
+//                .andExpect(model().attributeExists("curvePoints"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("curvePoint/list"))
+                .andExpect(status().isOk());
+
+        verify(curvePointService, times(1)).getAllCurvePoint();
+        assertNull((curvePointService.getAllCurvePoint()));
+    }
+
+    // ********************************************************************
+    
 }
