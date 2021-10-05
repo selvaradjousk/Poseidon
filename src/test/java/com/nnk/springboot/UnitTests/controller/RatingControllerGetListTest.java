@@ -109,4 +109,24 @@ class RatingControllerGetListTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request /rating/list - NULL LIST"
+    		+ " - Given a Rating List,"
+    		+ " when GET /rating/list action request,"
+    		+ " then returns ratingslist page")    
+    @Test
+    public void testGetRatingListNull() throws Exception {
+        when(ratingService.getAllRating()).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.get("/rating/list"))
+//                .andExpect(model().attributeExists("ratings"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("rating/list"))
+                .andExpect(status().isOk());
+
+        verify(ratingService, times(1)).getAllRating();
+        assertNull((ratingService.getAllRating()));
+    }
+
+    // ********************************************************************
+    
 }

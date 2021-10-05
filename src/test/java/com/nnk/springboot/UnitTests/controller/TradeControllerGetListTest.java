@@ -121,7 +121,7 @@ class TradeControllerGetListTest {
     // ********************************************************************
 
     
-    @DisplayName(" Url request /trade/list - "
+    @DisplayName(" Url request /trade/list - NULL LIST "
     		+ " - Given a Trade List,"
     		+ " when GET /trade/list action request,"
     		+ " then returns tradeslist page")    
