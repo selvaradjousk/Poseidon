@@ -257,5 +257,76 @@ class CurvePointControllerPostValidateTest {
 
     // ********************************************************************
        
+
+
+    @DisplayName("Url request /curvePoint/validate - Term Digits >10 - "
+    		+ " - Given a CurvePoint - Term Digits >10 -,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithTermMoreThan10Digits() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService.addCurvePoint(any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
         
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/validate")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", testCurvePointDTO1.getCurveId().toString())
+        .param("term", "1000000000000.00")
+        .param("value", testCurvePointDTO1.getValue().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).addCurvePoint(any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Invalid number input value : Maximum digits allowed are 10 and with 2 decimals fractions");
+              
+    }
+
+    // ********************************************************************
+
+
+
+    @DisplayName("Url request /curvePoint/validate - Term With Symbols - "
+    		+ " - Given a CurvePoint - Term With Symbols -,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithTermWithSymbols() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService.addCurvePoint(any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/validate")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", testCurvePointDTO1.getCurveId().toString())
+        .param("term", "&&&&&&")
+        .param("value", testCurvePointDTO1.getValue().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).addCurvePoint(any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Failed to convert property value of type java.lang.String to required type java.lang.Double for property term");
+              
+    }
+
+    // ********************************************************************
+
+       
+         
 }
