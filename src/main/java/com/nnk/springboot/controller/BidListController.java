@@ -24,7 +24,8 @@ public class BidListController {
 
     // ********************************************************************
 
-	public BidListController(final IBidListService bidListService) {
+	public BidListController(
+			final IBidListService bidListService) {
         this.bidListService = bidListService;
     }
 
