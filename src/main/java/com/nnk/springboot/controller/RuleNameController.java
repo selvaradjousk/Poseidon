@@ -69,8 +69,20 @@ public class RuleNameController {
     		final @Valid RuleNameDTO ruleNameDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check data valid and save to db, after saving return RuleName list
-        return "ruleName/add";
+
+    	log.info("Request post for ruleName/validate received");
+
+    	if (result.hasErrors()) {
+
+        	log.error("Request post for ruleName/validate Error(s) {} ", result);
+
+    		return "ruleName/add";
+        }
+        ruleNameService.addRuleName(ruleNameDTO);
+
+       	log.info("Request post for ruleName/validate SUCCESS");
+
+        return "redirect:/ruleName/list";
     }
 
   	// ********************************************************************
@@ -100,7 +112,25 @@ public class RuleNameController {
     		@Valid final RuleNameDTO ruleNameDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check required fields, if valid call service to update RuleName and return RuleName list
+
+       	log.info("Request POST ruleName/update/{id} received - ID: {}", id);
+
+        if (result.hasErrors()) {
+
+        	log.error("Request post for ruleName/update{id} Error(s) {} ", result);
+
+        	model.addAttribute("ruleNameDTO", ruleNameDTO);
+            model.addAttribute(id);
+
+          	log.info("Request POST ruleName/update/{id} SUCCESS for - ID: {}", id);
+
+        	return "ruleName/update";
+        }
+
+        ruleNameService.updateRuleName(id, ruleNameDTO);
+
+    	log.info("Request POST for ruleName/update{id} SUCCESS");
+
         return "redirect:/ruleName/list";
     }
 

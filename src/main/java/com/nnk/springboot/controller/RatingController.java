@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.service.IRatingService;
 
@@ -69,8 +68,20 @@ public class RatingController {
     		@Valid final RatingDTO ratingDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check data valid and save to db, after saving return Rating list
-        return "rating/add";
+
+    	log.info("Request post for rating/validate received");
+
+    	if (result.hasErrors()) {
+
+        	log.error("Request post for rating/validate Error(s) {} ", result);
+
+    		return "rating/add";
+        }
+        ratingService.addRating(ratingDTO);
+
+       	log.info("Request post for rating/validate SUCCESS");
+
+        return "redirect:/rating/list";
     }
 
     // ********************************************************************
@@ -100,7 +111,25 @@ public class RatingController {
     		final @Valid RatingDTO ratingDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check required fields, if valid call service to update Rating and return Rating list
+
+       	log.info("Request POST rating/update/{id} received - ID: {}", id);
+
+        if (result.hasErrors()) {
+
+        	log.error("Request post for rating/update{id} Error(s) {} ", result);
+
+        	model.addAttribute("ratingDTO", ratingDTO);
+            model.addAttribute(id);
+
+          	log.info("Request POST rating/update/{id} SUCCESS for - ID: {}", id);
+
+        	return "rating/update";
+        }
+
+        ratingService.updateRating(id, ratingDTO);
+
+    	log.info("Request POST for rating/update{id} SUCCESS");
+
         return "redirect:/rating/list";
     }
 
