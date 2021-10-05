@@ -118,4 +118,36 @@ class RuleNameControllerPostValidateTest {
     // ********************************************************************
 
 
+    @DisplayName(" Url request /ruleName/validate - Id Negative "
+    		+ " - Given a RuleName, Id Negative"
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
+    @Test
+    public void testPostRuleNameValidateIdNegative() throws Exception {
+
+    	when(ruleNameService
+    			.addRuleName(any(RuleNameDTO.class)))
+    	.thenReturn(any(RuleNameDTO.class));
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+        .param("id", "-1")
+        .param("name", testRuleNameDTO1.getName())
+        .param("description", testRuleNameDTO1.getDescription())
+        .param("json", testRuleNameDTO1.getJson())
+        .param("template", testRuleNameDTO1.getTemplate())
+        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+        .andExpect(model().hasNoErrors())
+        .andExpect(model().size(0))
+        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
+        .andExpect(redirectedUrl("/ruleName/list"))
+        .andExpect(status().is(302));
+
+        verify(ruleNameService, times(1)).addRuleName(any(RuleNameDTO.class));
+    }
+
+    // ********************************************************************
+
+
 }
