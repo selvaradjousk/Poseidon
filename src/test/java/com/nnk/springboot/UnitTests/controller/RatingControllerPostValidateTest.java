@@ -1,5 +1,7 @@
 package com.nnk.springboot.UnitTests.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -7,6 +9,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -28,7 +32,6 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.RatingController;
 import com.nnk.springboot.dto.RatingDTO;
-import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.service.RatingService;
 
 	@DisplayName("Controller < RATING > -VALIDATE UNIT TESTS")
@@ -141,5 +144,38 @@ import com.nnk.springboot.service.RatingService;
 
 	    // ********************************************************************
 	    	    
+
+	    @DisplayName(" Url request /rating/validate - EmptyMoodysRating "
+	    		+ " - Given a Rating - EmptyMoodysRating,"
+	    		+ " when POST /rating/validate action request,"
+	    		+ " then returns error & redirect /rating/add page")    
+	    @Test
+	    public void testPostRatingValidateEmptyMoodysRating() throws Exception {
+	    	when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+//	    	when(ratingService.addRating(any(RatingDTO.class))).thenReturn(any(RatingDTO.class));
+	        
+	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", "")
+			        .param("sandPRating", testRatingDTO1.getSandPRating())
+			        .param("fitchRating", testRatingDTO1.getFitchRating()))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(1))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/add"))
+			        .andExpect(status().is(200))
+			        .andReturn();
+
+	        verify(ratingService, times(0)).getAllRating();
+	        verify(ratingService, times(0)).addRating(any(RatingDTO.class));
+
+	        String content = result.getResponse().getContentAsString();
+	        
+	        assertThat(content).contains("MoodysRating is mandatory");
+	        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+	    }
+
+	    // ********************************************************************
 	    
 }
