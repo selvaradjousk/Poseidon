@@ -498,4 +498,41 @@ class RuleNameControllerPostValidateTest {
 
     // ********************************************************************
 
+    @DisplayName(" Url request /ruleName/validate - SqlPart length > 125 "
+    		+ " - Given a RuleName - SqlPart length > 125,"
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
+    @Test
+    public void testPostRuleNameValidateSqlPartWith125MoreCharacters() throws Exception {
+    	when(ruleNameService.getAllRuleName()).thenReturn(ruleNameDTOList);
+//    	when(ruleNameService.addRuleName(any(RuleNameDTO.class))).thenReturn(any(RuleNameDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", testRuleNameDTO1.getId().toString())
+			.param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlPart())
+		        .param("sqlPart", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+		        .andExpect(model().hasErrors())
+		        .andExpect(model().size(1))
+		        .andExpect(model().attributeExists("ruleNameDTO"))
+		        .andExpect(view().name("ruleName/add"))
+		        .andExpect(status().is(200))
+		        .andReturn();
+
+        verify(ruleNameService, times(0)).getAllRuleName();
+        verify(ruleNameService, times(0)).addRuleName(any(RuleNameDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The maximum length for sqlPart can be 125 characters");
+    }
+
+    // ********************************************************************
+
 }
