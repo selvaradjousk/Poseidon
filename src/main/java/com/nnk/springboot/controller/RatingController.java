@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.service.IRatingService;
 
 import lombok.extern.log4j.Log4j2;
@@ -52,13 +53,18 @@ public class RatingController {
 
 
     @GetMapping("/add")
-    public String addRatingForm(final Rating rating) {
-        return "rating/add";
+    public String addRatingForm(final RatingDTO ratingDTO) {
+
+    	log.info("Request GET for rating/add received");
+
+    	log.info("Request GET for rating/add reponse SUCCESS(200 OK)");
+
+    	return "rating/add";
     }
 
     @PostMapping("/validate")
     public String validate(
-    		@Valid final Rating rating,
+    		@Valid final RatingDTO ratingDTO,
     		final BindingResult result,
     		final Model model) {
         // TODO: check data valid and save to db, after saving return Rating list
@@ -76,7 +82,7 @@ public class RatingController {
     @PostMapping("/update/{id}")
     public String updateRating(
     		@PathVariable("id") final Integer id,
-    		final @Valid Rating rating,
+    		final @Valid RatingDTO ratingDTO,
     		final BindingResult result,
     		final Model model) {
         // TODO: check required fields, if valid call service to update Rating and return Rating list

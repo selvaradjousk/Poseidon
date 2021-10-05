@@ -46,7 +46,7 @@ public class TradeController {
     // ********************************************************************
 
     @GetMapping("/add")
-    public String addUser(final TradeDTO tradeDTO) {
+    public String addTrade(final TradeDTO tradeDTO) {
 
     	log.info("Request GET for trade/add received");
 
