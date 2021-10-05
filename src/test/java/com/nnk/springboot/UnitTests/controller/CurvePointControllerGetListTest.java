@@ -66,12 +66,14 @@ class CurvePointControllerGetListTest {
 
         objectMapper = new ObjectMapper();
         testCurvePointDTO1 = CurvePointDTO.builder()
+        		.id(1)
         		.curveId(1)
         		.term(10.0)
         		.value(10.0)
         		.build();
         
         testCurvePointDTO2 = CurvePointDTO.builder()
+        		.id(2)
         		.curveId(2)
         		.term(20.0)
         		.value(20.0)
@@ -80,12 +82,14 @@ class CurvePointControllerGetListTest {
         curvePointDTOList = Arrays.asList(testCurvePointDTO1, testCurvePointDTO2);   
         
         testCurvePoint1 = CurvePoint.builder()
+        		.id(1)
         		.curveId(1)
         		.term(10.0)
         		.value(10.0)
         		.build();
         
         testCurvePoint2 = CurvePoint.builder()
+        		.id(2)
         		.curveId(2)
         		.term(20.0)
         		.value(20.0)
