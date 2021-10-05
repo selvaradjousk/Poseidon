@@ -126,7 +126,7 @@ import com.nnk.springboot.service.RatingService;
 	        
 	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
 	        .sessionAttr("ratingDTO", testRatingDTO1)
-	        .param("id", testRatingDTO1.getId().toString())
+	        .param("id", "-1")
 	        .param("moodysRating", testRatingDTO1.getMoodysRating())
 	        .param("sandPRating", testRatingDTO1.getSandPRating())
 	        .param("fitchRating", testRatingDTO1.getFitchRating()))
