@@ -82,7 +82,7 @@ import com.nnk.springboot.service.RatingService;
 	        
 	        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	    }
-	    
+
 	  	// ********************************************************************
 
 
@@ -114,7 +114,7 @@ import com.nnk.springboot.service.RatingService;
 
 	    // ********************************************************************
 
-	    
+
 
 	    @DisplayName(" Url request /rating/validate - Id Negative "
 	    		+ " - Given a Rating, Id Negative"
@@ -143,7 +143,7 @@ import com.nnk.springboot.service.RatingService;
 	    }
 
 	    // ********************************************************************
-	    	    
+
 
 	    @DisplayName(" Url request /rating/validate - EmptyMoodysRating "
 	    		+ " - Given a Rating - EmptyMoodysRating,"
@@ -245,7 +245,7 @@ import com.nnk.springboot.service.RatingService;
 	    }
 
 	    // ********************************************************************
-	    
+
 
 		@DisplayName(" Url request /rating/validate - EmptySandPRating "
 				+ " - Given a Rating - EmptySandPRating,"
@@ -277,7 +277,7 @@ import com.nnk.springboot.service.RatingService;
 		    assertThat(content).contains("SandPRating is mandatory");
 		    assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
 		}
-		
+
 		// ********************************************************************
 
 
@@ -313,7 +313,7 @@ import com.nnk.springboot.service.RatingService;
 	    }
 
 	    // ********************************************************************
-		
+
 
 	    @DisplayName(" Url request /rating/validate - SandPRating length > 125 "
 	    		+ " - Given a Rating - SandPRating length > 125,"
@@ -380,7 +380,7 @@ import com.nnk.springboot.service.RatingService;
 		    assertThat(content).contains("FitchRating is mandatory");
 		    assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
 		}
-		
+
 		// ********************************************************************
 
 
@@ -450,6 +450,6 @@ import com.nnk.springboot.service.RatingService;
 	    }
 
 	    // ********************************************************************
-				
-	    
+
+
 }
