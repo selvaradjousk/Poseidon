@@ -471,4 +471,45 @@ import com.nnk.springboot.service.RatingService;
 
 	    // ********************************************************************
 
+
+	    @DisplayName(" Url request /rating/update/{id} - FitchRating length > 125 "
+	    		+ " - Given a Rating - FitchRating length > 125,"
+	    		+ " when POST /rating/update/{id} action request,"
+	    		+ " then returns error & redirect /rating/add page")    
+	    @Test
+	    public void testPostRatingValidateFitchRatingWith125MoreCharecters() throws Exception {
+
+	    	when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+
+	    	when(ratingService
+	    			.updateRating(anyInt(), any(RatingDTO.class)))
+	    	.thenReturn(testRatingDTO1);
+	        
+	        
+	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/1")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", testRatingDTO1.getMoodysRating())
+			        .param("sandPRating", testRatingDTO1.getSandPRating())
+			        .param("fitchRating", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+			        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+			        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(2))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/update"))
+			        .andExpect(status().is(200))
+			        .andReturn();
+
+
+	        verify(ratingService, times(0)).getAllRating();
+	        verify(ratingService, times(0)).updateRating(anyInt(), any(RatingDTO.class));
+
+	        String content = result.getResponse().getContentAsString();
+	        
+	        assertThat(content).contains("The maximum length for fitchRating can be 125 characters");
+	    }
+
+	    // ********************************************************************
+
 }
