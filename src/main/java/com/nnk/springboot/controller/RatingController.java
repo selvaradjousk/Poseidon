@@ -87,7 +87,16 @@ public class RatingController {
     public String deleteRating(
     		@PathVariable("id") final Integer id,
     		final Model model) {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
-        return "redirect:/rating/list";
+
+       	log.info("Request DELETE rating/delete/{id} received - ID: {}", id);
+
+       	ratingService.deleteRating(id);
+
+    	log.info("Request DELETE for rating/delete/{} SUCCESS", id);
+
+    	return "redirect:/rating/list";
     }
+
+    // ********************************************************************
+
 }
