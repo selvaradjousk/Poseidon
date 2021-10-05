@@ -30,8 +30,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.CurveController;
-import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.dto.CurvePointDTO;
 import com.nnk.springboot.service.CurvePointService;
 
