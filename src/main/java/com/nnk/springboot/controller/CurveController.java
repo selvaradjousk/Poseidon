@@ -71,8 +71,15 @@ public class CurveController {
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
-        // TODO: get CurvePoint by Id and to model then show to the form
-        return "curvePoint/update";
+      	log.info("Request GET curvePoint/update/{id} received - ID: {}", id);
+
+    	CurvePointDTO curvePointDTO = curvePointService.getCurvePointById(id);
+
+    	model.addAttribute("curvePointDTO", curvePointDTO);
+
+    	log.info("Request GET for curvePoint/update{id} SUCCESS");
+
+    	return "curvePoint/update";
     }
 
   	// ********************************************************************
