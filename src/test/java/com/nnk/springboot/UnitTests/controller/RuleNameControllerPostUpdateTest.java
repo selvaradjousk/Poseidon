@@ -122,4 +122,36 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
+    @DisplayName(" Url request /ruleName/update/{id} - Id Negative "
+    		+ " - Given a RuleName, Id Negative"
+    		+ " when POST /ruleName/update/{id} action request,"
+    		+ " then returns error & redirect /ruleName/update page")    
+    @Test
+    public void testPostRuleNameValidateIdNegative() throws Exception {
+
+    	when(ruleNameService
+    			.updateRuleName(anyInt(), any(RuleNameDTO.class)))
+     	.thenReturn(testRuleNameDTO1);
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/1")
+        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", "-1")
+		        .param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasNoErrors())
+		        .andExpect(model().size(0))
+		        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
+		        .andExpect(redirectedUrl("/ruleName/list"))
+		        .andExpect(status().is(302));
+
+        verify(ruleNameService, times(1)).updateRuleName(anyInt(), any(RuleNameDTO.class));
+    }
+
+    // ********************************************************************
+
 }
