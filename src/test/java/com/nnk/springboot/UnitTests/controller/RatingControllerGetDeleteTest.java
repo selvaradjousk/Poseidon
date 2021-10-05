@@ -7,9 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +23,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.RatingController;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.service.RatingService;
 
@@ -93,6 +89,24 @@ class RatingControllerGetDeleteTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request rating/delete/{id} invalid id- "
+    		+ " - Given a Rating rating/delete/{id} invalid id,"
+    		+ " when GET rating/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetRatingDeleteNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/rating/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(ratingService, times(0)).deleteRating(1);
+    }
+
+    // ********************************************************************
+   
+   
 
 
 }
