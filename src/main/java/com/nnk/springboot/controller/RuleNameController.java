@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.service.IRuleNameService;
 
@@ -54,7 +53,12 @@ public class RuleNameController {
 
     @GetMapping("/add")
     public String addRuleForm(final RuleNameDTO ruleNameDTO) {
-        return "ruleName/add";
+
+    	log.info("Request GET for ruleName/add received");
+
+    	log.info("Request GET for ruleName/add reponse SUCCESS(200 OK)");
+
+    	return "ruleName/add";
     }
 
   	// ********************************************************************
