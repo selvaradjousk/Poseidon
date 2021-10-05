@@ -93,9 +93,18 @@ public class CurveController {
     public String deleteBid(
     		@PathVariable("id") final Integer id,
     		final Model model) {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
-        return "redirect:/curvePoint/list";
+
+       	log.info("Request DELETE curvePoint/delete/{id} received - ID: {}", id);
+
+    	curvePointService.deleteCurvePoint(id);
+
+    	log.info("Request DELETE for curvePoint/delete/{} SUCCESS", id);
+
+    	return "redirect:/curvePoint/list";
     }
+
+    // ********************************************************************
+
 
 
   	// ********************************************************************
