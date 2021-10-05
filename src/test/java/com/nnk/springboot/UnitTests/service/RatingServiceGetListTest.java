@@ -53,7 +53,8 @@ class RatingServiceGetListTest {
     
     @BeforeEach
     public void setUp() {
-        objectMapper = new ObjectMapper();
+
+    	objectMapper = new ObjectMapper();
         testRatingDTO1 = RatingDTO.builder()
         		.id(1)
         		.moodysRating("MoodyRating1")
