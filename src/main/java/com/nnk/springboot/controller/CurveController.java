@@ -36,8 +36,13 @@ public class CurveController {
     @GetMapping("/list")
     public String home(final Model model)
     {
+
+    	log.info("Request GET for curvePoint/list received");
+
     	model.addAttribute("curvePoints", curvePointService
     			.getAllCurvePoint());
+
+    	log.info("Request GET for curvePoint/list reponse SUCCESS(200 OK)");
 
     	return "curvePoint/list";
     }
