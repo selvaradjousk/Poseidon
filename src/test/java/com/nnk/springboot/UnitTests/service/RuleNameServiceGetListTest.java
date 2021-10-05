@@ -46,14 +46,15 @@ class RuleNameServiceGetListTest {
     
     private static RuleName testRuleName1, testRuleName2;
     
-    private static List<RuleNameDTO> RuleNameDTOList;
+    private static List<RuleNameDTO> ruleNameDTOList;
     
-    private static List<RuleName> RuleNameList;
+    private static List<RuleName> ruleNameList;
 
     
     @BeforeEach
     public void setUp() {
-        objectMapper = new ObjectMapper();
+
+    	objectMapper = new ObjectMapper();
         testRuleNameDTO1 = RuleNameDTO.builder()
         		.name("RuleName1")
         		.description("Description1")
@@ -72,7 +73,7 @@ class RuleNameServiceGetListTest {
         		.sqlPart("SqlPart2")
         		.build();
         
-        RuleNameDTOList = Arrays.asList(testRuleNameDTO1, testRuleNameDTO2);   
+        ruleNameDTOList = Arrays.asList(testRuleNameDTO1, testRuleNameDTO2);   
         
         testRuleName1 = RuleName.builder()
         		.name("RuleName1")
@@ -92,7 +93,7 @@ class RuleNameServiceGetListTest {
         		.sqlPart("SqlPart2")
         		.build();
         
-        RuleNameList = Arrays.asList(testRuleName1, testRuleName2);   
+        ruleNameList = Arrays.asList(testRuleName1, testRuleName2);   
         
     }
     
@@ -108,7 +109,7 @@ class RuleNameServiceGetListTest {
         	
             when(RuleNameRepository
             		.findAll())
-            .thenReturn(RuleNameList);
+            .thenReturn(ruleNameList);
             
             when(RuleNameMapper
             		.toRuleNameDTO(testRuleName1))
@@ -189,7 +190,7 @@ class RuleNameServiceGetListTest {
           		 .getAllRuleName();
            
            // THEN
-           assertEquals(RuleNameDTOList, result);
+           assertEquals(ruleNameDTOList, result);
        
         }
    	
@@ -211,7 +212,7 @@ class RuleNameServiceGetListTest {
             		 .getAllRuleName();
              
              // THEN
-             assertEquals(RuleNameDTOList.size(), result.size());
+             assertEquals(ruleNameDTOList.size(), result.size());
              assertEquals(2, result.size());
 
           }    

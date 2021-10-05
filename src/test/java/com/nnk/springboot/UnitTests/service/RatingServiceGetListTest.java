@@ -46,9 +46,9 @@ class RatingServiceGetListTest {
     
     private static Rating testRating1, testRating2;
     
-    private static List<RatingDTO> RatingDTOList;
+    private static List<RatingDTO> ratingDTOList;
     
-    private static List<Rating> RatingList;
+    private static List<Rating> ratingList;
 
     
     @BeforeEach
@@ -70,7 +70,7 @@ class RatingServiceGetListTest {
         		.orderNumber(2)
         		.build();
         
-        RatingDTOList = Arrays.asList(testRatingDTO1, testRatingDTO2);   
+        ratingDTOList = Arrays.asList(testRatingDTO1, testRatingDTO2);   
         
         testRating1 = Rating.builder()
         		.id(1)
@@ -88,7 +88,7 @@ class RatingServiceGetListTest {
         		.orderNumber(2)
         		.build();
         
-        RatingList = Arrays.asList(testRating1, testRating2);   
+        ratingList = Arrays.asList(testRating1, testRating2);   
         
     }
     
@@ -104,7 +104,7 @@ class RatingServiceGetListTest {
         	
             when(RatingRepository
             		.findAll())
-            .thenReturn(RatingList);
+            .thenReturn(ratingList);
             
             when(RatingMapper
             		.toRatingDTO(testRating1))
@@ -182,7 +182,7 @@ class RatingServiceGetListTest {
             		 .getAllRating();
              
              // THEN
-             assertEquals(RatingDTOList, result);
+             assertEquals(ratingDTOList, result);
          
           }
      	
@@ -206,7 +206,7 @@ class RatingServiceGetListTest {
 		  		 .getAllRating();
 		   
 		   // THEN
-		   assertEquals(RatingDTOList.size(), result.size());
+		   assertEquals(ratingDTOList.size(), result.size());
 		   assertEquals(2, result.size());
 		
 		}    
