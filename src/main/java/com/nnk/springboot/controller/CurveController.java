@@ -66,9 +66,22 @@ public class CurveController {
     		@Valid final CurvePointDTO curvePointDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check data valid and save to db, after saving return Curve list
-        return "curvePoint/add";
+
+    	log.info("Request post for curvePoint/validate received");
+
+    	if (result.hasErrors()) {
+
+        	log.error("Request post for curvePoint/validate Error(s) {} ", result);
+
+    		return "curvePoint/add";
+        }
+        curvePointService.addCurvePoint(curvePointDTO);
+
+       	log.info("Request post for curvePoint/validate SUCCESS");
+
+        return "redirect:/curvePoint/list";
     }
+
 
   	// ********************************************************************
 
