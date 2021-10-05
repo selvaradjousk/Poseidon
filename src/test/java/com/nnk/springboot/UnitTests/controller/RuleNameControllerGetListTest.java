@@ -113,5 +113,25 @@ class RuleNameControllerGetListTest {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request /ruleName/list - NULL LIST "
+    		+ " - Given a RuleName List,"
+    		+ " when GET /ruleName/list action request,"
+    		+ " then returns ruleNameslist page")    
+    @Test
+    public void testGetRuleNameListNull() throws Exception {
+        when(ruleNameService.getAllRuleName()).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/list"))
+//                .andExpect(model().attributeExists("ruleNames"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("ruleName/list"))
+                .andExpect(status().isOk());
+
+        verify(ruleNameService, times(1)).getAllRuleName();
+        assertNull((ruleNameService.getAllRuleName()));
+    }
+
+    // ********************************************************************
+   
  
 }
