@@ -178,7 +178,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -219,7 +219,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -263,7 +263,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -302,7 +302,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -344,7 +344,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -387,7 +387,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -429,7 +429,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -479,7 +479,7 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -520,7 +520,7 @@ class RuleNameControllerPostUpdateTest {
 		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(1))
+		        .andExpect(model().size(2))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
 		        .andExpect(view().name("ruleName/update"))
 		        .andExpect(status().is(200))
@@ -532,6 +532,47 @@ class RuleNameControllerPostUpdateTest {
         String content = result.getResponse().getContentAsString();
         
         assertThat(content).contains("The maximum length for sqlStr can be 125 characters");
+    }
+
+    // ********************************************************************
+
+    @DisplayName(" Url request /ruleName/update/{id} - SqlPart length > 125 "
+    		+ " - Given a RuleName - SqlPart length > 125,"
+    		+ " when POST /ruleName/update/{id} action request,"
+    		+ " then returns error & redirect /ruleName/update page")    
+    @Test
+    public void testPostRuleNameValidateSqlPartWith125MoreCharacters() throws Exception {
+    	when(ruleNameService.getAllRuleName()).thenReturn(ruleNameDTOList);
+
+    	when(ruleNameService
+    			.updateRuleName(anyInt(), any(RuleNameDTO.class)))
+     	.thenReturn(testRuleNameDTO1);
+        
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/1")
+		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", testRuleNameDTO1.getId().toString())
+			.param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlPart())
+		        .param("sqlPart", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+		        .andExpect(model().hasErrors())
+		        .andExpect(model().size(2))
+		        .andExpect(model().attributeExists("ruleNameDTO"))
+		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(status().is(200))
+		        .andReturn();
+
+        verify(ruleNameService, times(0)).getAllRuleName();
+        verify(ruleNameService, times(0)).updateRuleName(anyInt(), any(RuleNameDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The maximum length for sqlPart can be 125 characters");
     }
 
     // ********************************************************************
