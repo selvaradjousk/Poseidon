@@ -1,5 +1,7 @@
  package com.nnk.springboot.UnitTests.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
@@ -8,6 +10,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -110,6 +114,40 @@ class CurvePointControllerPostUpdateTest {
         .andExpect(status().is(302));
 
         verify(curvePointService, times(1)).updateCurvePoint(anyInt(), any(CurvePointDTO.class));
+    }
+
+    // ********************************************************************
+
+
+    @DisplayName("Url request /curvePoint/update/{id} - CurveIdNegative - "
+    		+ " - Given a CurvePoint - CurveIdNegative-,"
+    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithCurveIdNegative() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService..updateCurvePoint(anyInt(), any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/update/1")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", "-1")
+        .param("term", testCurvePointDTO1.getTerm().toString())
+        .param("value", testCurvePointDTO1.getValue().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).updateCurvePoint(anyInt(), any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The value must be positive");
+              
     }
 
     // ********************************************************************
