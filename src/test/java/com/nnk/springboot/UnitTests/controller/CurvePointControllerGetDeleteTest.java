@@ -87,7 +87,24 @@ class CurvePointControllerGetDeleteTest {
 
     // ********************************************************************
 
-  
+
+    @DisplayName(" Url request curvePoint/delete/{id} invalid id- "
+    		+ " - Given a CurvePoint curvePoint/delete/{id} invalid id,"
+    		+ " when GET curvePoint/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetCurvePointDeleteNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/curvePoint/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(curvePointService, times(0)).deleteCurvePoint(1);
+    }
+
+    // ********************************************************************
+   
+     
 
 
 }
