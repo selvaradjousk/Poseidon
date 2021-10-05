@@ -119,6 +119,41 @@ class CurvePointControllerPostValidateTest {
     // ********************************************************************
 
 
+
+    @DisplayName("Url request /curvePoint/validate - CurveIdNegative - "
+    		+ " - Given a CurvePoint - CurveIdNegative-,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithCurveIdNegative() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService.addCurvePoint(any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/validate")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", "-1")
+        .param("term", testCurvePointDTO1.getTerm().toString())
+        .param("value", testCurvePointDTO1.getValue().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).addCurvePoint(any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The value must be positive");
+              
+    }
+
+    // ********************************************************************
+
+
         
     
 }
