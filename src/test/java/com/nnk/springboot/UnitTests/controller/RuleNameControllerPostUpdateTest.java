@@ -236,4 +236,47 @@ class RuleNameControllerPostUpdateTest {
     // ********************************************************************
 
 
+
+
+    @DisplayName(" Url request /ruleName/update/{id} - Name length > 125 "
+    		+ " - Given a RuleName - Name length > 125,"
+    		+ " when POST /ruleName/update/{id} action request,"
+    		+ " then returns error & redirect /ruleName/update page")    
+    @Test
+    public void testPostRuleNameValidateNameWith125MoreCharecters() throws Exception {
+    	when(ruleNameService.getAllRuleName()).thenReturn(ruleNameDTOList);
+
+    	when(ruleNameService
+    			.updateRuleName(anyInt(), any(RuleNameDTO.class)))
+     	.thenReturn(testRuleNameDTO1);
+        
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/1")
+		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", testRuleNameDTO1.getId().toString())
+		        .param("name", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasErrors())
+		        .andExpect(model().size(1))
+		        .andExpect(model().attributeExists("ruleNameDTO"))
+		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(status().is(200))
+		        .andReturn();
+
+        verify(ruleNameService, times(0)).getAllRuleName();
+        verify(ruleNameService, times(0)).updateRuleName(anyInt(), any(RuleNameDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The maximum length for name can be 125 characters");
+    }
+
+    // ********************************************************************
+
 }
