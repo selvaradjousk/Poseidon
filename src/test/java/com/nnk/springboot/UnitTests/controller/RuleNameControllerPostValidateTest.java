@@ -1,5 +1,6 @@
 package com.nnk.springboot.UnitTests.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -7,6 +8,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +23,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -99,18 +102,18 @@ class RuleNameControllerPostValidateTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
-        .param("id", testRuleNameDTO1.getId().toString())
-        .param("name", testRuleNameDTO1.getName())
-        .param("description", testRuleNameDTO1.getDescription())
-        .param("json", testRuleNameDTO1.getJson())
-        .param("template", testRuleNameDTO1.getTemplate())
-        .param("sqlStr", testRuleNameDTO1.getSqlStr())
-        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
-        .andExpect(model().hasNoErrors())
-        .andExpect(model().size(0))
-        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
-        .andExpect(redirectedUrl("/ruleName/list"))
-        .andExpect(status().is(302));
+		        .param("id", testRuleNameDTO1.getId().toString())
+		        .param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasNoErrors())
+		        .andExpect(model().size(0))
+		        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
+		        .andExpect(redirectedUrl("/ruleName/list"))
+		        .andExpect(status().is(302));
 
         verify(ruleNameService, times(1)).addRuleName(any(RuleNameDTO.class));
     }
@@ -131,23 +134,61 @@ class RuleNameControllerPostValidateTest {
         
         mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
-        .param("id", "-1")
-        .param("name", testRuleNameDTO1.getName())
-        .param("description", testRuleNameDTO1.getDescription())
-        .param("json", testRuleNameDTO1.getJson())
-        .param("template", testRuleNameDTO1.getTemplate())
-        .param("sqlStr", testRuleNameDTO1.getSqlStr())
-        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
-        .andExpect(model().hasNoErrors())
-        .andExpect(model().size(0))
-        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
-        .andExpect(redirectedUrl("/ruleName/list"))
-        .andExpect(status().is(302));
+		        .param("id", testRuleNameDTO1.getId().toString())
+		        .param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasNoErrors())
+		        .andExpect(model().size(0))
+		        .andExpect(model().attributeDoesNotExist("ruleNameDTO"))
+		        .andExpect(redirectedUrl("/ruleName/list"))
+		        .andExpect(status().is(302));
 
         verify(ruleNameService, times(1)).addRuleName(any(RuleNameDTO.class));
     }
 
     // ********************************************************************
+
+
+    @DisplayName(" Url request /ruleName/validate - EmptyName "
+    		+ " - Given a RuleName - EmptyName,"
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
+    @Test
+    public void testPostRuleNameValidateEmptyName() throws Exception {
+    	when(ruleNameService.getAllRuleName()).thenReturn(ruleNameDTOList);
+//    	when(ruleNameService.addRuleName(any(RuleNameDTO.class))).thenReturn(any(RuleNameDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", testRuleNameDTO1.getId().toString())
+		        .param("name", "")
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", testRuleNameDTO1.getTemplate())
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasErrors())
+		        .andExpect(model().size(1))
+		        .andExpect(model().attributeExists("ruleNameDTO"))
+		        .andExpect(view().name("ruleName/add"))
+		        .andExpect(status().is(200))
+		        .andReturn();
+
+        verify(ruleNameService, times(0)).getAllRuleName();
+        verify(ruleNameService, times(0)).addRuleName(any(RuleNameDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Name is mandatory");
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
+
 
 
 }
