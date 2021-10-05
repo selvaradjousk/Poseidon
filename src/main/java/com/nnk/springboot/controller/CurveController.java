@@ -51,7 +51,12 @@ public class CurveController {
 
     @GetMapping("/add")
     public String addBidForm(final CurvePointDTO curvePointDTO) {
-        return "curvePoint/add";
+
+    	log.info("Request GET for curvePoint/add received");
+
+    	log.info("Request GET for curvePoint/add reponse SUCCESS(200 OK)");
+
+    	return "curvePoint/add";
     }
 
   	// ********************************************************************
