@@ -445,4 +445,54 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
+    @DisplayName(" Url request /ruleName/update/{id} - Template length > 512 "
+    		+ " - Given a RuleName - Template length > 512,"
+    		+ " when POST /ruleName/update/{id} action request,"
+    		+ " then returns error & redirect /ruleName/update page")    
+    @Test
+    public void testPostRuleNameValidateTemplateWith512MoreCharacters() throws Exception {
+    	when(ruleNameService.getAllRuleName()).thenReturn(ruleNameDTOList);
+
+    	when(ruleNameService
+    			.updateRuleName(anyInt(), any(RuleNameDTO.class)))
+     	.thenReturn(testRuleNameDTO1);
+        
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/1")
+		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
+		        .param("id", testRuleNameDTO1.getId().toString())
+			.param("name", testRuleNameDTO1.getName())
+		        .param("description", testRuleNameDTO1.getDescription())
+		        .param("json", testRuleNameDTO1.getJson())
+		        .param("template", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
+		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
+		        .andExpect(model().hasErrors())
+		        .andExpect(model().size(1))
+		        .andExpect(model().attributeExists("ruleNameDTO"))
+		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(status().is(200))
+		        .andReturn();
+
+        verify(ruleNameService, times(0)).getAllRuleName();
+        verify(ruleNameService, times(0)).updateRuleName(anyInt(), any(RuleNameDTO.class));
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The maximum length for template can be 512 characters");
+    }
+
+    // ********************************************************************
+
 }
