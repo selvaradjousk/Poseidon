@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nnk.springboot.domain.RuleName;
+import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.service.IRuleNameService;
 
 import lombok.extern.log4j.Log4j2;
@@ -52,7 +53,7 @@ public class RuleNameController {
 
 
     @GetMapping("/add")
-    public String addRuleForm(RuleName bid) {
+    public String addRuleForm(final RuleNameDTO ruleNameDTO) {
         return "ruleName/add";
     }
 
@@ -60,7 +61,10 @@ public class RuleNameController {
 
 
     @PostMapping("/validate")
-    public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
+    public String validate(
+    		final @Valid RuleNameDTO ruleNameDTO,
+    		final BindingResult result,
+    		final Model model) {
         // TODO: check data valid and save to db, after saving return RuleName list
         return "ruleName/add";
     }
@@ -69,16 +73,29 @@ public class RuleNameController {
 
 
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get RuleName by Id and to model then show to the form
-        return "ruleName/update";
+    public String showUpdateForm(
+    		@PathVariable("id") final Integer id,
+    		final Model model) {
+
+       	log.info("Request GET ruleName/update/{id} received - ID: {}", id);
+
+    	RuleNameDTO ruleNameDTO = ruleNameService.getRuleNameById(id);
+
+    	model.addAttribute("ruleNameDTO", ruleNameDTO);
+
+    	log.info("Request GET for ruleName/update{id} SUCCESS");
+
+    	return "ruleName/update";
     }
 
   	// ********************************************************************
 
     @PostMapping("/update/{id}")
-    public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
-                             BindingResult result, Model model) {
+    public String updateRuleName(
+    		@PathVariable("id") final Integer id,
+    		@Valid final RuleNameDTO ruleNameDTO,
+    		final BindingResult result,
+    		final Model model) {
         // TODO: check required fields, if valid call service to update RuleName and return RuleName list
         return "redirect:/ruleName/list";
     }
