@@ -172,7 +172,41 @@ import com.nnk.springboot.service.RatingService;
 
 	        String content = result.getResponse().getContentAsString();
 	        
-	        assertThat(content).contains("MoodysRating is mandatory");
+	        assertThat(content).contains("Moodys Rating is mandatory");
+	        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+	    }
+
+	    // ********************************************************************
+
+
+
+	    @DisplayName(" Url request /rating/validate - Name With Symbols "
+	    		+ " - Given a Rating - Name With Symols,"
+	    		+ " when POST /rating/validate action request,"
+	    		+ " then returns error & redirect /rating/add page")    
+	    @Test
+	    public void testPostRatingValidateNameWithSymbols() throws Exception {
+	    	when(ratingService.getAllRating()).thenReturn(ratingDTOList);
+//	    	when(ratingService.addRating(any(RatingDTO.class))).thenReturn(any(RatingDTO.class));
+	        
+	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/validate")
+			        .sessionAttr("ratingDTO", testRatingDTO1)
+			        .param("id", testRatingDTO1.getId().toString())
+			        .param("moodysRating", "&&&aaa")
+			        .param("sandPRating", testRatingDTO1.getSandPRating())
+			        .param("fitchRating", testRatingDTO1.getFitchRating()))
+			        .andExpect(model().hasErrors())
+			        .andExpect(model().size(1))
+			        .andExpect(model().attributeExists("ratingDTO"))
+			        .andExpect(view().name("rating/add"))
+			        .andExpect(status().is(200))
+			        .andReturn();
+
+	        verify(ratingService, times(0)).getAllRating();
+	        verify(ratingService, times(0)).addRating(any(RatingDTO.class));
+
+	        String content = result.getResponse().getContentAsString();
+	        
 	        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
 	    }
 
