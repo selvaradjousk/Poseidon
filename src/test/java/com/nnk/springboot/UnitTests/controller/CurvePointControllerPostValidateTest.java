@@ -327,6 +327,40 @@ class CurvePointControllerPostValidateTest {
 
     // ********************************************************************
 
-       
+
+
+    @DisplayName("Url request /curvePoint/validate - Value Null - "
+    		+ " - Given a CurvePoint - Value Null-,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns error & redirect /curvePoint/add page")    
+    @Test
+    public void testPostCurvePointValidateWithValueNull() throws Exception {
+    	when(curvePointService.getAllCurvePoint()).thenReturn(curvePointDTOList);
+//    	when(curvePointService.addCurvePoint(any(CurvePointDTO.class))).thenReturn(any(CurvePointDTO.class));
+        
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/curvePoint/validate")
+        .sessionAttr("curvePointDTO", testCurvePointDTO1)
+        .param("curveId", testCurvePointDTO1.getCurveId().toString())
+        .param("term", testCurvePointDTO1.getTerm().toString())
+        .param("value", ""))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(1))
+        .andExpect(model().attributeExists("curvePointDTO"))
+        .andExpect(view().name("curvePoint/add"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        verify(curvePointService, times(0)).getAllCurvePoint();
+        verify(curvePointService, times(0)).addCurvePoint(any(CurvePointDTO.class));
+        
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Value is mandatory");
+              
+    }
+
+    // ********************************************************************
+             
          
 }
