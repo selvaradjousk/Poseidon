@@ -108,9 +108,30 @@ public class CurveController {
     		@Valid final CurvePointDTO curvePointDTO,
     		final BindingResult result,
     		final Model model) {
-        // TODO: check required fields, if valid call service to update Curve and return Curve list
+
+    	log.info("Request POST curvePoint/update/{id} received - ID: {}", id);
+
+        if (result.hasErrors()) {
+
+        	log.error("Request post for curvePoint/update{id} Error(s) {} ", result);
+
+        	model.addAttribute("curvePointDTO", curvePointDTO);
+            model.addAttribute(id);
+
+          	log.info("Request POST curvePoint/update/{id} SUCCESS for - ID: {}", id);
+
+        	return "curvePoint/update";
+        }
+
+        curvePointService.updateCurvePoint(id, curvePointDTO);
+
+    	log.info("Request POST for curvePoint/update{id} SUCCESS");
+
         return "redirect:/curvePoint/list";
     }
+
+    // ********************************************************************
+
 
   	// ********************************************************************
 
