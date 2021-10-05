@@ -91,4 +91,22 @@ class RuleNameControllerGetDeleteTest {
     // ********************************************************************
 
 
+    
+    @DisplayName(" Url request ruleName/delete/{id} invalid id "
+    		+ " - Given a RuleName ruleName/delete/{id} invalid id,"
+    		+ " when GET ruleName/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetRuleNameDeleteNull() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+        verify(ruleNameService, times(0)).deleteRuleName(1);
+    }
+
+    // ********************************************************************
+   
+   
 }
