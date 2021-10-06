@@ -6,7 +6,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Login in Poseidon</title>
+<title>Welcome to Poseidon</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -24,14 +24,14 @@
 		<div class="container">
 			<div class="header">
 				<a href="#default" class="logo"><img alt="logo"
-					src="img/logo.png"></a>
-				<div class="header-right">
+					th:src="@{/img/logo.PNG}"></a>
+<!-- 				<div class="header-right">
 					<a class="active" href="#" th:href="@{/home}">Home</a> <a href="#"
 						th:href="@{/transaction}">Buddy-Transfer </a> <a href="#"
 						th:href="@{/profile}">Profile</a> <a href="#"
 						th:href="@{/contact}">Contact</a> <a href="#" th:href="@{/logout}">Log
 						off</a>
-				</div>
+				</div> -->
 			</div>
 
 
@@ -51,7 +51,7 @@
 
 							<div>
 								<div class="row">
-									<h1>Sign in to your Account 💰</h1>
+									<h2>Sign in to Poseidon </h2>
 								</div>
 
 								<br /> <br />
@@ -60,8 +60,15 @@
 									choose a social network to login directly or fill in this form
 									to create an account.</legend>
 
-
-<br> <br>
+					            </br>
+					            <div th:if="${param.error}">
+					                <p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+					            </div>
+					
+					            <div th:if="${param.logout}">
+					                <p class="text-warning">You have been logged out.</p>
+					            </div>
+						<br> <br>
 								<div class="vl">
 								
 									<span class="vl-innertext">or</span>
@@ -99,10 +106,11 @@
 										<br />
 										<div >
 											<input type="text" id="username" name="username" size="50"
-												maxlength="50" minlength="5" required="true"
-												placeholder=" ✉  Email" /> <br /> <input type="password"
+												maxlength="50" minlength="8" required="true"
+												placeholder=" ✉  Username" /> <br />
+											<input type="password"
 												id="password" name="password" size="50" maxlength="50"
-												minlength="5" required="true" placeholder=" 🔑  Password" />
+												minlength="8" required="true" placeholder=" 🔑  Password" />
 											<br />
 
 

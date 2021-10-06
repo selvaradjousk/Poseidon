@@ -25,13 +25,13 @@
 			<div class="header">
 				<a href="#default" class="logo"><img alt="logo"
 					src="img/logo.png"></a>
-				<div class="header-right">
+				<!-- <div class="header-right">
 					<a class="active" href="#" th:href="@{/home}">Home</a> <a href="#"
 						th:href="@{/transaction}">Buddy-Transfer </a> <a href="#"
 						th:href="@{/profile}">Profile</a> <a href="#"
 						th:href="@{/contact}">Contact</a> <a href="#" th:href="@{/logout}">Log
 						off</a>
-				</div>
+				</div> -->
 			</div>
 
 			<section>
@@ -41,18 +41,14 @@
   <p>Some content..</p>  -->
 					<div>
 
-						<div th:if="${errorMessage}" th:utext="${errorMessage}"
-							style="color: red; font-style: italic; font-weight: bold;">...
-						</div>
-
 						<div>
 
 							<br /> <br />
-							<form th:action="@{/register}" method="post">
+							<form th:action="@{/register}" th:object="${userDTO}" method="post" class="form-horizontal" style="width: 100%">
 
 								<div>
 									<div class="row">
-										<h1>Registration - Open Your Account 💰</h1>
+										<h2>Register your Account here..</h2>
 									</div>
 									
 									<br /> <br />
@@ -60,40 +56,51 @@
 									<legend style="font-style: italic; font-size: 18px">Please
 										 fill in this form
 										to create an account.</legend>
-<br> <br>
-	
+<br> 
 
+						<div th:if="${error}" th:utext="${error}"
+							style="color: red; font-style: italic; font-weight: bold;">
+							User with this username exists, Choose a different name,
+							or if you are the user go to login session for sign in !
+						</div>
+
+<br>
+	<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+	<p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
+	<p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 
 									<div class="container-register">
 
 										<div class="put">
 										
 										<br> <br><br>
-											<label for="firstName"><span></span> <input
-												type="text" class="form-control" id="firstName"
-												name="firstName" th:value="${firstName}" size="50"
+											<label for="fullname"><span></span> <input
+												type="text" class="form-control" id="fullname"
+												name="fullname" th:value="${fullname}" size="50"
 												maxlength="20" minlength="2" required="true"
-												placeholder=" 👤  Firstname (required)" /> </label><br> <label
-												for="lastName"> <span></span> <input type="text"
-												class="form-control" id="lastName" name="lastName"
-												th:value="${lastName}" size="50" maxlength="20"
+												placeholder=" 👤  Fullname (required)" />
+												
+											</label>
+											<br>
+											<label for="username"> <span></span> <input type="text"
+												class="form-control" id="username" name="username"
+												th:value="${username}" size="50" maxlength="20"
 												minlength="2" required="true"
-												placeholder=" 👤  Lastname (required)" />
-											</label><br> <label for="email"> <span></span> <input
-												type="email" class="form-control" id="email" name="email"
-												th:value="${email}" size="50" maxlength="50" minlength="5"
-												required="true" placeholder=" ✉  Email (required)" />
-											</label><br> <label for="password"> <span></span> <input
+												placeholder=" 👤  Username (required)" />
+												
+											</label>
+											<br> 
+											<label for="password"> <span></span> <input
 												type="password" class="form-control" id="password"
 												name="password" th:value="${password}" size="50"
-												maxlength="50" minlength="10" required="true"
+												maxlength="50" minlength="1" required="true"
 												placeholder=" 🔒  Password (required)" />
-											</label><br> <label for="confirmation"> <span></span> <input
-												type="password" class="form-control" id="confirmation"
-												name="confirmation" th:value="${confirmation}" size="50"
-												maxlength="50" minlength="10" required="true"
-												placeholder=" 🔑  Confirm Password " />
-											</label><br>
+												
+											</label>
+											<br>
+											<label for="password">Role - User</label>
+											<label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="USER" th:checked ></label>
+                        					<p class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
 											<hr>
 											<p>
 												By creating an account you agree to our <a href="#">Terms
@@ -106,7 +113,6 @@
 										<div class="signup_blue">
 											<button type="submit" class="btn"
 												style="color: white; background-color: orange"
-												onclick="return confirm( 'an account validation email has been sent to you.')"
 												size="50">Sign up 💸</button>
 												<p>Already a member?  <a href="#" th:href="@{/login}">Sign In Here 💸💲</a> </p>
 										</div>

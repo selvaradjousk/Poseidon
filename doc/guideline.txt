@@ -29,3 +29,12 @@
 ## Security
 1. Create user service to load user from  database and place in package com.nnk.springboot.services
 2. Add configuration class and place in package com.nnk.springboot.config
+
+
+## Password for DML: $2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK (Password1!)
+ * DML - Data Definition Language (INSERT, UPDATE, DELETE, LOCK, CALL, EXPLAIN PLAN)
+ * DQL - Data Query Language (SELECT)
+ * DDL - Data Definition Language (Schema - CREATE, DROP, ALTER, TRUNCATE, COMMENT RENAME))
+ * DCL - Data Control Language (GRANT, REVOKE)
+ * TCL - Transaction Control Language ( COMMIT, ROLLBACK, SAVEPOINT, SET TRANSACTION)
+ 

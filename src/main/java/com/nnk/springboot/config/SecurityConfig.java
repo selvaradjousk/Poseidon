@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**")
                 	.permitAll()
 
-                .antMatchers("/images/**")
+                .antMatchers("/img/**")
                 	.permitAll()
 
                 .antMatchers("/register/**")
@@ -110,7 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		// list of cookies to be deleted when the user logs out
         		.deleteCookies("JSESSIONID")
         		// Spring security default logout value
-        		.logoutUrl("/logout")
+        		.logoutUrl("/app-logout")
         		.logoutSuccessUrl("/login");
 
 
