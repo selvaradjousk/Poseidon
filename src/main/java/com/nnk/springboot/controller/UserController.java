@@ -3,6 +3,7 @@ package com.nnk.springboot.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,6 +45,20 @@ public class UserController {
     {
 
     	log.info("Request GET for user/list received");
+
+        boolean adminSession = SecurityContextHolder
+        		.getContext()
+        		.getAuthentication()
+        		.getAuthorities().toString()
+        		.equals("[ADMIN]");
+
+        if (adminSession){
+
+        	log.info("Session ADMIN " + adminSession
+        			+ " USER LIST is accessible" );
+
+        	model.addAttribute("admin", "admin");
+        }
 
     	model.addAttribute(
         		"users",

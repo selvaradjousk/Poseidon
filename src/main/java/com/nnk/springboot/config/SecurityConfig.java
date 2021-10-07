@@ -66,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/")
                 	.permitAll()
 
+                	// ----------------
+                	// permit all
+                	// -----------------
                 .antMatchers("/css/**")
                 	.permitAll()
 
@@ -75,13 +78,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register/**")
                 	.permitAll()
 
-                .antMatchers("/admin/*")
+
+                	// -----------------
+                	// user + admin
+                	// -----------------
+//                .antMatchers(
+//                    "/bidList/**",
+//                    "/curvePoint/**",
+//                    "/ruleName/**",
+//                    "/rating/**",
+//                    "/trade/**")
+//                .hasAnyRole("USER", "ADMIN")
+
+
+	            	// -----------------
+	            	// admin
+	            	// -----------------
+                   .antMatchers("/admin/*")
                 	.hasAuthority("ADMIN")
                 
                 .antMatchers("/user/*")
                 	.hasAuthority("ADMIN")
-                
-                .anyRequest().authenticated();
+
+
+//                	// -----------------
+//                    // ERROR HANDLING
+//                	// -----------------
+//                    .and()
+//                    .exceptionHandling()
+//                    .accessDeniedPage("/error")               
+                .anyRequest().authenticated()
+                ;
 
 
         // ************************************************************************    	
@@ -90,12 +117,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.loginPage("/login")
         		// redirect the user to the home page on login success
 
+        		.loginProcessingUrl("/login")
         		.defaultSuccessUrl("/bidList/list")
         		// redirect the user back to the login page on error login
 
         		.failureUrl("/login?error=true").permitAll();
 
+        // ************************************************************************    	
+    	http.oauth2Login()
+        // ************************************************************************
+        		.loginPage("/login")
+        		// redirect the user to the home page on login success
+//
+//        		.loginProcessingUrl("/login")
+        		.defaultSuccessUrl("/bidList/list");
+        		// redirect the user back to the login page on error login
 
+//        		.failureUrl("/login?error=true").permitAll();
+
+    	
+    	
+    	
+    	
         //      http
         //				.oauth2Login()
         //      		.defaultSuccessUrl("/home", true)

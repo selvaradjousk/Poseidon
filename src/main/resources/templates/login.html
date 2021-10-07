@@ -76,8 +76,13 @@
 
 
 								<div class="col">
+								
+								<br>
+								<br>
 								<br> 
-									<a style="font-style: italic; font-size: 15px" href="#" class="fb btn"> <i class="fa fa-facebook fa-fw"></i>Login
+								
+								
+								<!-- 	<a style="font-style: italic; font-size: 15px" href="#" class="fb btn"> <i class="fa fa-facebook fa-fw"></i>Login
 										with Facebook
 									</a> <a style="font-style: italic; font-size: 15px" href="#" class="twitter btn"> <i
 										class="fa fa-twitter fa-fw"></i> Login with Twitter
@@ -93,6 +98,20 @@
 									</a> <a href="#" th:href="@{/register}"
 										style=" font-size:16px; color: white; background-color:rgba(255,0,0,0.8);" class="btn">If
 										you don't have an account? .. Sign Up Here 💲</a>
+								 -->		
+
+
+			<div class="container-fluid" style="margin-top: 20px">
+       			<div class="d-flex flex-row justify-content-start align-items-center">
+            		<h4>Or Sign in using : </h4>
+	            <div style="margin-left: 15px"><!-- GITHUB -->
+	                <a href="http://localhost:9090/oauth2/authorization/github"><img alt="GitHub" th:src="@{/img/github.PNG}" height="89px"/></a>
+	            </div>
+	            
+	            </div>
+			</div>
+										
+										
 								</div>
 
 								<div class="col">
@@ -106,7 +125,7 @@
 										<br />
 										<div >
 											<input type="text" id="username" name="username" size="50"
-												maxlength="50" minlength="8" required="true"
+												maxlength="50" minlength="2" required="true"
 												placeholder=" ✉  Username" /> <br />
 											<input type="password"
 												id="password" name="password" size="50" maxlength="50"
