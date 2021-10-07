@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -24,31 +25,38 @@ public class HomeController {
 	}
 
 //	@RequestMapping("/admin/home")
-	@GetMapping("/admin/home")
-	public String adminHome(Authentication auth)
-	{
-	    for (GrantedAuthority role : auth.getAuthorities()) {
-		        if (role.getAuthority().equals("ROLE_ADMIN")) {
-		          return "redirect:/user/list";
-		        }
-		    }
-		return "redirect:/bidList/list";
-		   
-				//  boolean adminSession = SecurityContextHolder
-				//	.getContext()
-				//	.getAuthentication()
-				//	.getAuthorities().toString()
-				//	.equals("[ADMIN]");
-				//
-				//if (adminSession) {
-				//model.addAttribute("admin", "admin");	  
-				//}
-				
-				
-				//for (GrantedAuthority role : auth.getAuthorities()) {
-				//if (role.getAuthority().equals("ROLE_ADMIN")) {
-				//return "redirect:/user/list";
-				//}
-				//} 
-	}
+//	@GetMapping("/admin/home")
+//	public String adminHome(Authentication auth)
+//	{
+//	    for (GrantedAuthority role : auth.getAuthorities()) {
+//		        if (role.getAuthority().equals("ROLE_ADMIN")) {
+//		          return "redirect:/user/list";
+//		        }
+//		    }
+//		return "redirect:/bidList/list";
+//		   
+//				//  boolean adminSession = SecurityContextHolder
+//				//	.getContext()
+//				//	.getAuthentication()
+//				//	.getAuthorities().toString()
+//				//	.equals("[ADMIN]");
+//				//
+//				//if (adminSession) {
+//				//model.addAttribute("admin", "admin");	  
+//				//}
+//				
+//				
+//				//for (GrantedAuthority role : auth.getAuthorities()) {
+//				//if (role.getAuthority().equals("ROLE_ADMIN")) {
+//				//return "redirect:/user/list";
+//				//}
+//				//} 
+//	}
+	
+    @RequestMapping("/admin/home")
+    public String adminHome(Model model)
+    {
+        return "redirect:/bidList/list";
+    }
+	
 }
