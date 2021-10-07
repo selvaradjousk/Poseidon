@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -92,7 +93,7 @@ class RuleNameControllerGetListTest {
     
   	// ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /ruleName/list - "
     		+ " - Given a RuleName List,"
     		+ " when GET /ruleName/list action request,"
@@ -113,7 +114,7 @@ class RuleNameControllerGetListTest {
 
     // ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /ruleName/list - NULL LIST "
     		+ " - Given a RuleName List,"
     		+ " when GET /ruleName/list action request,"

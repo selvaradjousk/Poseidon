@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -99,7 +100,7 @@ class BidListControllerGetListTest {
     
   	// ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /bidList/list - "
     		+ " - Given a BidList List,"
     		+ " when GET /bidList/list action request,"
@@ -120,7 +121,7 @@ class BidListControllerGetListTest {
 
     // ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /bidList/list - "
     		+ " - Given a BidList List,"
     		+ " when GET /bidList/list action request,"

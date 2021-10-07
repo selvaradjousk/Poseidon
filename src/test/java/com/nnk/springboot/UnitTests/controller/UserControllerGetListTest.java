@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
+import org.springframework.security.test.context.support.WithMockUser;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -81,7 +82,7 @@ class UserControllerGetListTest {
     
   	// ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /user/list - "
     		+ " - Given a User List,"
     		+ " when GET /user/list action request,"
@@ -102,7 +103,7 @@ class UserControllerGetListTest {
 
     // ********************************************************************
 
-    
+    @WithMockUser(username="admin")
     @DisplayName(" Url request /user/list - "
     		+ " - Given a User List,"
     		+ " when GET /user/list action request,"
