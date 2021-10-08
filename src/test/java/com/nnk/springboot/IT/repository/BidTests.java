@@ -20,7 +20,7 @@ import com.nnk.springboot.repository.BidListRepository;
 //@RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource({"/application-test.properties"})
-
+//@Import(EnableEncryptablePropertiesConfiguration.class)
 public class BidTests {
 
 	@Autowired
