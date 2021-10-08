@@ -2,6 +2,8 @@ package com.nnk.springboot.config;
 
 
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +25,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsService userDetailsService;
 
+    // ************************************************************************
+    
+    // https://www.javainuse.com/spring/boot-jwt
+    
+    // ===>  UserDetailsService (Autowired) *
+    // ===>  UserDetailsService (can be send as bean for custom user details service)
 
+    
+    // ===>  AuthEntryPointJwt (Autowired) **
+    // ===>  AuthTokenFilter (Bean) ***
+ 
+    
+    // ===>  AuthenticationManager (Bean) ***
+    // ===>  PasswordEncoder (Bean) ***
 
+    // ===>  DaoAuthenticationProvider  passed into config AuthMangagerBuilder instead of userDetailsService*
+    
+    // ===>  configure - AuthenticationManagerBuilder ***
+    // ===>  configure - HttpSecurity ***
+    //			- http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    
+    // ===>  configure - Websecurity *
+    // 			- web.ignoring().anthMatchers("/resources/**", "/static/**", "/webjars/**")
+    
+    // need stateless authentication with a JWT token
+    // ===> Enable CORS and disable CSRF
+    // ===> Set session management to stateless
+    // ===> Set unauthorized requests exception handler
+    // ===> Set permissions on endpoints
+    // ===> Add JWT token filter
+    
+ 
     // ************************************************************************
     // ************************************************************************
     @Bean
@@ -42,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // ************************************************************************
     // ************************************************************************
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 
     	log.info("auth.userDetailsService(userDetailsService) - function called");
 
@@ -59,16 +91,54 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception{
 
+    	// -------------------------------------
+        // Enable CORS and disable CSRF
+        http = http.cors().and().csrf().disable();
+        // -------------------------------------
+
+        // https://stackoverflow.com/questions/57882688/spring-security-oauth2-with-jwt-redirect-to-login-page
+        // https://blog.jdriven.com/2014/10/stateless-spring-security-part-2-stateless-authentication/
+        // https://www.baeldung.com/spring-security-oauth-jwt
+        // -------------------------------------
+        // Set session management to stateless
+        // -------------------------------------
+//        http = http
+//            .sessionManagement()
+//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//            .and();
+        // The above stateless is breaking the oauth login sessions and with classic login
+
+        
+        
+        
+        // Following https://www.toptal.com/spring/spring-security-tutorial        
+        
+        
+
+        // Set unauthorized requests exception handler
+        http = http
+            .exceptionHandling()
+            .authenticationEntryPoint(
+                (request, response, ex) -> {
+                    response.sendError(
+                        HttpServletResponse.SC_UNAUTHORIZED,
+                        ex.getMessage()
+                    );
+                }
+            )
+            .and();        
+
         // ************************************************************************
+    	// SET PERMISSION ON ENDPOINTS
     	http.authorizeRequests()
         // ************************************************************************
 
+    			// ----------------
+    			// PUBLIC ENDPOINTS
+    			// -----------------
                 .antMatchers("/")
                 	.permitAll()
 
-                	// ----------------
-                	// permit all
-                	// -----------------
                 .antMatchers("/css/**")
                 	.permitAll()
 
@@ -79,6 +149,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 	.permitAll()
 
 
+        			// ----------------
+        			// PRIVATE ENDPOINTS
+        			// -----------------
+                	
                 	// -----------------
                 	// user + admin
                 	// -----------------
@@ -92,11 +166,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	            	// -----------------
-	            	// admin
+	            	// PRIVATE ADMIN SPECIFIC ACCESS ENDPOINTS
 	            	// -----------------
                    .antMatchers("/admin/*")
                 	.hasAuthority("ADMIN")
-                
+
                 .antMatchers("/user/*")
                 	.hasAuthority("ADMIN")
 
@@ -106,7 +180,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                	// -----------------
 //                    .and()
 //                    .exceptionHandling()
-//                    .accessDeniedPage("/error")               
+//                    .accessDeniedPage("/error")  
+                	
+                	// PRIVATE ENDPOINTS for USERS & ADMIN
                 .anyRequest().authenticated()
                 ;
 
