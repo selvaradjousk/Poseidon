@@ -26,6 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.ui.Model;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -100,7 +101,7 @@ class TradeControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /trade/list - "
     		+ " - Given a Trade List,"
     		+ " when GET /trade/list action request,"
@@ -140,5 +141,5 @@ class TradeControllerGetListTest {
     }
 
     // ********************************************************************
-    
+  
 }

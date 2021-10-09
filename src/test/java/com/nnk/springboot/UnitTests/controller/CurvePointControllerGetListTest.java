@@ -103,7 +103,7 @@ class CurvePointControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /curvePoint/list - "
     		+ " - Given a CurvePoint List,"
     		+ " when GET /curvePoint/list action request,"

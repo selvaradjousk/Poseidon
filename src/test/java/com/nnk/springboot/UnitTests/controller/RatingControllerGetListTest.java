@@ -88,7 +88,7 @@ class RatingControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /rating/list - "
     		+ " - Given a Rating List,"
     		+ " when GET /rating/list action request,"

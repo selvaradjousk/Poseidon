@@ -74,10 +74,6 @@ public class LoginController {
 
         	mav.addObject("login", principal
         			.getAttribute("login"));
-
-            log.error("Username from Oauth recovered"
-            		+ " - Status {} ", mav.getStatus());
-
         }
 
         mav.setViewName("403");

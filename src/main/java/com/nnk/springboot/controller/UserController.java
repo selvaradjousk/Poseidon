@@ -54,8 +54,7 @@ public class UserController {
 
         if (adminSession){
 
-        	log.info("Session ADMIN " + adminSession
-        			+ " USER LIST is accessible" );
+        	log.info("Session ADMIN USER LIST is accessible" );
 
         	model.addAttribute("admin", "admin");
         }

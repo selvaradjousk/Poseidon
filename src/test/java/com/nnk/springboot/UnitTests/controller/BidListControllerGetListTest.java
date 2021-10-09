@@ -100,7 +100,7 @@ class BidListControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /bidList/list - "
     		+ " - Given a BidList List,"
     		+ " when GET /bidList/list action request,"

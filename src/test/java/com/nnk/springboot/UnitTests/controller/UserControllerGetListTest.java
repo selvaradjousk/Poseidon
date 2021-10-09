@@ -82,7 +82,7 @@ class UserControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /user/list - "
     		+ " - Given a User List,"
     		+ " when GET /user/list action request,"

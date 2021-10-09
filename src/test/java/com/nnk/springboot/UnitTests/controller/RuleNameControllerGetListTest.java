@@ -93,7 +93,7 @@ class RuleNameControllerGetListTest {
     
   	// ********************************************************************
 
-    @WithMockUser(username="admin")
+    @WithMockUser(username="admin",roles={"ADMIN"})
     @DisplayName(" Url request /ruleName/list - "
     		+ " - Given a RuleName List,"
     		+ " when GET /ruleName/list action request,"

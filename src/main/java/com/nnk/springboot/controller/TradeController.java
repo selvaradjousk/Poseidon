@@ -43,10 +43,9 @@ public class TradeController {
         		.getAuthorities().toString()
         		.equals("[ADMIN]");
 
-        if (adminSession){
+		if (adminSession){
 
-        	log.info("Session ADMIN " + adminSession
-        			+ " USER LIST is accessible" );
+        	log.info("Session ADMIN  - USER LIST is accessible" );
 
         	model.addAttribute("admin", "admin");
         }
@@ -57,6 +56,7 @@ public class TradeController {
 
         return "trade/list";
     }
+
 
     // ********************************************************************
 
