@@ -1,10 +1,27 @@
 package com.nnk.springboot.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.LoginRequest;
+import com.nnk.springboot.repository.UserRepository;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -13,15 +30,82 @@ import lombok.extern.log4j.Log4j2;
 //@RequestMapping("app")
 public class LoginController {
 
-//    @Autowired
-//    private UserRepository userRepository;
 
+    @Autowired
+	AuthenticationManager authenticationManager;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	PasswordEncoder encoder;
+
+	@Autowired
+	JwtUtils jwtUtils;
+
+	//    @Autowired
+
+	//    private UserRepository userRepository;
+
+	// ******************************************************************
     @GetMapping("login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
         return mav;
     }
+    // ******************************************************************
+
+    @RequestMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public String authenticateUser(
+			@Valid final LoginRequest loginRequest,
+			final HttpServletResponse response,
+			final Model model) {
+
+    	log.debug("POST LOGIN CALLED ***************");
+
+        try {
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(
+						loginRequest.getUsername(),
+						loginRequest.getPassword()));
+
+		log.info("*********** Authentication: " + authentication + "Login Request: " + loginRequest + "Response: " + response + "Model: " + model  + "AUTHENTICATION: " +  authentication);
+
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		String jwt = jwtUtils.generateJwtToken(authentication);
+
+    	log.debug("JWT" + jwt+ "*******************");       
+
+		Cookie cookie = new Cookie("token", jwt);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/bitList/list");
+        cookie.setMaxAge(10000);
+        response.addCookie(cookie);
+
+        //		MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();		
+//		List<String> roles = userDetails.getAuthorities().stream()
+//				.map(item -> item.getAuthority())
+//				.collect(Collectors.toList());
+
+    	log.debug("*********************COOKIE: " + cookie);
+
+        return "bidList/list";
+
+        } catch (Exception e) {
+
+    	String errorMessage = "Invalid credentials";
+
+    	model.addAttribute("errorMessage",errorMessage);
+
+    	return "login";
+    }
+}
+
+
 
     // ******************************************************************
     // what way article-details link to user list ???? Need clarity!!!!
@@ -81,5 +165,17 @@ public class LoginController {
         log.error("Login redirect 403 error");
 
         return mav;
+    }
+
+    @RequestMapping("/login-error")
+    public String loginError(Model model) {
+
+    	log.error("invalid user login attempt");
+
+    	model.addAttribute("loginError", "invalid user credentials or session");
+
+    	log.trace("Display login view");
+
+    	return "login";
     }
 }

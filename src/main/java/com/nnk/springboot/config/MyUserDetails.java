@@ -1,9 +1,8 @@
 package com.nnk.springboot.config;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,26 +10,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.nnk.springboot.domain.User;
 
-import lombok.ToString;
-
 
 
 /**
  * The Class MyUserDetails.
  * @author Senthil
  */
-@ToString
 public class MyUserDetails  implements UserDetails {
 
+	private static final long serialVersionUID = 1L;
+
+    private Integer id;
 
 	/** The user name. */
-	private String userName;
+	private String username;
 
     /** The password. */
     private String password;
 
     /** The authorities. */
-    private List<GrantedAuthority> authorities;
+    private GrantedAuthority authorities;
 
     // ************************************************************************
 
@@ -39,15 +38,26 @@ public class MyUserDetails  implements UserDetails {
      *
      * @param user the user
      */
-    public MyUserDetails(final User user) {
-        this.userName = user.getUsername();
-        this.password = user.getPassword();
-        this.authorities = Arrays.stream(user.getRole().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
+    public MyUserDetails(Integer id, String username, String password,
+            GrantedAuthority authorities) {
+				this.id = id;
+				this.username = username;
+				this.password = password;
+				this.authorities = authorities;
+				}
 
     // ************************************************************************
+
+
+	public static MyUserDetails build(User user) {
+        GrantedAuthority authorities = new SimpleGrantedAuthority(user.getRole());
+
+        return new MyUserDetails(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                authorities);
+    }
 
     /**
      * Gets the authorities.
@@ -56,7 +66,12 @@ public class MyUserDetails  implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return List.of(authorities);
+    }
+
+
+    public Integer getId() {
+        return id;
     }
 
     /**
@@ -76,7 +91,7 @@ public class MyUserDetails  implements UserDetails {
      */
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     /**
@@ -120,7 +135,19 @@ public class MyUserDetails  implements UserDetails {
     }
 
 
-//    /**
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        MyUserDetails user = (MyUserDetails) o;
+        return Objects.equals(id, user.id);
+    }
+
+    
+    
+    //    /**
 //     * To string.
 //     *
 //     * @return the string

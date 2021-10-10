@@ -22,6 +22,7 @@
 	<div class="container-outer">
 
 		<div class="container">
+		
 			<div class="header">
 				<a href="#default" class="logo"><img alt="logo"
 					th:src="@{/img/logo.PNG}"></a>
@@ -46,8 +47,10 @@
 					<div>
 
 						<br /> <br />
-
+		<p th:if="${loginError}" class="alert alert-danger" th:text="${loginError}">Wrong user or password</p>
+        <p th:if="${loginSession}" class="alert alert-danger" th:text="${loginSession}">Invalid session</p>
 						<form th:action="@{/login}" method="POST">
+
 
 							<div>
 								<div class="row">
@@ -130,9 +133,12 @@
 										</div>
 										<br />
 										<div >
+								
+										
 											<input type="text" id="username" name="username" size="50"
 												maxlength="50" minlength="2" required="true"
 												placeholder=" ✉  Username" /> <br />
+												
 											<input type="password"
 												id="password" name="password" size="50" maxlength="50"
 												minlength="8" required="true" placeholder=" 🔑  Password" />
@@ -141,7 +147,7 @@
 
 										</div>
 										<div class="check">
-											<label> <input type="checkbox" value="remember-me">Remember
+											<label> <input type="checkbox"  id="remember-me" name="remember-me">Remember
 												me
 											</label>
 										</div>

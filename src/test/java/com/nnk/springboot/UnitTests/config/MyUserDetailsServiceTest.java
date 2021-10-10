@@ -22,83 +22,86 @@ import com.nnk.springboot.repository.UserRepository;
 @DisplayName("MyUserDetailService - H2 DB TEST ")
 @ExtendWith(MockitoExtension.class)
 class MyUserDetailsServiceTest {
-
-	
-	@Mock
-	UserRepository userRepository;
-
-	@InjectMocks
-	MyUserDetailsService myUserDetailService;
-	
-	  
-	
-    private static User testUser1, testUser2;
-    User toTestUser1 = new User("Username", "Password", "Fullname", "admin");
-    User toTestUser2 = new User("Username", "Password", "Fullname", "admin");
-
-
-	/** The to test 1. */
-	UserDetails toTest1 = new MyUserDetails(toTestUser1);
-
-	/** The to test 2. */
-	UserDetails toTest2 = new MyUserDetails(toTestUser2);
-
-	
-    @Test
-    @DisplayName("Given - Valid User,"
-    		+ " When loadUserByUsername,"
-    		+ " THEN Asserts Not foundExpected")
-    public void testLoadUserByUsernameNotFound() {
-
-    	assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
-	     		  -> myUserDetailService.loadUserByUsername("Username"));
-      	
-    }
-
-    
-	  
-  	// *******************************************************************
-
-	  @DisplayName("User Details Test Null - "
-				+ "GIVEN user email null"
-				+ "WHEN loadUserByUsername"
-				+ "THEN returns Exception")
-	  @Test
-	  public void testLoadUserByUsernameNull(){
-	
-		    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
-		     		  -> myUserDetailService.loadUserByUsername(null));		
-  }  
-  
-	    
-	  
-	  	// *******************************************************************
-
-		  @DisplayName("User Details Test invalid username- "
-					+ "GIVEN user email invalid"
-					+ "WHEN loadUserByUsername"
-					+ "THEN returns Exception")
-		  @Test
-		  public void testLoadUserByUsernameinvalidName(){
-		
-			    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
-			     		  -> myUserDetailService.loadUserByUsername("SDFSDFSDFSQFDSQDF"));		
-	  }  
-	  
-	       
-	  
-	  	// *******************************************************************
-
-		  @DisplayName("User Details Test username ButNotFound- "
-					+ "GIVEN user email ButNotFound"
-					+ "WHEN loadUserByUsername"
-					+ "THEN returns Exception")
-		  @Test
-		  public void testLoadUserByUsernameValidEmailButNotFound(){
-		
-			    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
-			     		  -> myUserDetailService.loadUserByUsername("Username11"));		
-	  }  
-	  
+//
+//	
+//	@Mock
+//	UserRepository userRepository;
+//	
+//	@Mock
+//	MyUserDetails myUserDetails;
+//
+//	@InjectMocks
+//	MyUserDetailsService myUserDetailService;
+//	
+//	  
+//	
+//    private static User testUser1, testUser2;
+//    User toTestUser1 = new User("1, Username", "Password", "Fullname", "admin");
+//    User toTestUser2 = new User("2, Username", "Password", "Fullname", "admin");
+//
+//
+//	/** The to test 1. */
+//	UserDetails toTest1 = new MyUserDetails(toTestUser1);
+//
+//	/** The to test 2. */
+//	UserDetails toTest2 = new MyUserDetails(toTestUser2);
+//
+//	
+//    @Test
+//    @DisplayName("Given - Valid User,"
+//    		+ " When loadUserByUsername,"
+//    		+ " THEN Asserts Not foundExpected")
+//    public void testLoadUserByUsernameNotFound() {
+//
+//    	assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
+//	     		  -> myUserDetailService.loadUserByUsername("Username"));
+//      	
+//    }
+//
+//    
+//	  
+//  	// *******************************************************************
+//
+//	  @DisplayName("User Details Test Null - "
+//				+ "GIVEN user email null"
+//				+ "WHEN loadUserByUsername"
+//				+ "THEN returns Exception")
+//	  @Test
+//	  public void testLoadUserByUsernameNull(){
+//	
+//		    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
+//		     		  -> myUserDetailService.loadUserByUsername(null));		
+//  }  
+//  
+//	    
+//	  
+//	  	// *******************************************************************
+//
+//		  @DisplayName("User Details Test invalid username- "
+//					+ "GIVEN user email invalid"
+//					+ "WHEN loadUserByUsername"
+//					+ "THEN returns Exception")
+//		  @Test
+//		  public void testLoadUserByUsernameinvalidName(){
+//		
+//			    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
+//			     		  -> myUserDetailService.loadUserByUsername("SDFSDFSDFSQFDSQDF"));		
+//	  }  
+//	  
+//	       
+//	  
+//	  	// *******************************************************************
+//
+//		  @DisplayName("User Details Test username ButNotFound- "
+//					+ "GIVEN user email ButNotFound"
+//					+ "WHEN loadUserByUsername"
+//					+ "THEN returns Exception")
+//		  @Test
+//		  public void testLoadUserByUsernameValidEmailButNotFound(){
+//		
+//			    assertThrows(org.springframework.security.core.userdetails.UsernameNotFoundException.class, ()
+//			     		  -> myUserDetailService.loadUserByUsername("Username11"));		
+//	  }  
+//	  
 	        
 }
