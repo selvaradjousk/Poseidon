@@ -250,6 +250,35 @@ class BidListControllerPostUpdate_IT {
 
     // ********************************************************************
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/update/{id} - Type MoreThanThiryCharacters - "
+    		+ " - Given a BidList - Type MoreThanThiryCharacters,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithMoreThanThiryCharacters() throws Exception {
+
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", "TypeTypeTypeTypeTypeTypeTypeType")
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("The maximum length for type should be 30 characters");
+
+    }
+
+    // ********************************************************************
+
 
 
 
