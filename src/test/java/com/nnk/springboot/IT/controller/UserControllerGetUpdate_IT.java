@@ -1,7 +1,6 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,38 +18,32 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.nnk.springboot.service.UserService;
-
-@DisplayName("INTEGRATION TESTS - Controller < USER > GET LIST")
+@DisplayName("INTEGRATION TESTS - Controller < USER - GET UPDATE>")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class UserControllerGetList_IT {
+class UserControllerGetUpdate_IT {
 
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private UserService userService;
-
     @BeforeEach
     public void setUp() {
 
-
     }
+    // ********************************************************************
+
+
     
-  	// ********************************************************************
-
-
-    @DisplayName(" Url request GET /user/list - Without Authentication"
-    		+ " - Given a User List,"
-    		+ " when GET /user/list action request,"
+    @DisplayName(" Url request /user/update/{id} - Without Authentication"
+    		+ " - Given a User,"
+    		+ " when GET /user/update/{id} action request,"
     		+ " then returns Error Authentication required")    
     @Test
-    public void testGetUserListWithoutAuthentication() throws Exception {
+    public void testGetUserUpdateByIdWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/update/1"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -62,23 +55,23 @@ class UserControllerGetList_IT {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /user/list - With Authentication"
-    		+ " - Given a User List,"
-    		+ " when GET /user/list action request,"
-    		+ " then returns userslist page")    
+    @DisplayName(" Url request /user/update/{id} - "
+    		+ " - Given a User,"
+    		+ " when GET /user/update/{id} action request,"
+    		+ " then returns user ADD page")    
     @Test
-    public void testGetUserListWithAuthentication() throws Exception {
+    public void testGetUserUpdateById() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
-                .andExpect(model().attributeExists("users"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/update/1"))
+                .andExpect(model().attributeExists("userDTO"))
                 .andExpect(model().size(1))
-                .andExpect(view().name("user/list"))
+                .andExpect(view().name("user/update"))
                 .andExpect(status().isOk());
 
-        assertEquals(6, (userService.getAllUser()).size());
     }
 
     // ********************************************************************
 
+    
     
 }
