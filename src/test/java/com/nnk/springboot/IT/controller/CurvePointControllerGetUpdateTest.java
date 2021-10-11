@@ -1,7 +1,6 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -19,34 +18,38 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.nnk.springboot.service.CurvePointService;
+import com.nnk.springboot.config.MyUserDetailsService;
 
-@DisplayName("INTEGRATION TESTS - Controller < CURVEPOINT > GET LIST")
+@DisplayName("INTEGRATION TESTS - Controller < CURVEPOINT - GET UPDATE>")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointControllerGetList_IT {
+class CurvePointControllerGetUpdateTest {
 
     @Autowired
     private MockMvc mockMvc;
-    
+
     @Autowired
-    private CurvePointService curvePointService;
+    MyUserDetailsService myUserDetailsService;
 
     @BeforeEach
     public void setUp() {
 
     }
- 	// ********************************************************************
+    
+    
+    // ********************************************************************
 
-    @DisplayName(" Url request /curvePoint/list - Without Authentication"
-    		+ " - Given a CurvePoint List,"
-    		+ " when GET /curvePoint/list action request,"
-    		+ " then returns Error Authentication required")
+
+    
+    @DisplayName(" Url request /curvePoint/update/{id} - Without Authentication"
+    		+ " - Given a CurvePoint,"
+    		+ " when GET /curvePoint/update/{id} action request,"
+    		+ " then returns Error Authentication required")    
     @Test
-    public void testGetCurvePointListWithoutAuthentication() throws Exception {
+    public void testGetCurvePointUpdateByIdWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(get("/curvePoint/list"))
+        mockMvc.perform(get("/curvePoint/update/1"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -54,27 +57,28 @@ class CurvePointControllerGetList_IT {
 	        .andExpect(unauthenticated());
 
     }
-  
-  	// ********************************************************************
 
-    @WithMockUser(username="admin",roles={"ADMIN", "USER"})
-    @DisplayName(" Url request /curvePoint/list - "
-    		+ " - Given a CurvePoint List,"
-    		+ " when GET /curvePoint/list action request,"
-    		+ " then returns curvePointslist page")
+    // ********************************************************************
+
+ 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /curvePoint/update/{id} - With Authentication"
+    		+ " - Given a CurvePoint,"
+    		+ " when GET /curvePoint/update/{id} action request,"
+    		+ " then returns curvePoint ADD page")    
     @Test
-    public void testGetCurvePointList() throws Exception {
+    public void testGetCurvePointUpdateById() throws Exception {
 
-        mockMvc.perform(get("/curvePoint/list"))
-                .andExpect(model().attributeExists("curvePoints"))
+        mockMvc.perform(get("/curvePoint/update/1"))
+                .andExpect(model().attributeExists("curvePointDTO"))
                 .andExpect(model().size(1))
-                .andExpect(view().name("curvePoint/list"))
+                .andExpect(view().name("curvePoint/update"))
                 .andExpect(status().isOk());
-
-        assertEquals(5, (curvePointService.getAllCurvePoint()).size());
 
     }
 
     // ********************************************************************
 
+        
+    
 }
