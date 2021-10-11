@@ -276,4 +276,33 @@ class BidListControllerPostValidate_IT {
 
     // ********************************************************************
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/validate - BidQuantityNegative - "
+    		+ " - Given a BidList - BidQuantityNegative-,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithBidQuantityNegative() throws Exception {
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+	        .sessionAttr("bidListDTO", testBidListDTO1)
+	        .param("account", testBidListDTO1.getAccount())
+	        .param("type", testBidListDTO1.getType())
+	        .param("bidQuantity", "-1000"))
+	        .andExpect(model().hasErrors())
+	        .andExpect(model().size(1))
+	        .andExpect(model().attributeExists("bidListDTO"))
+	        .andExpect(view().name("bidList/add"))
+	        .andExpect(status().is(200))
+	        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The bidQuantity must be positive");
+              
+    }
+
+    // ********************************************************************
+
 }
