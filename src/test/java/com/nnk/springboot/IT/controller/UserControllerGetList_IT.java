@@ -1,10 +1,11 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,78 +19,67 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-@DisplayName("INTEGRATION TESTS - Controller < USER > DELETE")
+import com.nnk.springboot.service.UserService;
+
+@DisplayName("INTEGRATION TESTS - Controller < USER > GET LIST")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class UserControllerGetDeleteTest {
+class UserControllerGetList_IT {
 
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UserService userService;
+
     @BeforeEach
     public void setUp() {
+
 
     }
     
   	// ********************************************************************
 
-    
-    @DisplayName(" Url request GET user/delete/{id} valid id - Without Authentication"
-    		+ " - Given a user/delete/{id} valid id, "
-    		+ " when GET user/delete action request,"
-    		+ " then returns Error Authentication required") 
-    @Test
-    public void testGetUserDeleteWithoutAuthentication() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/user/delete/1"))
+    @DisplayName(" Url request /user/list - Without Authentication"
+    		+ " - Given a User List,"
+    		+ " when GET /user/list action request,"
+    		+ " then returns Error Authentication required")    
+    @Test
+    public void testGetUserListWithoutAuthentication() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
 	        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
 	        .andExpect(unauthenticated());
- 
+
+        assertEquals(2, (userService.getAllUser()).size());
     }
 
     // ********************************************************************
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /user/list - With Authentication"
+    		+ " - Given a User List,"
+    		+ " when GET /user/list action request,"
+    		+ " then returns userslist page")    
+    @Test
+    public void testGetUserListWithAuthentication() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
+                .andExpect(model().attributeExists("users"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("user/list"))
+                .andExpect(status().isOk());
+
+        assertEquals(6, (userService.getAllUser()).size());
+    }
+
+    // ********************************************************************
+
     
-    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request user/delete/{id} valid id - With Authentication "
-    		+ " - Given a user/delete/{id} valid id, "
-    		+ " when GET user/delete action request,"
-    		+ " then returns delete page")    
-    @Test
-    public void testGetUserDeleteWithAuthentication() throws Exception {
-
-    	mockMvc.perform(MockMvcRequestBuilders.get("/user/delete/1"))
-    				.andExpect(redirectedUrl("/user/list"))
-            		.andExpect(status().isFound())
-            		.andExpect(model().hasNoErrors())
-            		.andExpect(status().is(302));
-
-
-        
-    }
-
-    // ********************************************************************
-
-    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request user/delete/{id} invalid id- "
-    		+ " - Given a User user/delete/{id} invalid id,"
-    		+ " when GET user/delete action request,"
-    		+ " then returns delete page")    
-    @Test
-    public void testGetUserDeleteNull() throws Exception {
-    	
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/delete/"))
-        		.andExpect(redirectedUrl(null))
-                .andExpect(status().is(404))
-        		.andExpect(status().isNotFound());
-
-    }
-
-    // ********************************************************************
-   
-   
 }
