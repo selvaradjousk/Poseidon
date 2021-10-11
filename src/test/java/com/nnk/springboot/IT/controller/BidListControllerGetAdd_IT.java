@@ -21,11 +21,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.nnk.springboot.controller.BidListController;
 
-@DisplayName("Controller < BIDLIST > GET ADD - INTEGRATION TESTS")
+@DisplayName("INTEGRATION TESTS - Controller < BIDLIST > GET ADD")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class BidListControllerGetAddTest {
+class BidListControllerGetAdd_IT {
 
 
 	@InjectMocks
@@ -59,7 +59,7 @@ class BidListControllerGetAddTest {
     // ********************************************************************
 
 
-    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER" })
+    @WithMockUser(username = "admin", authorities = { "ADMIN"})
     @DisplayName(" Url request /bidList/add - VALID ADMIN AUTH Login Status FOUND"
     		+ " - Given a BidList,"
     		+ " when GET /bidList/add action request,"
@@ -85,7 +85,7 @@ class BidListControllerGetAddTest {
     		+ " when GET /bidList/add action request,"
     		+ " then returns bidList ADD page")    
     @Test
-    public void testGetBidListAddUserUser() throws Exception {
+    public void testGetBidListAddUserAuthenticationUser() throws Exception {
 
         mockMvc.perform(get("/bidList/add"))
                 .andExpect(model().attributeExists("bidListDTO"))
