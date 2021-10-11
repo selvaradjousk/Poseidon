@@ -76,12 +76,12 @@ import com.nnk.springboot.dto.RatingDTO;
 	    // ********************************************************************
 
 	    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-	    @DisplayName(" Url request /rating/update/{id} - VALID"
+	    @DisplayName(" Url request /rating/update/{id} - With Authentication"
 	    		+ " - Given a Rating,"
 	    		+ " when POST /rating/update/{id} action request,"
 	    		+ " then returns redirect /rating/update/{id} page")    
 	    @Test
-	    public void testPostRatingValidate() throws Exception {
+	    public void testPostRatingValidateWithAuthentication() throws Exception {
 
        
 	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
