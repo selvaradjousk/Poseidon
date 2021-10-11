@@ -89,7 +89,7 @@ class BidListControllerPostUpdate_IT {
      public void testPostBidListUpdateWithAuthentication() throws Exception {
 
          
-         mockMvc.perform(post("/bidList/update/1")
+         mockMvc.perform(post("/bidList/update/2")
          .sessionAttr("bidListDTO", testBidListDTO1)
          .param("account", testBidListDTO1.getAccount())
          .param("type", testBidListDTO1.getType())

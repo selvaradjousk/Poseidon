@@ -74,7 +74,7 @@ class RatingControllerGetList_IT {
                 .andExpect(status().isOk());
 
 
-        assertEquals(5, (ratingService.getAllRating()).size());
+        assertEquals(4, (ratingService.getAllRating()).size());
 
     }
     // ********************************************************************
