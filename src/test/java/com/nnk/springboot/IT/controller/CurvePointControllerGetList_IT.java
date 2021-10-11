@@ -1,8 +1,9 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -16,34 +17,41 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-@DisplayName("INTEGRATION TESTS - Controller < CURVEPOINT > GET ADD")
+import com.nnk.springboot.controller.CurveController;
+import com.nnk.springboot.service.CurvePointService;
+
+@DisplayName("INTEGRATION TESTS - Controller < CURVEPOINT > GET LIST")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointControllerGetAdd_IT {
+class CurvePointControllerGetList_IT {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private CurveController curveController;
+    
+    @Autowired
+    private CurvePointService curvePointService;
 
     @BeforeEach
     public void setUp() {
 
     }
- 
-    // ********************************************************************
+ 	// ********************************************************************
 
-
-    
-    @DisplayName(" Url request /curvePoint/add - Without Authentication"
-    		+ " - Given a CurvePoint,"
-    		+ " when GET /curvePoint/add action request,"
-    		+ " then returns Error Authentication required")    
+    @DisplayName(" Url request /curvePoint/list - Without Authentication"
+    		+ " - Given a CurvePoint List,"
+    		+ " when GET /curvePoint/list action request,"
+    		+ " then returns Error Authentication required")
     @Test
-    public void testGetCurvePointAddWithoutAuthentication() throws Exception {
+    public void testGetCurvePointListWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(get("/curvePoint/add"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/curvePoint/list"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -51,27 +59,27 @@ class CurvePointControllerGetAdd_IT {
 	        .andExpect(unauthenticated());
 
     }
+  
+  	// ********************************************************************
 
-    // ********************************************************************
-
-
-    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /curvePoint/add - With Authentication"
-    		+ " - Given a CurvePoint,"
-    		+ " when GET /curvePoint/add action request,"
-    		+ " then returns curvePoint ADD page")    
+    @WithMockUser(username="admin",roles={"ADMIN", "USER"})
+    @DisplayName(" Url request /curvePoint/list - "
+    		+ " - Given a CurvePoint List,"
+    		+ " when GET /curvePoint/list action request,"
+    		+ " then returns curvePointslist page")
     @Test
-    public void testGetCurvePointAddWithAuthentication() throws Exception {
+    public void testGetCurvePointList() throws Exception {
 
-        mockMvc.perform(get("/curvePoint/add"))
-                .andExpect(model().attributeExists("curvePointDTO"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/curvePoint/list"))
+                .andExpect(model().attributeExists("curvePoints"))
                 .andExpect(model().size(1))
-                .andExpect(view().name("curvePoint/add"))
+                .andExpect(view().name("curvePoint/list"))
                 .andExpect(status().isOk());
+
+        assertEquals(5, (curvePointService.getAllCurvePoint()).size());
 
     }
 
     // ********************************************************************
-    
-    
+
 }
