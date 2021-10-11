@@ -56,16 +56,15 @@ import com.nnk.springboot.dto.RatingDTO;
 
 	  	// ********************************************************************
 
-	    @DisplayName(" Url request /rating/update/{id} - - Without Authentication"
+	    @DisplayName(" Url request /rating/update/{id} - Without Authentication"
 	    		+ " - Given a Rating,"
 	    		+ " when POST /rating/update/{id} action request,"
 	    		+ " then returns redirect /rating/update/{id} page")    
 	    @Test
 	    public void testPostRatingValidateWithoutAuthentication() throws Exception {
 
-       
 	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
-	        .sessionAttr("ratingDTO", testRatingDTO1))
+	        	.sessionAttr("ratingDTO", testRatingDTO1))
 		        .andExpect(status().is(401))
 		        .andDo(MockMvcResultHandlers.print())
 		        .andExpect(status().isUnauthorized())
