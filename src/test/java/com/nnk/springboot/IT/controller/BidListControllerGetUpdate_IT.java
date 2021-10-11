@@ -72,7 +72,7 @@ class BidListControllerGetUpdate_IT {
     @Test
     public void testGetBidListUpdateByIdWithAuthentication() throws Exception {
 
-        mockMvc.perform(get("/bidList/update/1"))
+        mockMvc.perform(get("/bidList/update/2"))
                 .andExpect(model().attributeExists("bidListDTO"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("bidList/update"))

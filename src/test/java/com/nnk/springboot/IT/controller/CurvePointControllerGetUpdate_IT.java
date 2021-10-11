@@ -69,7 +69,7 @@ class CurvePointControllerGetUpdate_IT {
     @Test
     public void testGetCurvePointUpdateById() throws Exception {
 
-        mockMvc.perform(get("/curvePoint/update/1"))
+        mockMvc.perform(get("/curvePoint/update/2"))
                 .andExpect(model().attributeExists("curvePointDTO"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("curvePoint/update"))

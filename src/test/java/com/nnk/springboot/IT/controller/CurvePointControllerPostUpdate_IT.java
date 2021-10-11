@@ -81,7 +81,7 @@ class CurvePointControllerPostUpdate_IT {
     public void testPostCurvePointValidateWithAuthentication() throws Exception {
 
         
-        mockMvc.perform(post("/curvePoint/update/1")
+        mockMvc.perform(post("/curvePoint/update/2")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
