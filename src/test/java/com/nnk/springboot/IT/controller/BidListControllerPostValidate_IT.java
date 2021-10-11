@@ -334,4 +334,36 @@ class BidListControllerPostValidate_IT {
 
     // ********************************************************************
 
+
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/validate - BuyQuantityWithSymbols - "
+    		+ " - Given a BidList - BuyQuantityWithSymbols -,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithBuyQuantityWithSymbols() throws Exception {
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+	        .sessionAttr("bidListDTO", testBidListDTO1)
+	        .param("account", testBidListDTO1.getAccount())
+	        .param("type", testBidListDTO1.getType())
+	        .param("bidQuantity", "100000&!-."))
+	        .andExpect(model().hasErrors())
+	        .andExpect(model().size(1))
+	        .andExpect(model().attributeExists("bidListDTO"))
+	        .andExpect(view().name("bidList/add"))
+	        .andExpect(status().is(200))
+	        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Failed to convert property value of type java.lang.String to required type java.lang.Double for property bidQuantity");
+              
+    }
+
+    // ********************************************************************
+
+ 
 }
