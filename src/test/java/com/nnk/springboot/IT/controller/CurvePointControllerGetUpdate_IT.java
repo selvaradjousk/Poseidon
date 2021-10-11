@@ -24,7 +24,7 @@ import com.nnk.springboot.config.MyUserDetailsService;
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointControllerGetUpdateTest {
+class CurvePointControllerGetUpdate_IT {
 
     @Autowired
     private MockMvc mockMvc;

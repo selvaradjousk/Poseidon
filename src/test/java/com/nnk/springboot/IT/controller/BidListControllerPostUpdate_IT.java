@@ -64,7 +64,7 @@ class BidListControllerPostUpdate_IT {
     @DisplayName(" Url request /bidList/update/{id} - VALID WithoutAuthentication"
     		+ " - Given a BidList,"
     		+ " when POST /bidList/update/{id} action request,"
-    		+ " then returns redirect /bidList/update/{id} page")    
+    		+ " then returns Error Authentication required")    
     @Test
     public void testPostBidListUpdateWithoutAuthentication() throws Exception {
 
