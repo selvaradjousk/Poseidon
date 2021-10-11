@@ -37,7 +37,7 @@ class TradeControllerGetAdd_IT {
     // ********************************************************************
 
 
-    @DisplayName(" Url request /trade/add - Without Authentication "
+    @DisplayName(" Url request GET /trade/add - Without Authentication "
     		+ " - Given a Trade,"
     		+ " when GET /trade/add action request,"
     		+ " then returns trade ADD page")    
