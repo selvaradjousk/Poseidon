@@ -3,6 +3,7 @@ package com.nnk.springboot.IT.controller;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -16,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.nnk.springboot.service.UserService;
@@ -50,7 +50,7 @@ class UserControllerGetList_IT {
     @Test
     public void testGetUserListWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
+        mockMvc.perform(get("/user/list"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -69,7 +69,7 @@ class UserControllerGetList_IT {
     @Test
     public void testGetUserListWithAuthentication() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/list"))
+        mockMvc.perform(get("/user/list"))
                 .andExpect(model().attributeExists("users"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("user/list"))
