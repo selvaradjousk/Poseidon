@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.dto.TradeDTO;
 
-@DisplayName("Controller < TRADE > -VALIDATE UNIT TESTS")
+@DisplayName("INTEGRATION TESTS - Controller < TRADE > - VALIDATE")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
@@ -55,7 +55,7 @@ class TradeControllerPostValidate_IT {
   
   	// ********************************************************************
 
-    @DisplayName(" Url request /trade/validate - Without Authentication"
+    @DisplayName(" Url request POST /trade/validate - Without Authentication"
     		+ " - Given a Trade,"
     		+ " when POST /trade/validate action request,"
     		+ " then returns Error Authentication required")   

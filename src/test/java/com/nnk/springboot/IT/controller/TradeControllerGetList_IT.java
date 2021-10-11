@@ -43,7 +43,7 @@ class TradeControllerGetList_IT {
     
   	// ********************************************************************
 
-    @DisplayName(" Url request /trade/list - "
+    @DisplayName(" Url request /trade/list - Without Authentication"
     		+ " - Given a Trade List, Without Authentication"
     		+ " when GET /trade/list action request,"
     		+ " then returns Error Authentication required") 

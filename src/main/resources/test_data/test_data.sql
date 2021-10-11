@@ -37,3 +37,10 @@ INSERT INTO `rulename` (`description`, `json`, `name`, `sql_part`, `sql_str`, `t
 			('description3', 'json3', 'name3', 'sql_part3', 'sql_str3', 'template3'),
 			('description4', 'json4', 'name4', 'sql_part4', 'sql_str4', 'template4'),
 			('description5', 'json5', 'name5', 'sql_part5', 'sql_str5', 'template5');
+
+insert into Users(fullname, username, password, role) values("User1", "user1", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "USER");
+insert into Users(fullname, username, password, role) values("User2", "user2", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "USER");
+insert into Users(fullname, username, password, role) values("User3", "user3", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "USER");
+insert into Users(fullname, username, password, role) values("User4", "user4", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "USER");
+insert into Users(fullname, username, password, role) values("User5", "user5", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "USER");			
+insert into Users(fullname, username, password, role) values("Administrator", "admin", "$2a$12$Oy/UKrmNbRccE9Gc6LZ3C.n20H//ezfWYKJAuM8XwMrqbcq6V1qPK", "ADMIN")
