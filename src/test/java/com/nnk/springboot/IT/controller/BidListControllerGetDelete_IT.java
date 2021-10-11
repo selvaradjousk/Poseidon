@@ -3,6 +3,7 @@ package com.nnk.springboot.IT.controller;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,9 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import com.nnk.springboot.service.BidListService;
 
 @DisplayName("INTEGRATION TESTS - Controller < BIDLIST > DELETE")
 @AutoConfigureMockMvc
@@ -51,5 +55,26 @@ class BidListControllerGetDelete_IT {
 
        
     }
+
+    // ********************************************************************
+
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request bidList/delete/{id} valid id - withAUTH Login Status FOUND"
+    		+ " - Given a bidList/delete/{id} valid id, "
+    		+ " when GET bidList/delete action request,"
+    		+ " then returns on SUCCESS redirect to /bidList/list page")    
+    @Test
+    public void testGetBidListDeleteWithAuthentication() throws Exception {
+	
+    	mockMvc.perform(get("/bidList/delete/1"))
+    				.andExpect(redirectedUrl("/bidList/list"))
+            		.andExpect(status().isFound())
+            		.andExpect(status().is(302));
+
+       
+    }
+
+    // ********************************************************************
 
 }
