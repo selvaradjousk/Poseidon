@@ -339,6 +339,35 @@ class BidListControllerPostUpdate_IT {
     // ********************************************************************
 
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/update/{id} - BidQuantityMoreThan10Digits - "
+    		+ " - Given a BidList - BidQuantityMoreThan10Digits -,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithBidQuantityMoreThan10Digits() throws Exception {
+        
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", "100000000000000.00"))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Invalid number input value : Maximum digits allowed are 10 and with 2 decimals fractions");
+              
+    }
+
+    // ********************************************************************
+
 
 
 
