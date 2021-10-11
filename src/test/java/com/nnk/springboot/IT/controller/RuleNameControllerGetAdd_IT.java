@@ -2,6 +2,7 @@ package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @DisplayName("INTEGRATION TESTS - Controller < RULENAME > GET ADD - UNIT TESTS")
@@ -44,7 +44,7 @@ class RuleNameControllerGetAdd_IT {
     @Test
     public void testGetRuleNameAddWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/add"))
+        mockMvc.perform(get("/ruleName/add"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -64,7 +64,7 @@ class RuleNameControllerGetAdd_IT {
     @Test
     public void testGetRuleNameAddWithAuthentication() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/add"))
+        mockMvc.perform(get("/ruleName/add"))
                 .andExpect(model().attributeExists("ruleNameDTO"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("ruleName/add"))

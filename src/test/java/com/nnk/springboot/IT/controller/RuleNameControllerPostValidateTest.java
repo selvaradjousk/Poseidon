@@ -3,6 +3,7 @@ package com.nnk.springboot.IT.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,7 +19,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +64,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateWithoutAuthentication() throws Exception {
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+        mockMvc.perform(post("/ruleName/validate")
 	        .sessionAttr("ruleNameDTO", testRuleNameDTO1))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
@@ -86,7 +86,7 @@ class RuleNameControllerPostValidateTest {
     public void testPostRuleNameValidateWithAuthentication() throws Exception {
 
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+        mockMvc.perform(post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", testRuleNameDTO1.getName())
@@ -113,7 +113,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateIdNegative() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+        mockMvc.perform(post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", "-1")
 		        .param("name", testRuleNameDTO1.getName())
@@ -141,7 +141,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateEmptyName() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "")
@@ -175,7 +175,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateNameWithSymbols() throws Exception {
  
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "&&&aaa")
@@ -208,7 +208,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateNameWith125MoreCharecters() throws Exception {
  
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -241,7 +241,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateEmptyDescription() throws Exception {
  
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", testRuleNameDTO1.getName())
@@ -276,7 +276,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateDescriptionWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -308,7 +308,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateDescriptionWith125MoreCharecters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -342,7 +342,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateJsonWith125MoreCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -376,7 +376,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateTemplateWith512MoreCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -417,7 +417,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateSqlStrWith125MoreCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -450,7 +450,7 @@ class RuleNameControllerPostValidateTest {
     @Test
     public void testPostRuleNameValidateSqlPartWith125MoreCharacters() throws Exception {
         
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
+    	MvcResult result = mockMvc.perform(post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())

@@ -2,6 +2,7 @@ package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @DisplayName("INTEGRATION TESTS - Controller < RULENAME > DELETE")
@@ -42,7 +42,7 @@ class RuleNameControllerGetDelete_IT {
     @Test
     public void testGetRuleNameDeleteWithoutAuthentication() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/delete/1"))
+    	mockMvc.perform(get("/ruleName/delete/1"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -61,7 +61,7 @@ class RuleNameControllerGetDelete_IT {
     @Test
     public void testGetRuleNameDeleteWithAuthentication() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/delete/1"))
+    	mockMvc.perform(get("/ruleName/delete/1"))
     				.andExpect(redirectedUrl("/ruleName/list"))
             		.andExpect(status().isFound())
             		.andExpect(model().hasNoErrors())
@@ -80,7 +80,7 @@ class RuleNameControllerGetDelete_IT {
     @Test
     public void testGetRuleNameDeleteNull() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/delete/"))
+    	mockMvc.perform(get("/ruleName/delete/"))
         		.andExpect(redirectedUrl(null))
                 .andExpect(status().is(404))
         		.andExpect(status().isNotFound());

@@ -3,6 +3,7 @@ package com.nnk.springboot.IT.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,7 +19,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -63,7 +63,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @Test
 	    public void testPostRatingValidateWithoutAuthentication() throws Exception {
 
-	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	        mockMvc.perform(post("/rating/update/2")
 	        	.sessionAttr("ratingDTO", testRatingDTO1))
 		        .andExpect(status().is(401))
 		        .andDo(MockMvcResultHandlers.print())
@@ -83,7 +83,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @Test
 	    public void testPostRatingValidateWithAuthentication() throws Exception {
        
-	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	        mockMvc.perform(post("/rating/update/2")
 	        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -108,7 +108,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @Test
 	    public void testPostRatingValidateIdNegative() throws Exception {
 	        
-	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	        mockMvc.perform(post("/rating/update/2")
 	        .sessionAttr("ratingDTO", testRatingDTO1)
 	        .param("id", "-1")
 	        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -133,7 +133,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @Test
 	    public void testPostRatingValidateEmptyMoodysRating() throws Exception {
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 	        .sessionAttr("ratingDTO", testRatingDTO1)
 	        .param("id", testRatingDTO1.getId().toString())
 	        .param("moodysRating", "")
@@ -165,7 +165,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateMoodysRatingWithSymbols() throws Exception {
 	        
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", "&&&aaa")
@@ -194,7 +194,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateMoodysRatingWith125MoreCharecters() throws Exception {
 	        
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -225,7 +225,7 @@ import com.nnk.springboot.dto.RatingDTO;
 		public void testPostRatingValidateEmptySandPRating() throws Exception {
 
 		    
-			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+			MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -256,7 +256,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateSandPRatingWithSymbols() throws Exception {
 
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -286,7 +286,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateSandPRatingWith125MoreCharecters() throws Exception {
    
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -317,7 +317,7 @@ import com.nnk.springboot.dto.RatingDTO;
 		public void testPostRatingValidateEmptyFitchRating() throws Exception {
 
 		    
-			MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+			MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -347,7 +347,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateFitchRatingWithSymbols() throws Exception {
 
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
@@ -377,7 +377,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    public void testPostRatingValidateFitchRatingWith125MoreCharecters() throws Exception {
 	        
 	        
-	    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
+	    	MvcResult result = mockMvc.perform(post("/rating/update/2")
 			        .sessionAttr("ratingDTO", testRatingDTO1)
 			        .param("id", testRatingDTO1.getId().toString())
 			        .param("moodysRating", testRatingDTO1.getMoodysRating())
