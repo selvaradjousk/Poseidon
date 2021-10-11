@@ -77,5 +77,25 @@ class BidListControllerGetAddTest {
 
     // ********************************************************************
 
+
+
+    @WithMockUser(username = "user", authorities = { "USER" })
+    @DisplayName(" Url request /bidList/add - VALID  with USER AUTH Login Status FOUND"
+    		+ " - Given a BidList,"
+    		+ " when GET /bidList/add action request,"
+    		+ " then returns bidList ADD page")    
+    @Test
+    public void testGetBidListAddUserUser() throws Exception {
+
+        mockMvc.perform(get("/bidList/add"))
+                .andExpect(model().attributeExists("bidListDTO"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("bidList/add"))
+                .andExpect(status().isOk());
+
+    }
+
+    // ********************************************************************
+      
     
 }
