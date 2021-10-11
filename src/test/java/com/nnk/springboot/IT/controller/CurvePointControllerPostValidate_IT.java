@@ -1,4 +1,4 @@
- package com.nnk.springboot.IT.controller;
+package com.nnk.springboot.IT.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -28,7 +28,8 @@ import com.nnk.springboot.dto.CurvePointDTO;
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointControllerPostUpdate_IT {
+class CurvePointControllerPostValidate_IT {
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,10 +38,19 @@ class CurvePointControllerPostUpdate_IT {
 	
     private static CurvePointDTO testCurvePointDTO1;
 
+
     @BeforeEach
     public void setUp() {
 
         objectMapper = new ObjectMapper();
+        objectMapper = new ObjectMapper();
+        testCurvePointDTO1 = CurvePointDTO.builder()
+        		.curveId(1)
+        		.term(10.0)
+        		.value(10.0)
+        		.build();
+ 
+        
         testCurvePointDTO1 = CurvePointDTO.builder()
         		.curveId(1)
         		.term(10.0)
@@ -50,38 +60,36 @@ class CurvePointControllerPostUpdate_IT {
 
     }
     
-   	// ********************************************************************
+  	// ********************************************************************
 
 
-     @DisplayName(" Url request /curvePoint/update/{id} - Without Authentication"
-     		+ " - Given a CurvePoint,"
-     		+ " when POST /curvePoint/update/{id} action request,"
-     		+ " then returns Error Authentication required")    
-     @Test
-     public void testPostCurvePointValidateWithoutAuthentication() throws Exception {
+    @DisplayName(" Url request /curvePoint/validate - Without Authentication"
+    		+ " - Given a CurvePoint,"
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns Error Authentication required")    
+    @Test
+    public void testPostCurvePointValidateWithoutAuthentication() throws Exception {
 
-         
-         mockMvc.perform(post("/curvePoint/update/1"))
+        mockMvc.perform(post("/curvePoint/validate"))
      	        .andExpect(status().is(401))
      	        .andDo(MockMvcResultHandlers.print())
      	        .andExpect(status().isUnauthorized())
      	        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
      	        .andExpect(unauthenticated());
 
-     }
-   
-  	// ********************************************************************
+    }
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /curvePoint/update/{id} - With Authentication"
+    // ********************************************************************
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /curvePoint/validate - "
     		+ " - Given a CurvePoint,"
-    		+ " when POST /curvePoint/update/{id} action request,"
-    		+ " then returns redirect /curvePoint/update/{id} page")    
+    		+ " when POST /curvePoint/validate action request,"
+    		+ " then returns redirect /curvePoint/validate page")    
     @Test
     public void testPostCurvePointValidateWithAuthentication() throws Exception {
 
-        
-        mockMvc.perform(post("/curvePoint/update/1")
+        mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
@@ -96,26 +104,28 @@ class CurvePointControllerPostUpdate_IT {
 
     // ********************************************************************
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - CurveIdNegative - "
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - CurveIdNegative - "
     		+ " - Given a CurvePoint - CurveIdNegative-,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithCurveIdNegative() throws Exception {
-        
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", "-1")
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
-       
+
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -126,26 +136,27 @@ class CurvePointControllerPostUpdate_IT {
     // ********************************************************************
 
 
-
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - CurveIdNull - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - CurveIdNull - "
     		+ " - Given a CurvePoint - CurveIdNull-,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithCurveIdNull() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", "")
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -155,25 +166,26 @@ class CurvePointControllerPostUpdate_IT {
 
     // ********************************************************************
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Term Null - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Term Null - "
     		+ " - Given a CurvePoint - Term Null-,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithTermNull() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", "")
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
 
 
         String content = result.getResponse().getContentAsString();
@@ -183,27 +195,29 @@ class CurvePointControllerPostUpdate_IT {
     }
 
     // ********************************************************************
+       
 
-
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Term Negative - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Term Negative - "
     		+ " - Given a CurvePoint - Term Negative -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithTermNegative() throws Exception {
-
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+ 
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", "-10.0")
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -212,27 +226,28 @@ class CurvePointControllerPostUpdate_IT {
     }
 
     // ********************************************************************
-    
+       
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Term Digits >10 - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Term Digits >10 - "
     		+ " - Given a CurvePoint - Term Digits >10 -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithTermMoreThan10Digits() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", "1000000000000.00")
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -243,25 +258,27 @@ class CurvePointControllerPostUpdate_IT {
     // ********************************************************************
 
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Term With Symbols - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Term With Symbols - "
     		+ " - Given a CurvePoint - Term With Symbols -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithTermWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", "&&&&&&")
 	        .param("value", testCurvePointDTO1.getValue().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -272,25 +289,27 @@ class CurvePointControllerPostUpdate_IT {
     // ********************************************************************
 
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Value Null - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Value Null - "
     		+ " - Given a CurvePoint - Value Null-,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithValueNull() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", ""))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -300,25 +319,26 @@ class CurvePointControllerPostUpdate_IT {
 
     // ********************************************************************
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Value Negative - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Value Negative - "
     		+ " - Given a CurvePoint - Value Negative -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithValueNegative() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", "-10.0"))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -328,23 +348,23 @@ class CurvePointControllerPostUpdate_IT {
 
     // ********************************************************************
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Value Digits >10 - "
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Value Digits >10 - "
     		+ " - Given a CurvePoint - Value Digits >10 -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithValueMoreThan10Digits() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", "1000000000000.00"))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -357,25 +377,27 @@ class CurvePointControllerPostUpdate_IT {
     // ********************************************************************
 
 
-     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /curvePoint/update/{id} - Value With Symbols - "
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /curvePoint/validate - Value With Symbols - "
     		+ " - Given a CurvePoint - Value With Symbols -,"
-    		+ " when POST /curvePoint/update/{id} action request,"
+    		+ " when POST /curvePoint/validate action request,"
     		+ " then returns error & redirect /curvePoint/add page")    
     @Test
     public void testPostCurvePointValidateWithValueWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/curvePoint/update/1")
+    	MvcResult result = mockMvc.perform(post("/curvePoint/validate")
 	        .sessionAttr("curvePointDTO", testCurvePointDTO1)
 	        .param("curveId", testCurvePointDTO1.getCurveId().toString())
 	        .param("term", testCurvePointDTO1.getTerm().toString())
 	        .param("value", "&&&&&&"))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("curvePointDTO"))
-	        .andExpect(view().name("curvePoint/update"))
+	        .andExpect(view().name("curvePoint/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -385,5 +407,7 @@ class CurvePointControllerPostUpdate_IT {
 
     // ********************************************************************
 
+        
+             
          
 }
