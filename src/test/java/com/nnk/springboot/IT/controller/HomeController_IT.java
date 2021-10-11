@@ -63,7 +63,7 @@ class HomeController_IT {
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
 	        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
-	        .andExpect(unauthenticated());;
+	        .andExpect(unauthenticated());
     }
     
     
