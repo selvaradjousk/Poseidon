@@ -103,4 +103,34 @@ class BidListControllerPostValidate_IT {
 
     // ********************************************************************
 
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/validate - EmptyAccount "
+    		+ " - Given a BidList - EmptyAccount,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateEmptyAccount() throws Exception {
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+	        .sessionAttr("bidListDTO", testBidListDTO1)
+	        .param("account", "")
+	        .param("type", testBidListDTO1.getType())
+	        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+	        .andExpect(model().hasErrors())
+	        .andExpect(model().size(1))
+	        .andExpect(model().attributeExists("bidListDTO"))
+	        .andExpect(view().name("bidList/add"))
+	        .andExpect(status().is(200))
+	        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+    }
+
+    // ********************************************************************
+
 }
