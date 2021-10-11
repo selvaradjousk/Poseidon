@@ -63,4 +63,25 @@ class BidListControllerGetUpdate_IT {
 
     // ********************************************************************
 
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/update/{id} - With Authenticated User"
+    		+ " - Given a BidList,"
+    		+ " when GET /bidList/update/{id} action request,"
+    		+ " then returns bidList ADD page")    
+    @Test
+    public void testGetBidListUpdateByIdWithAuthentication() throws Exception {
+
+        mockMvc.perform(get("/bidList/update/1"))
+                .andExpect(model().attributeExists("bidListDTO"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("bidList/update"))
+                .andExpect(status().isOk());
+
+
+    }
+
+
+    // ********************************************************************
+    
 }
