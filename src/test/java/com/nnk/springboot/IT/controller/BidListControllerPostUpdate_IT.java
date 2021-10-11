@@ -9,37 +9,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.controller.BidListController;
 import com.nnk.springboot.dto.BidListDTO;
-import com.nnk.springboot.service.BidListService;
 
-@DisplayName("\"INTEGRATION TESTS - Controller < BIDLIST > POST UPDATE")
+@DisplayName("INTEGRATION TESTS - Controller < BIDLIST > POST UPDATE")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
 class BidListControllerPostUpdate_IT {
-
-
-    @MockBean
-    private BidListService bidListService;
 
 
 	@Autowired
@@ -48,14 +38,11 @@ class BidListControllerPostUpdate_IT {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private WebApplicationContext context;
 
     private ObjectMapper objectMapper;
 	
-    private static BidListDTO testBidListDTO1, testBidListDTO2, bidListUpdateDTO;
+    private static BidListDTO testBidListDTO1;
  
-    private static List<BidListDTO> bidListDTOList;
 
     @BeforeEach
     public void setUp() {
@@ -67,22 +54,7 @@ class BidListControllerPostUpdate_IT {
         		.type("Type")
         		.bidQuantity(10.0)
         		.build();
-        
-        testBidListDTO2 = BidListDTO.builder()
-        		.bidListId(2)
-        		.account("Account")
-        		.type("Type")
-        		.bidQuantity(10.0)
-        		.build();
-        
-        bidListDTOList = Arrays.asList(testBidListDTO1, testBidListDTO2); 
 
-       bidListUpdateDTO = BidListDTO.builder()
-        		.bidListId(2)
-        		.account("Account")
-        		.type("Type")
-        		.bidQuantity(10.0)
-        		.build();
         
     }
     
