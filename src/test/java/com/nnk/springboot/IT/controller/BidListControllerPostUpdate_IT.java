@@ -220,6 +220,36 @@ class BidListControllerPostUpdate_IT {
     // ********************************************************************
 
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/update/{id} - TypeEmpty - "
+    		+ " - Given a BidList - TypeEmpty,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithTypeEmpty() throws Exception {
+
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", "")
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+      assertThat(content).contains("Type is mandatory");
+      assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+
+    }
+
+    // ********************************************************************
+
 
 
 
