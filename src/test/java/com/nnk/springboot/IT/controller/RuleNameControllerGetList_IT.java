@@ -1,7 +1,6 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
