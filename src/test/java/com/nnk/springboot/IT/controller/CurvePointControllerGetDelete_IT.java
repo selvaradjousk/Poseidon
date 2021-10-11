@@ -3,6 +3,7 @@ package com.nnk.springboot.IT.controller;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -17,21 +18,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.nnk.springboot.controller.BidListController;
-
-@DisplayName("INTEGRATION TESTS - Controller < BIDLIST > DELETE")
+@DisplayName("INTEGRATION TESTS - Controller < CURVEPOINT > DELETE")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class BidListControllerGetDelete_IT {
+class CurvePointControllerGetDelete_IT {
 
 
-	@Autowired
+    @Autowired
     private MockMvc mockMvc;
-
-	@Autowired
-	BidListController bidListController;
-
 
     @BeforeEach
     public void setUp() {
@@ -41,14 +36,14 @@ class BidListControllerGetDelete_IT {
   	// ********************************************************************
 
     
-    @DisplayName(" Url request bidList/delete/{id} valid id - Without AUTH Login Status ERROR"
-    		+ " - Given a bidList/delete/{id} valid id, "
-    		+ " when GET bidList/delete action request,"
+    @DisplayName(" Url request curvePoint/delete/{id} valid id - Without AUTH Login Status ERROR "
+    		+ " - Given a curvePoint/delete/{id} valid id, "
+    		+ " when GET curvePoint/delete action request,"
     		+ " then returns Error Authentication required")    
     @Test
-    public void testGetBidListDeleteWithoutAuthentication() throws Exception {
+    public void testGetCurvePointDeleteWithoutAuthentication() throws Exception {
 
-    	mockMvc.perform(get("/bidList/delete/1"))
+    	mockMvc.perform(get("/curvePoint/delete/1"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -57,21 +52,21 @@ class BidListControllerGetDelete_IT {
 
        
     }
-
-    // ********************************************************************
-
+    
+  	// ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request bidList/delete/{id} valid id - withAUTH Login Status FOUND"
-    		+ " - Given a bidList/delete/{id} valid id, "
-    		+ " when GET bidList/delete action request,"
-    		+ " then returns on SUCCESS redirect to /bidList/list page")    
+    @DisplayName(" Url request curvePoint/delete/{id} valid id- "
+    		+ " - Given a curvePoint/delete/{id} valid id, "
+    		+ " when GET curvePoint/delete action request,"
+    		+ " then returns delete page")    
     @Test
-    public void testGetBidListDeleteWithAuthentication() throws Exception {
-	
-    	mockMvc.perform(get("/bidList/delete/1"))
-    				.andExpect(redirectedUrl("/bidList/list"))
+    public void testGetCurvePointDelete() throws Exception {
+
+    	mockMvc.perform(get("/curvePoint/delete/1"))
+    				.andExpect(redirectedUrl("/curvePoint/list"))
             		.andExpect(status().isFound())
+            		.andExpect(model().hasNoErrors())
             		.andExpect(status().is(302));
 
        
@@ -79,35 +74,14 @@ class BidListControllerGetDelete_IT {
 
     // ********************************************************************
 
-    
-    @DisplayName(" Url request bidList/delete/{id} invalid id - without AUTH "
-    		+ " - Given a BidList bidList/delete/{id} invalid id,"
-    		+ " when GET bidList/delete action request,"
-    		+ " then returns Error Authentication required")    
-    @Test
-    public void testGetBidListDeleteNullWithoutUserAuth() throws Exception {
-
-        mockMvc.perform(get("/bidList/delete/"))
-        		.andExpect(redirectedUrl(null))
-        		.andExpect(status().is(401))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isUnauthorized())
-                .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
-                .andExpect(unauthenticated());
-
-    }
-
-    // ********************************************************************
-
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request bidList/delete/{id} invalid id - with AUTH"
-    		+ " - Given a BidList bidList/delete/{id} invalid id,"
-    		+ " when GET bidList/delete action request,"
+    @DisplayName(" Url request curvePoint/delete/{id} invalid id- "
+    		+ " - Given a CurvePoint curvePoint/delete/{id} invalid id,"
+    		+ " when GET curvePoint/delete action request,"
     		+ " then returns delete page")    
     @Test
-    public void testGetBidListDeleteNullWithUserAuth() throws Exception {
-
-        mockMvc.perform(get("/bidList/delete/"))
+    public void testGetCurvePointDeleteNull() throws Exception {
+        mockMvc.perform(get("/curvePoint/delete/"))
         		.andExpect(redirectedUrl(null))
                 .andExpect(status().is(404))
         		.andExpect(status().isNotFound());
@@ -115,5 +89,8 @@ class BidListControllerGetDelete_IT {
     }
 
     // ********************************************************************
+   
+     
+
 
 }
