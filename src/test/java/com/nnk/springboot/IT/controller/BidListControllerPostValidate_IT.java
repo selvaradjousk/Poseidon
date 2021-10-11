@@ -133,4 +133,32 @@ class BidListControllerPostValidate_IT {
 
     // ********************************************************************
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/validate - AccountMoreThanThiryCharacters "
+    		+ " - Given a BidList - AccountMoreThanThiryCharacters,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns error & redirect /bidList/add page")    
+    @Test
+    public void testPostBidListValidateWithAccountMoreThanThiryCharacters() throws Exception {
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+	        .sessionAttr("bidListDTO", testBidListDTO1)
+	        .param("account", "AccountAccountAccountAccountAccount")
+	        .param("type", testBidListDTO1.getType())
+	        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+	        .andExpect(model().hasErrors())
+	        .andExpect(model().size(1))
+	        .andExpect(model().attributeExists("bidListDTO"))
+	        .andExpect(view().name("bidList/add"))
+	        .andExpect(status().is(200))
+	        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("The maximum length for account should be 30 characters");
+    }
+
+    // ********************************************************************
+
 }
