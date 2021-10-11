@@ -46,7 +46,7 @@ class TradeControllerGetListTest {
     @DisplayName(" Url request /trade/list - "
     		+ " - Given a Trade List, Without Authentication"
     		+ " when GET /trade/list action request,"
-    		+ " then returns tradeslist page")
+    		+ " then returns Error Authentication required") 
     @Test
     public void testGetTradeListWithoutAuthentication() throws Exception {
 

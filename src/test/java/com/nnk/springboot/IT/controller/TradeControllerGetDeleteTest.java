@@ -41,7 +41,7 @@ class TradeControllerGetDeleteTest {
     @DisplayName(" Url request trade/delete/{id} valid id - Without Authentication"
     		+ " - Given a trade/delete/{id} valid id, "
     		+ " when GET trade/delete action request,"
-    		+ " then returns delete page")    
+    		+ " then returns Error Authentication required")     
     @Test
     public void testGetTradeDeleteWithoutAuthentication() throws Exception {
 
