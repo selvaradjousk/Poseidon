@@ -77,4 +77,41 @@ class BidListControllerGetDelete_IT {
 
     // ********************************************************************
 
+    
+    @DisplayName(" Url request bidList/delete/{id} invalid id - without AUTH "
+    		+ " - Given a BidList bidList/delete/{id} invalid id,"
+    		+ " when GET bidList/delete action request,"
+    		+ " then returns Error Authentication required")    
+    @Test
+    public void testGetBidListDeleteNullWithoutUserAuth() throws Exception {
+
+        mockMvc.perform(get("/bidList/delete/"))
+        		.andExpect(redirectedUrl(null))
+        		.andExpect(status().is(401))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isUnauthorized())
+                .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
+                .andExpect(unauthenticated());
+
+    }
+
+    // ********************************************************************
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request bidList/delete/{id} invalid id - with AUTH"
+    		+ " - Given a BidList bidList/delete/{id} invalid id,"
+    		+ " when GET bidList/delete action request,"
+    		+ " then returns delete page")    
+    @Test
+    public void testGetBidListDeleteNullWithUserAuth() throws Exception {
+
+        mockMvc.perform(get("/bidList/delete/"))
+        		.andExpect(redirectedUrl(null))
+                .andExpect(status().is(404))
+        		.andExpect(status().isNotFound());
+
+    }
+
+    // ********************************************************************
+
 }
