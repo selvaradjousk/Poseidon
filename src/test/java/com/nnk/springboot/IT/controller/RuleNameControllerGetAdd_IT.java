@@ -37,10 +37,10 @@ class RuleNameControllerGetAdd_IT {
 
 
 
-    @DisplayName(" Url request /ruleName/add - Without Authentication "
+    @DisplayName(" Url request GET /ruleName/add - Without Authentication "
     		+ " - Given a RuleName,"
     		+ " when GET /ruleName/add action request,"
-    		+ " then returns ruleName ADD page")    
+    		+ " then returns Error Authentication required")
     @Test
     public void testGetRuleNameAddWithoutAuthentication() throws Exception {
 
@@ -57,7 +57,7 @@ class RuleNameControllerGetAdd_IT {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /ruleName/add - With Authentication "
+    @DisplayName(" Url request GET /ruleName/add - With Authentication "
     		+ " - Given a RuleName,"
     		+ " when GET /ruleName/add action request,"
     		+ " then returns ruleName ADD page")    

@@ -59,7 +59,7 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @DisplayName(" Url request /rating/update/{id} - Without Authentication"
 	    		+ " - Given a Rating,"
 	    		+ " when POST /rating/update/{id} action request,"
-	    		+ " then returns redirect /rating/update/{id} page")    
+	    		+ " then returns Error Authentication required")
 	    @Test
 	    public void testPostRatingValidateWithoutAuthentication() throws Exception {
 
@@ -79,10 +79,9 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @DisplayName(" Url request /rating/update/{id} - With Authentication"
 	    		+ " - Given a Rating,"
 	    		+ " when POST /rating/update/{id} action request,"
-	    		+ " then returns redirect /rating/update/{id} page")    
+	    		+ " then returns redirect /rating/update/{id} page")
 	    @Test
 	    public void testPostRatingValidateWithAuthentication() throws Exception {
-
        
 	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
 	        .sessionAttr("ratingDTO", testRatingDTO1)
@@ -105,10 +104,9 @@ import com.nnk.springboot.dto.RatingDTO;
 	    @DisplayName(" Url request /rating/update/{id} - Id Negative "
 	    		+ " - Given a Rating, Id Negative"
 	    		+ " when POST /rating/update/{id} action request,"
-	    		+ " then returns error & redirect /rating/add page")    
+	    		+ " then returns error & redirect /rating/add page")
 	    @Test
 	    public void testPostRatingValidateIdNegative() throws Exception {
-
 	        
 	        mockMvc.perform(MockMvcRequestBuilders.post("/rating/update/2")
 	        .sessionAttr("ratingDTO", testRatingDTO1)

@@ -1,6 +1,5 @@
 package com.nnk.springboot.IT.controller;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
@@ -25,19 +24,19 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.dto.RuleNameDTO;
 
-@DisplayName("INTEGRATION TESTS - Controller < RULENAME > - UPDATE")
+@DisplayName("INTEGRATION TESTS - Controller < RULENAME > - VALIDATE")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class RuleNameControllerPostUpdateTest {
+class RuleNameControllerPostValidateTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+
     private ObjectMapper objectMapper;
 	
     private static RuleNameDTO testRuleNameDTO1;
-
 
     @BeforeEach
     public void setUp() {
@@ -53,21 +52,19 @@ class RuleNameControllerPostUpdateTest {
         		.sqlPart("SqlPart1")
         		.build();
 
-
     }
     
   	// ********************************************************************
 
 
-    @DisplayName(" Url request POST /ruleName/update/{id} - Without Authentication"
+    @DisplayName(" Url request POST /ruleName/validate - Without Authentication"
     		+ " - Given a RuleName,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns Error Authentication required") 
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns Error Authentication required")  
     @Test
     public void testPostRuleNameValidateWithoutAuthentication() throws Exception {
-
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 	        .sessionAttr("ruleNameDTO", testRuleNameDTO1))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
@@ -76,19 +73,20 @@ class RuleNameControllerPostUpdateTest {
 	        .andExpect(unauthenticated());
 
     }
+    
+  	// ********************************************************************
 
-    // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - With Authentication"
+    @DisplayName(" Url request POST /ruleName/validate - With Authentication "
     		+ " - Given a RuleName,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns redirect /ruleName/update/{id} page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns redirect /ruleName/validate page")
     @Test
     public void testPostRuleNameValidateWithAuthentication() throws Exception {
 
         
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", testRuleNameDTO1.getName())
@@ -104,19 +102,18 @@ class RuleNameControllerPostUpdateTest {
 		        .andExpect(status().is(302));
 
     }
-
     // ********************************************************************
 
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Id Negative "
+    @DisplayName(" Url request POST /ruleName/validate - Id Negative "
     		+ " - Given a RuleName, Id Negative"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")
     @Test
     public void testPostRuleNameValidateIdNegative() throws Exception {
 
-        
-        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+        mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
         .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", "-1")
 		        .param("name", testRuleNameDTO1.getName())
@@ -135,16 +132,16 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - EmptyName "
+    @DisplayName(" Url request POST /ruleName/validate - EmptyName "
     		+ " - Given a RuleName - EmptyName,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateEmptyName() throws Exception {
 
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "")
@@ -154,9 +151,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -168,15 +165,17 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /ruleName/update/{id} - Name With Symbols "
+    @DisplayName(" Url request POST /ruleName/validate - Name With Symbols "
     		+ " - Given a RuleName - Name With Symols,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateNameWithSymbols() throws Exception {
-
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+ 
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "&&&aaa")
@@ -186,9 +185,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -202,14 +201,14 @@ class RuleNameControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Name length > 125 "
+    @DisplayName(" Url request POST /ruleName/validate - Name length > 125 "
     		+ " - Given a RuleName - Name length > 125,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateNameWith125MoreCharecters() throws Exception {
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+ 
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -221,9 +220,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -233,15 +232,16 @@ class RuleNameControllerPostUpdateTest {
     }
 
     // ********************************************************************
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Empty Description "
+    @DisplayName(" Url request POST /ruleName/validate - Empty Description "
     		+ " - Given a RuleName - Empty Description,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateEmptyDescription() throws Exception {
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+ 
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 		        .param("name", testRuleNameDTO1.getName())
@@ -251,9 +251,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -266,15 +266,17 @@ class RuleNameControllerPostUpdateTest {
     // ********************************************************************
 
 
+
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Description With Symbols "
+    @DisplayName(" Url request POST /ruleName/validate - Description With Symbols "
     		+ " - Given a RuleName - Description With Symols,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateDescriptionWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -284,9 +286,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -299,14 +301,14 @@ class RuleNameControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Description length > 125 "
+    @DisplayName(" Url request POST /ruleName/validate - Description length > 125 "
     		+ " - Given a RuleName - Description length > 125,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateDescriptionWith125MoreCharecters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -318,9 +320,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -331,15 +333,16 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Json length > 125 "
+    @DisplayName(" Url request POST /ruleName/validate - Json length > 125 "
     		+ " - Given a RuleName - Json length > 125,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateJsonWith125MoreCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -351,9 +354,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -364,15 +367,16 @@ class RuleNameControllerPostUpdateTest {
 
     // ********************************************************************
 
+
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - Template length > 512 "
+    @DisplayName(" Url request POST /ruleName/validate - Template length > 512 "
     		+ " - Given a RuleName - Template length > 512,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateTemplateWith512MoreCharacters() throws Exception {
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -392,9 +396,9 @@ class RuleNameControllerPostUpdateTest {
 		        .param("sqlStr", testRuleNameDTO1.getSqlStr())
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 
@@ -406,14 +410,14 @@ class RuleNameControllerPostUpdateTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - SqlStr length > 125 "
+    @DisplayName(" Url request POST /ruleName/validate - SqlStr length > 125 "
     		+ " - Given a RuleName - SqlStr length > 125,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateSqlStrWith125MoreCharacters() throws Exception {
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -425,12 +429,11 @@ class RuleNameControllerPostUpdateTest {
 		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 		        .param("sqlPart", testRuleNameDTO1.getSqlPart()))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
-
 
         String content = result.getResponse().getContentAsString();
         
@@ -440,15 +443,14 @@ class RuleNameControllerPostUpdateTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /ruleName/update/{id} - SqlPart length > 125 "
+    @DisplayName(" Url request POST /ruleName/validate - SqlPart length > 125 "
     		+ " - Given a RuleName - SqlPart length > 125,"
-    		+ " when POST /ruleName/update/{id} action request,"
-    		+ " then returns error & redirect /ruleName/update page")    
+    		+ " when POST /ruleName/validate action request,"
+    		+ " then returns error & redirect /ruleName/add page")    
     @Test
     public void testPostRuleNameValidateSqlPartWith125MoreCharacters() throws Exception {
         
-        
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/ruleName/validate")
 		        .sessionAttr("ruleNameDTO", testRuleNameDTO1)
 		        .param("id", testRuleNameDTO1.getId().toString())
 			.param("name", testRuleNameDTO1.getName())
@@ -460,9 +462,9 @@ class RuleNameControllerPostUpdateTest {
 		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 		        		+ "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
 		        .andExpect(model().hasErrors())
-		        .andExpect(model().size(2))
+		        .andExpect(model().size(1))
 		        .andExpect(model().attributeExists("ruleNameDTO"))
-		        .andExpect(view().name("ruleName/update"))
+		        .andExpect(view().name("ruleName/add"))
 		        .andExpect(status().is(200))
 		        .andReturn();
 

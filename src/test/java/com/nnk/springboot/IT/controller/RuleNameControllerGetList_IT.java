@@ -46,7 +46,7 @@ class RuleNameControllerGetList_IT {
     @DisplayName(" Url request /ruleName/list - Without Authentication"
     		+ " - Given a RuleName List,"
     		+ " when GET /ruleName/list action request,"
-    		+ " then returns ruleNameslist page")
+    		+ " then returns Error Authentication required")
     @Test
     public void testGetRuleNameListWithoutAuthentication() throws Exception {
 
