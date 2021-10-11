@@ -2,7 +2,6 @@ package com.nnk.springboot.IT.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -164,6 +163,34 @@ class BidListControllerPostUpdate_IT {
 
     // ********************************************************************
 
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/update/{id} - AccountMoreThanThiryCharacters "
+    		+ " - Given a BidList - AccountMoreThanThiryCharacters,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithAccountMoreThanThiryCharacters() throws Exception {
+
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "AccountAccountAccountAccountAccount")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        
+//        assertThat(content).contains("Account is mandatory");
+        assertThat(content).contains("The maximum length for account should be 30 characters");
+    }
+
+    // ********************************************************************
 
 
 
