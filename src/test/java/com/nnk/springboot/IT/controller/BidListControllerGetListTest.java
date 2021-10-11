@@ -63,6 +63,29 @@ class BidListControllerGetListTest {
 
     // ********************************************************************
 
+    
+
+    @WithMockUser(username="admin",roles={"ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/list - "
+    		+ " - Given a BidList List,"
+    		+ " when GET /bidList/list action request,"
+    		+ " then returns bidListslist page")
+    @Test
+    public void testGetBidListList() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/bidList/list"))
+                .andExpect(model().attributeExists("bids"))
+                .andExpect(model().size(1))
+                .andExpect(view().name("bidList/list"))
+                .andExpect(status().isOk());
+
+
+        assertEquals(5, (bidListService.getAllBidList()).size());
+
+    }
+
+    // ********************************************************************
+
  
 
 }
