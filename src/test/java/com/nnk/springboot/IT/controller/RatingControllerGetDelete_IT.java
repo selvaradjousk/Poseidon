@@ -2,6 +2,7 @@ package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @DisplayName("INTEGRATION TESTS - Controller < RATING > DELETE")
@@ -45,7 +45,7 @@ class RatingControllerGetDelete_IT {
     @Test
     public void testGetRatingDeleteWithoutAuthentication() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/rating/delete/1"))
+    	mockMvc.perform(get("/rating/delete/1"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -64,7 +64,7 @@ class RatingControllerGetDelete_IT {
     @Test
     public void testGetRatingDelete() throws Exception {
 
-    	mockMvc.perform(MockMvcRequestBuilders.get("/rating/delete/1"))
+    	mockMvc.perform(get("/rating/delete/1"))
     				.andExpect(redirectedUrl("/rating/list"))
             		.andExpect(status().isFound())
             		.andExpect(model().hasNoErrors())
@@ -81,7 +81,7 @@ class RatingControllerGetDelete_IT {
     		+ " then returns delete page")    
     @Test
     public void testGetRatingDeleteNull() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/rating/delete/"))
+        mockMvc.perform(get("/rating/delete/"))
         		.andExpect(redirectedUrl(null))
                 .andExpect(status().is(404))
         		.andExpect(status().isNotFound());
@@ -90,8 +90,6 @@ class RatingControllerGetDelete_IT {
     }
 
     // ********************************************************************
-   
-   
 
 
 }

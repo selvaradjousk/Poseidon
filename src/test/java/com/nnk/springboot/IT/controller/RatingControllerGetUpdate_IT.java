@@ -1,7 +1,6 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -19,36 +18,33 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.nnk.springboot.service.RatingService;
-
-@DisplayName("INTEGRATION TESTS - Controller < RATING > GET LIST")
+@DisplayName("INTEGRATION TESTS - Controller < RATING - GET UPDATE>")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class RatingControllerGetList_IT {
+class RatingControllerGetUpdate_IT {
+
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private RatingService ratingService;
-
     @BeforeEach
     public void setUp() {
 
+
     }
+    // ********************************************************************
+
+
     
-  	// ********************************************************************
-
-
-    @DisplayName(" Url request /rating/list - Without Authentication "
-    		+ " - Given a Rating List,"
-    		+ " when GET /rating/list action request,"
-    		+ " then returns Error Authentication required") 
+    @DisplayName(" Url request /rating/update/{id} - Without Authentication"
+    		+ " - Given a Rating,"
+    		+ " when GET /rating/update/{id} action request,"
+    		+ " then returns Error Authentication required")    
     @Test
-    public void testGetRatingListWithoutAuthentication() throws Exception {
+    public void testGetRatingUpdateByIdWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(get("/rating/list"))
+        mockMvc.perform(get("/rating/update/2"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -58,25 +54,25 @@ class RatingControllerGetList_IT {
     }
 
     // ********************************************************************
-
+    
     @WithMockUser(username="admin",roles={"ADMIN"})
-    @DisplayName(" Url request /rating/list - With Authentication"
-    		+ " - Given a Rating List,"
-    		+ " when GET /rating/list action request,"
-    		+ " then returns ratingslist page")
+    @DisplayName(" Url request /rating/update/{id} - With Authentication"
+    		+ " - Given a Rating,"
+    		+ " when GET /rating/update/{id} action request,"
+    		+ " then returns rating ADD page")    
     @Test
-    public void testGetRatingListWithAuthenticaiton() throws Exception {
+    public void testGetRatingUpdateByIdWithAuthentication() throws Exception {
 
-        mockMvc.perform(get("/rating/list"))
-                .andExpect(model().attributeExists("ratings"))
+        mockMvc.perform(get("/rating/update/2"))
+                .andExpect(model().attributeExists("ratingDTO"))
                 .andExpect(model().size(1))
-                .andExpect(view().name("rating/list"))
+                .andExpect(view().name("rating/update"))
                 .andExpect(status().isOk());
 
-
-        assertEquals(5, (ratingService.getAllRating()).size());
-
     }
+
     // ********************************************************************
 
+    
+    
 }
