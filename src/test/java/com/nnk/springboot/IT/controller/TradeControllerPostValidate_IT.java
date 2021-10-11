@@ -1,7 +1,8 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,15 +18,18 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.dto.TradeDTO;
 
-@DisplayName("INTEGRATION TESTS - Controller < TRADE > POST UPDATE")
+@DisplayName("Controller < TRADE > -VALIDATE UNIT TESTS")
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class TradeControllerPostUpdateTest {
+class TradeControllerPostValidate_IT {
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,20 +49,42 @@ class TradeControllerPostUpdateTest {
         		.type("Type")
         		.buyQuantity(10.0)
         		.build();
+       
 
     }
+  
+  	// ********************************************************************
+
+    @DisplayName(" Url request /trade/validate - Without Authentication"
+    		+ " - Given a Trade,"
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns Error Authentication required")   
+    @Test
+    public void testPostTradeValidateWithoutAuthentication() throws Exception {
+
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
+	        .sessionAttr("tradeDTO", testTradeDTO1))
+	        .andExpect(status().is(401))
+	        .andDo(MockMvcResultHandlers.print())
+	        .andExpect(status().isUnauthorized())
+	        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
+	        .andExpect(unauthenticated());
+    }
+
     
   	// ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request POST /trade/update/{id} -  Without Authentication "
+    @DisplayName(" Url request /trade/validate - With Authentication"
     		+ " - Given a Trade,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns Error Authentication required")   
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns redirect /trade/validate page")    
     @Test
-    public void testPostTradeUpdateWithoutAuthentication() throws Exception {
+    public void testPostTradeValidateWithAuthentication() throws Exception {
 
-        mockMvc.perform(post("/trade/update/2")
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", testTradeDTO1.getType())
@@ -74,45 +100,22 @@ class TradeControllerPostUpdateTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /trade/update/{id} -  With Authentication "
-    		+ " - Given a Trade,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns redirect /trade/update/{id} page")    
-    @Test
-    public void testPostTradeUpdateWithAuthentication() throws Exception {
-
-        mockMvc.perform(post("/trade/update/2")
-	        .sessionAttr("tradeDTO", testTradeDTO1)
-	        .param("account", testTradeDTO1.getAccount())
-	        .param("type", testTradeDTO1.getType())
-	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
-	        .andExpect(model().hasNoErrors())
-	        .andExpect(model().size(0))
-	        .andExpect(model().attributeDoesNotExist("tradeDTO"))
-	        .andExpect(redirectedUrl("/trade/list"))
-	        .andExpect(status().is(302));
-
-    }
-
-    // ********************************************************************
-
-    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /trade/update/{id} - EmptyAccount "
+    @DisplayName(" Url request /trade/validate - EmptyAccount "
     		+ " - Given a Trade - EmptyAccount,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateEmptyAccount() throws Exception {
+    public void testPostTradeValidateEmptyAccount() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", "")
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -126,22 +129,22 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request /trade/update/{id} - AccountMoreThanThiryCharacters "
+    @DisplayName(" Url request /trade/validate - AccountMoreThanThiryCharacters "
     		+ " - Given a Trade - AccountMoreThanThiryCharacters,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithAccountMoreThanThiryCharacters() throws Exception {
+    public void testPostTradeValidateWithAccountMoreThanThiryCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", "AccountAccountAccountAccountAccount")
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -155,24 +158,25 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - Account  Non Alphanumeric characters - "
+    @DisplayName("Url request /trade/validate - Account  Non Alphanumeric characters - "
     		+ " - Given a Trade - Account with Non Alphanumeric characters,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithTradeAccountWithSymbols() throws Exception {
+    public void testPostTradeValidateWithTradeAccountWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", "Account!&&&")
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
+
 
         String content = result.getResponse().getContentAsString();
         
@@ -182,22 +186,22 @@ class TradeControllerPostUpdateTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - TypeEmpty - "
+    @DisplayName("Url request /trade/validate - TypeEmpty - "
     		+ " - Given a Trade - TypeEmpty,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithTypeEmpty() throws Exception {
+    public void testPostTradeValidateWithTypeEmpty() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", "")
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -212,22 +216,22 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - Type MoreThanThiryCharacters - "
+    @DisplayName("Url request /trade/validate - Type MoreThanThiryCharacters - "
     		+ " - Given a Trade - Type MoreThanThiryCharacters,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithMoreThanThiryCharacters() throws Exception {
+    public void testPostTradeValidateWithMoreThanThiryCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", "TypeTypeTypeTypeTypeTypeTypeType")
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -241,22 +245,22 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - TypeWithSymbols - "
+    @DisplayName("Url request /trade/validate - TypeWithSymbols - "
     		+ " - Given a Trade - TypeWithSymbols-,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateTypeWithSymbols() throws Exception {
+    public void testPostTradeValidateTypeWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", "Type!!&&")
 	        .param("buyQuantity", testTradeDTO1.getBuyQuantity().toString()))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -269,22 +273,22 @@ class TradeControllerPostUpdateTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - BuyQuantityNegative - "
+    @DisplayName("Url request /trade/validate - BuyQuantityNegative - "
     		+ " - Given a Trade - BuyQuantityNegative-,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithBuyQuantityNegative() throws Exception {
+    public void testPostTradeValidateWithBuyQuantityNegative() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", "-1000"))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -298,22 +302,22 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - BuyQuantityMoreThan10Digits - "
+    @DisplayName("Url request /trade/validate - BuyQuantityMoreThan10Digits - "
     		+ " - Given a Trade - BuyQuantityMoreThan10Digits -,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithBuyQuantityMoreThan10Digits() throws Exception {
+    public void testPostTradeValidateWithBuyQuantityMoreThan10Digits() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", "100000000000000.00"))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -327,22 +331,22 @@ class TradeControllerPostUpdateTest {
 
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName("Url request /trade/update/{id} - BuyQuantityWithSymbols - "
+    @DisplayName("Url request /trade/validate - BuyQuantityWithSymbols - "
     		+ " - Given a Trade - BuyQuantityWithSymbols -,"
-    		+ " when POST /trade/update/{id} action request,"
-    		+ " then returns error & redirect /trade/update/{id} page")    
+    		+ " when POST /trade/validate action request,"
+    		+ " then returns error & redirect /trade/add page")    
     @Test
-    public void testPostTradeUpdateWithBuyQuantityWithSymbols() throws Exception {
+    public void testPostTradeValidateWithBuyQuantityWithSymbols() throws Exception {
 
-    	MvcResult result = mockMvc.perform(post("/trade/update/2")
+    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/trade/validate")
 	        .sessionAttr("tradeDTO", testTradeDTO1)
 	        .param("account", testTradeDTO1.getAccount())
 	        .param("type", testTradeDTO1.getType())
 	        .param("buyQuantity", "100000&!-."))
 	        .andExpect(model().hasErrors())
-	        .andExpect(model().size(2))
+	        .andExpect(model().size(1))
 	        .andExpect(model().attributeExists("tradeDTO"))
-	        .andExpect(view().name("trade/update"))
+	        .andExpect(view().name("trade/add"))
 	        .andExpect(status().is(200))
 	        .andReturn();
 
@@ -354,6 +358,6 @@ class TradeControllerPostUpdateTest {
 
     // ********************************************************************
 
-    
+        
     
 }
