@@ -80,4 +80,27 @@ class BidListControllerPostValidate_IT {
     
   	// ********************************************************************
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName(" Url request /bidList/validate - "
+    		+ " - Given a BidList,"
+    		+ " when POST /bidList/validate action request,"
+    		+ " then returns redirect /bidList/validate page")    
+    @Test
+    public void testPostBidListValidate() throws Exception {
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/bidList/validate")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+	        .param("account", testBidListDTO1.getAccount())
+	        .param("type", testBidListDTO1.getType())
+	        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+	        .andExpect(model().hasNoErrors())
+	        .andExpect(model().size(0))
+	        .andExpect(model().attributeDoesNotExist("bidListDTO"))
+	        .andExpect(redirectedUrl("/bidList/list"))
+	        .andExpect(status().is(302));
+
+    }
+
+    // ********************************************************************
+
 }
