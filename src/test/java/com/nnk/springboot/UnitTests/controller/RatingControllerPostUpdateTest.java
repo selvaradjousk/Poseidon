@@ -1,7 +1,6 @@
 package com.nnk.springboot.UnitTests.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.times;
@@ -22,7 +21,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,6 +29,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.RatingController;
 import com.nnk.springboot.dto.RatingDTO;
 import com.nnk.springboot.service.RatingService;
@@ -45,7 +45,10 @@ import com.nnk.springboot.service.RatingService;
 	    private RatingService ratingService;
 
 	    @MockBean
-	    private UserDetailsService userDetailsService;
+	    private MyUserDetailsService userDetailsService;
+
+	    @MockBean
+	    private JwtUtils jwtUtils;
 
 	    @Autowired
 	    private MockMvc mockMvc;

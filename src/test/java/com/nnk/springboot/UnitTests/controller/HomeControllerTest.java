@@ -1,6 +1,5 @@
 package com.nnk.springboot.UnitTests.controller;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -16,8 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +22,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.HomeController;
 
 @DisplayName("Controller <HOME> - UNIT TESTS")
@@ -33,7 +32,10 @@ import com.nnk.springboot.controller.HomeController;
 class HomeControllerTest {
 
     @MockBean
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
+
+    @MockBean
+    private JwtUtils jwtUtils;
 
     @Autowired
     private MockMvc mockMvc;

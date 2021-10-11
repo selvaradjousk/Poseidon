@@ -11,13 +11,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.BidListController;
 import com.nnk.springboot.service.BidListService;
 
@@ -31,7 +32,10 @@ class BidListControllerGetAddTest {
     private BidListService bidListService;
 
     @MockBean
-    private UserDetailsService userDetailsService;
+    private JwtUtils jwtUtils;
+       
+    @MockBean
+    private MyUserDetailsService userDetailsService;
 
     @Autowired
     private MockMvc mockMvc;

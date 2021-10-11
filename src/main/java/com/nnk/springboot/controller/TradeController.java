@@ -2,6 +2,7 @@ package com.nnk.springboot.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import lombok.extern.log4j.Log4j2;
 @RequestMapping("/trade")
 public class TradeController {
 
+	@Autowired
 	private final ITradeService tradeService;
 
     // ********************************************************************

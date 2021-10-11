@@ -6,9 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -24,6 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.UserController;
 import com.nnk.springboot.dto.UserDTO;
 import com.nnk.springboot.service.UserService;
@@ -38,7 +36,10 @@ class UserControllerGetUpdateTest {
     private UserService userService;
 
     @MockBean
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
+
+    @MockBean
+    private JwtUtils jwtUtils;
 
     @Autowired
     private MockMvc mockMvc;

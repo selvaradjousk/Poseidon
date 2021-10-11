@@ -20,7 +20,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -29,6 +28,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.RuleNameController;
 import com.nnk.springboot.dto.RuleNameDTO;
 import com.nnk.springboot.service.RuleNameService;
@@ -43,7 +44,10 @@ class RuleNameControllerPostValidateTest {
     private RuleNameService ruleNameService;
 
     @MockBean
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
+
+    @MockBean
+    private JwtUtils jwtUtils;
 
     @Autowired
     private MockMvc mockMvc;
