@@ -109,5 +109,28 @@ class BidListControllerPostUpdate_IT {
     }
     
    	// ********************************************************************
-   
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+     @DisplayName(" Url request /bidList/update/{id} - VALID "
+     		+ " - Given a BidList,"
+     		+ " when POST /bidList/update/{id} action request,"
+     		+ " then returns redirect /bidList/update/{id} page")    
+     @Test
+     public void testPostBidListUpdateWithAuthentication() throws Exception {
+
+         
+         mockMvc.perform(post("/bidList/update/1")
+         .sessionAttr("bidListDTO", testBidListDTO1)
+         .param("account", testBidListDTO1.getAccount())
+         .param("type", testBidListDTO1.getType())
+         .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+         .andExpect(model().hasNoErrors())
+         .andExpect(model().size(0))
+         .andExpect(model().attributeDoesNotExist("bidListDTO"))
+         .andExpect(redirectedUrl("/bidList/list"))
+         .andExpect(status().is(302));
+
+     }
+
+    // ********************************************************************  
 }
