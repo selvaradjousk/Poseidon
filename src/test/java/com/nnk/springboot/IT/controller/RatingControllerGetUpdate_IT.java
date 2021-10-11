@@ -55,7 +55,7 @@ class RatingControllerGetUpdate_IT {
 
     // ********************************************************************
     
-    @WithMockUser(username="admin",roles={"ADMIN"})
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
     @DisplayName(" Url request /rating/update/{id} - With Authentication"
     		+ " - Given a Rating,"
     		+ " when GET /rating/update/{id} action request,"
