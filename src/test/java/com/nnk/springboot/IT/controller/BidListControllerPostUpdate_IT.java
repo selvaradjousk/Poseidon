@@ -368,6 +368,35 @@ class BidListControllerPostUpdate_IT {
 
     // ********************************************************************
 
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/update/{id} - BidQuantityWithSymbols - "
+    		+ " - Given a BidList - BidQuantityWithSymbols -,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithBidQuantityWithSymbols() throws Exception {
+        
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", testBidListDTO1.getAccount())
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", "100000&!-."))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Failed to convert property value of type java.lang.String to required type java.lang.Double for property bidQuantity");
+              
+    }
+
+    // ********************************************************************
+
 
 
 
