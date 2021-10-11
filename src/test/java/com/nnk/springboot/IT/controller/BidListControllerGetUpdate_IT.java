@@ -47,7 +47,7 @@ class BidListControllerGetUpdate_IT {
     @DisplayName(" Url request /bidList/update/{id} - Without Authentication"
     		+ " - Given a BidList,"
     		+ " when GET /bidList/update/{id} action request,"
-    		+ " then returns bidList ADD page")    
+    		+ " then returns Error Authentication required")    
     @Test
     public void testGetBidListUpdateById() throws Exception {
 
@@ -68,7 +68,7 @@ class BidListControllerGetUpdate_IT {
     @DisplayName(" Url request /bidList/update/{id} - With Authenticated User"
     		+ " - Given a BidList,"
     		+ " when GET /bidList/update/{id} action request,"
-    		+ " then returns bidList ADD page")    
+    		+ " then returns bidList update page")    
     @Test
     public void testGetBidListUpdateByIdWithAuthentication() throws Exception {
 
@@ -83,5 +83,5 @@ class BidListControllerGetUpdate_IT {
 
 
     // ********************************************************************
-    
+
 }

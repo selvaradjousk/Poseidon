@@ -18,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import com.nnk.springboot.controller.BidListController;
@@ -49,7 +48,7 @@ class BidListControllerGetList_IT {
     @DisplayName(" Url request /bidList/list - Without Authentication"
     		+ " - Given a BidList List,"
     		+ " when GET /bidList/list action request,"
-    		+ " then returns bidListslist page")
+    		+ " then returns Error Authentication required")
     @Test
     public void testGetBidListListXithoutAuthentication() throws Exception {
 
