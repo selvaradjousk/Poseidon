@@ -23,7 +23,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -143,7 +142,7 @@ class BidListControllerPostUpdate_IT {
     @Test
     public void testPostBidListUpdateEmptyAccount() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/1")
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
         .sessionAttr("bidListDTO", testBidListDTO1)
         .param("account", "")
         .param("type", testBidListDTO1.getType())
@@ -172,7 +171,7 @@ class BidListControllerPostUpdate_IT {
     @Test
     public void testPostBidListUpdateWithAccountMoreThanThiryCharacters() throws Exception {
 
-    	MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/bidList/update/1")
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
         .sessionAttr("bidListDTO", testBidListDTO1)
         .param("account", "AccountAccountAccountAccountAccount")
         .param("type", testBidListDTO1.getType())
@@ -188,6 +187,34 @@ class BidListControllerPostUpdate_IT {
         
 //        assertThat(content).contains("Account is mandatory");
         assertThat(content).contains("The maximum length for account should be 30 characters");
+    }
+
+    // ********************************************************************
+
+    @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
+    @DisplayName("Url request /bidList/update/{id} - Account  Non Alphanumeric characters - "
+    		+ " - Given a BidList - Account with Non Alphanumeric characters,"
+    		+ " when POST /bidList/update/{id} action request,"
+    		+ " then returns error & redirect /bidList/update/{id} page")    
+    @Test
+    public void testPostBidListUpdateWithBidListAccountWithSymbols() throws Exception {
+
+    	MvcResult result = mockMvc.perform(post("/bidList/update/1")
+        .sessionAttr("bidListDTO", testBidListDTO1)
+        .param("account", "Account!&&&")
+        .param("type", testBidListDTO1.getType())
+        .param("bidQuantity", testBidListDTO1.getBidQuantity().toString()))
+        .andExpect(model().hasErrors())
+        .andExpect(model().size(2))
+        .andExpect(model().attributeExists("bidListDTO"))
+        .andExpect(view().name("bidList/update"))
+        .andExpect(status().is(200))
+        .andReturn();
+
+
+        String content = result.getResponse().getContentAsString();
+        
+        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
     }
 
     // ********************************************************************
