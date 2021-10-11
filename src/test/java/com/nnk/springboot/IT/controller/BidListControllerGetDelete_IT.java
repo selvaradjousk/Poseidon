@@ -30,7 +30,7 @@ class BidListControllerGetDelete_IT {
 	@Autowired
     private MockMvc mockMvc;
 
-	@InjectMocks
+	@Autowired
 	BidListController bidListController;
 
 
@@ -50,11 +50,11 @@ class BidListControllerGetDelete_IT {
     public void testGetBidListDeleteWithoutAuthentication() throws Exception {
 
     	mockMvc.perform(get("/bidList/delete/1"))
-        .andExpect(status().is(401))
-        .andDo(MockMvcResultHandlers.print())
-        .andExpect(status().isUnauthorized())
-        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
-        .andExpect(unauthenticated());
+	        .andExpect(status().is(401))
+	        .andDo(MockMvcResultHandlers.print())
+	        .andExpect(status().isUnauthorized())
+	        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
+	        .andExpect(unauthenticated());
 
        
     }
