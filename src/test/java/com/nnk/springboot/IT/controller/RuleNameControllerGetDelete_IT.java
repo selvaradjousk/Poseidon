@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-class RuleNameControllerGetDeleteTest {
+class RuleNameControllerGetDelete_IT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -54,12 +54,12 @@ class RuleNameControllerGetDeleteTest {
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
-    @DisplayName(" Url request ruleName/delete/{id} valid id- "
+    @DisplayName(" Url request ruleName/delete/{id} valid id - With Authentication "
     		+ " - Given a ruleName/delete/{id} valid id, "
     		+ " when GET ruleName/delete action request,"
     		+ " then returns delete page")    
     @Test
-    public void testGetRuleNameDelete() throws Exception {
+    public void testGetRuleNameDeleteWithAuthentication() throws Exception {
 
     	mockMvc.perform(MockMvcRequestBuilders.get("/ruleName/delete/1"))
     				.andExpect(redirectedUrl("/ruleName/list"))
