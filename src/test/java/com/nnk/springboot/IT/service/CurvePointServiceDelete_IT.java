@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.nnk.springboot.exception.DataNotFoundException;
 import com.nnk.springboot.service.CurvePointService;
 
-@DisplayName("Service ==> CurvePoint DELETE - UNIT TESTS")
+@DisplayName("INTEGRATION TESTS - Service ==> CurvePoint DELETE")
 @SpringBootTest
 @ActiveProfiles("test")
 class CurvePointServiceDelete_IT {
