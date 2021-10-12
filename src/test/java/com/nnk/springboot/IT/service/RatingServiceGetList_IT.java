@@ -17,7 +17,7 @@ import com.nnk.springboot.service.RatingService;
 @DisplayName("INTEGRATION TESTS - Service ==> Rating Get List")
 @SpringBootTest
 @ActiveProfiles("test")
-class RatingServiceGetListTest {
+class RatingServiceGetList_IT {
 
     @Autowired
     private RatingService RatingService;
