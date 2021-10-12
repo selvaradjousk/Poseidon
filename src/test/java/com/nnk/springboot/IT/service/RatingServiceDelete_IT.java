@@ -9,45 +9,45 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.nnk.springboot.exception.DataNotFoundException;
-import com.nnk.springboot.service.CurvePointService;
+import com.nnk.springboot.service.RatingService;
 
-@DisplayName("INTEGRATION TESTS - Service ==> CurvePoint DELETE")
+@DisplayName("INTEGRATION TESTS - Service ==> Rating DELETE")
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointServiceDelete_IT {
+class RatingServiceDelete_IT {
 
-
-    @Autowired
-    private CurvePointService curvePointService;
+	@Autowired
+    private RatingService ratingService;
 
 
 	// *******************************************************************	
     
-    @DisplayName("Check <Delete CurvePoint>"
-		+ "GIVEN a CurvePoint  "
-		+ "WHEN Requested DELETE CurvePoint "
-		+ "THEN Deletes CurvePoint")	    
+    @DisplayName("Check <Delete Rating>"
+		+ "GIVEN a Rating  "
+		+ "WHEN Requested DELETE Rating "
+		+ "THEN Deletes Rating")	    
 	@Test
-	public void testCurvePointDelete() throws Exception {
+	public void testRatingDelete() throws Exception {
 
-    	curvePointService.deleteCurvePoint(3);
+    	ratingService.deleteRating(3);
     	// WHEN // THEN
     	assertThrows(DataNotFoundException.class, ()
-        		-> curvePointService.deleteCurvePoint(3));
+        		-> ratingService.deleteRating(3));
 	} 
 
 	// *******************************************************************	
  
+	
     @DisplayName("Check <Exception>"
-		+ "GIVEN a CurvePoint not exist "
-		+ "WHEN Requested DELETE CurvePoint "
+		+ "GIVEN a Rating not exist "
+		+ "WHEN Requested DELETE Rating "
 		+ "THEN throws Exception")	    
 	@Test
-	public void testDeleteCurvePointNotExists() throws Exception {
-    
+	public void testDeleteRatingNotExists() throws Exception {
+
     	// WHEN // THEN
     	assertThrows(DataNotFoundException.class, ()
-        		-> curvePointService.deleteCurvePoint(20));
+        		-> ratingService.deleteRating(100));
 	} 
 
 	// *******************************************************************	

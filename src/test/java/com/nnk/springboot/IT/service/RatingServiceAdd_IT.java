@@ -18,7 +18,7 @@ import com.nnk.springboot.service.RatingService;
 @DisplayName("INTEGRATION TESTS - Service ==> Rating Add")
 @SpringBootTest
 @ActiveProfiles("test")
-class RatingServiceAddTest {
+class RatingServiceAdd_IT {
 
 
     @Autowired
