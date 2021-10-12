@@ -17,4 +17,6 @@ public class GeneralConstraints {
 	public static final String PATTERN_ALPHANUMERIC = "[-A-Za-z0-9\\s]+${2}";
 
 	public static final String PATTERN_ALPHABETCHARACTERS = "[-A-Za-z]+${2}";
+	
+	public static final String PATTERN_USERNAME = "^[a-zA-Z][a-zA-Z0-9.@]+${2}";
 }

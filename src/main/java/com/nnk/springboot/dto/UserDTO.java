@@ -28,8 +28,8 @@ public class UserDTO {
 	@NotBlank(message = "Username is mandatory")
 	@Length(max = GeneralConstraints.VARIABLE_LENGTH_125,
 		message = "The maximum length for username should be 125 characters")
-    @Pattern(regexp = GeneralConstraints.PATTERN_ALPHANUMERIC,
-	message = "Should be alphanumeric and minimum more than 2 characters")
+    @Pattern(regexp = GeneralConstraints.PATTERN_USERNAME,
+	message = "Should be alphanumeric or email and minimum more than 2 characters")
 	private String username;
 
 	@NotBlank(message = "Password is mandatory")
