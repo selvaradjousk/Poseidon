@@ -64,7 +64,7 @@ class RatingServiceGetList_IT {
 		  		 .getAllRating();
 		   
 		   // THEN
-		   assertEquals(5, result.size());
+		   assertEquals(7, result.size());
 		
 		}    
 

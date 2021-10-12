@@ -58,7 +58,7 @@ class CurvePointServiceGetList_IT {
               List<CurvePointDTO> result = CurvePointService.getAllCurvePoint();
               
               // THEN
-              assertEquals(5, result.size());
+              assertEquals(6, result.size());
 
            }    
            
