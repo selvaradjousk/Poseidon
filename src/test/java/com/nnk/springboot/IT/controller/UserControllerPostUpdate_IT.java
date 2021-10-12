@@ -43,8 +43,8 @@ class UserControllerPostUpdate_IT {
 
     	objectMapper = new ObjectMapper();
         testUserDTO1 = UserDTO.builder()
-        		.username("Username")
-        		.password("Password&1")
+        		.username("username2")
+        		.password("Password1!")
         		.fullname("Fullname")
         		.role("USER")
         		.build();
@@ -62,7 +62,7 @@ class UserControllerPostUpdate_IT {
     @Test
     public void testPostUserUpdateWithoutAuthentication() throws Exception {
         
-        mockMvc.perform(post("/user/update/12")
+        mockMvc.perform(post("/user/update/2")
 	        .sessionAttr("userDTO", testUserDTO1))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
