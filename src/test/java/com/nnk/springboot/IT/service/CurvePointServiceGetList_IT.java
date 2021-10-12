@@ -22,8 +22,6 @@ class CurvePointServiceGetList_IT {
     @Autowired
     private CurvePointService CurvePointService;
 
-    
-
         
        	// *******************************************************************	
            
@@ -46,9 +44,6 @@ class CurvePointServiceGetList_IT {
            
    
          // *******************************************************************	          
-  
-        
-
 
            @DisplayName("Check <Execution Order>"
            		+ " - Given a CurvePoint List,"
