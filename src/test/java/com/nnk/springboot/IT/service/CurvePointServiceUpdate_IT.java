@@ -21,7 +21,7 @@ import com.nnk.springboot.service.CurvePointService;
 @DisplayName("INTEGRATION TESTS - Service ==> CurvePoint Update")
 @SpringBootTest
 @ActiveProfiles("test")
-class CurvePointServiceUpdateTest {
+class CurvePointServiceUpdate_IT {
 
 
     @Autowired
