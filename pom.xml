@@ -70,10 +70,20 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<!-- ===================================================================== -->
+		<!-- provides the communication of your server-side code with the database
+		, in order to validate the user or client. -->
+		<!-- ===================================================================== -->		
+		<dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
 
 		<!-- ===================================================================== -->
 		<!-- Starter Web used for building web application - RESTful applications 
-			using Spring MVC and includes Tomcat as the default embedded container -->
+			using Spring MVC and includes Tomcat as the default embedded container
+			** used to write the HTTP Endpoints or to create an API in the RestController class. -->
 		<!-- ===================================================================== -->	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -91,7 +101,8 @@
 
 
 		<!-- ===================================================================== -->
-		<!-- spring-boot-starter-security that interact with your application -->
+		<!-- spring-boot-starter-security that interact with your application 
+		** access all necessary packages to implements the spring security in your application -->
 		<!-- ===================================================================== -->	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -120,7 +131,9 @@
 
 
 		<!-- ============================================================== -->
-		<!-- ==================  H2 database ====================== -->
+		<!-- ==================  H2 database ====================== 
+		in-memory database where you can store the client details for authentication
+		 and authorization.-->
 		<!-- ============================================================== -->	
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -262,13 +275,20 @@
 
 
 		<!-- ===================================================================== -->
-		<!--SPRING BOOT SECURITY OAUTH2 CLIENT-->
+		<!--SPRING BOOT SECURITY OAUTH2 CLIENT
+		** can implement features such as Authorization Server and Resource Server on your application-->
 		<!-- ===================================================================== -->
 		 <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		
+		<dependency>
+   			<groupId>org.springframework.security.oauth</groupId>
+   			<artifactId>spring-security-oauth2</artifactId>
+   			<version>2.5.1.RELEASE</version>
+		</dependency>
+
 		<!-- ===================================================================== -->
 		<!--JASYPT ENCRYPTION TOOL-->
 		<!-- ===================================================================== -->		
@@ -323,12 +343,20 @@
 		    <scope>test</scope>
 		</dependency>
 
-
+	<!-- ======================================================= -->
+	<!-- generate the JSON Web Token, which further used by the client to access the protected resources. -->
+	<!-- ======================================================= -->
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
+		</dependency>
+		
+		<dependency>
+   			<groupId>org.springframework.security</groupId>
+   			<artifactId>spring-security-jwt</artifactId>
+   			<version>1.1.1.RELEASE</version>
 		</dependency>
 
 		<dependency>
