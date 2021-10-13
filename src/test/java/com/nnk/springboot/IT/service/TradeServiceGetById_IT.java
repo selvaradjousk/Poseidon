@@ -35,10 +35,10 @@ class TradeServiceGetById_IT {
     public void setUp() {
         objectMapper = new ObjectMapper();
         testTradeDTO1 = TradeDTO.builder()
-        		.tradeId(1)
-        		.account("account1")
-        		.type("type1")
-        		.buyQuantity(10.0)
+        		.tradeId(3)
+        		.account("account3")
+        		.type("type3")
+        		.buyQuantity(30.0)
         		.build();
         
        
@@ -56,7 +56,7 @@ class TradeServiceGetById_IT {
 			
 
     		TradeDTO result = tradeService
-    				.getTradeById(1);
+    				.getTradeById(3);
 
 	        assertNotNull(result);
 	    }
@@ -72,12 +72,12 @@ class TradeServiceGetById_IT {
     public void testGetTradeByIdReturnResultMatch() {
 			
     	TradeDTO result = tradeService
-    			.getTradeById(1);
+    			.getTradeById(3);
 
     	assertEquals(testTradeDTO1.toString(), result.toString());
 	    assertThat(result).usingRecursiveComparison().isEqualTo(testTradeDTO1);
-	    assertEquals("account1", result.getAccount());
-	    assertEquals(1, result.getTradeId());
+	    assertEquals("account3", result.getAccount());
+	    assertEquals(3, result.getTradeId());
     }  
     
 	

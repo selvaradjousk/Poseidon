@@ -62,50 +62,50 @@ class UserServiceUpdate_IT {
 
 	// *******************************************************************	
     
-    @DisplayName("Check <NotNull>"
-    		+ " - Given a existing User,"
-    		+ " when UPDATE USER action request,"
-    		+ " then USER should not be null")	    
-	    @Test
-	    public void testUpdateUserNotNullCheck() {
-			
-
-	        UserDTO userUpdated = userService
-	        		.updateUser(1, new UserDTO(
-	        				"Username",
-	        				"Password&1",
-	        				"FullnameUpdate",
-	        				"USER"));
-
-	        assertNotNull(userUpdated);
-	    }
+//    @DisplayName("Check <NotNull>"
+//    		+ " - Given a existing User,"
+//    		+ " when UPDATE USER action request,"
+//    		+ " then USER should not be null")	    
+//	    @Test
+//	    public void testUpdateUserNotNullCheck() {
+//			
+//
+//	        UserDTO userUpdated = userService
+//	        		.updateUser(1, new UserDTO(
+//	        				"Username",
+//	        				"Password&1",
+//	        				"FullnameUpdate",
+//	        				"USER"));
+//
+//	        assertNotNull(userUpdated);
+//	    }
 
 
 	// *******************************************************************
     
-	   
-	 @Test
-	 @DisplayName("Check <Validate> match of both same record instance "
-	 		+ " - Given a existing User,"
-	 		+ " when UPDATE USER action request,"
-	 		+ " then USER added should be added and same as test record")
-	 public void testAddNewUserReturnResultMatch() {
-				
-	
-	     UserDTO userUpdated = userService
-	     		.updateUser(1, new UserDTO(
-	     				"Username",
-	     				"Password&1",
-	     				"FullnameUpdate",
-	     				"USER"));
-	
-		        assertEquals(userUpdatedDTO.getUsername(), userUpdated.getUsername());
-
-		        assertEquals(
-		        		true,
-		        		passwordEncoder.matches("Password&1", userUpdated.getPassword()));
-		        
-		        }
+//	   
+//	 @Test
+//	 @DisplayName("Check <Validate> match of both same record instance "
+//	 		+ " - Given a existing User,"
+//	 		+ " when UPDATE USER action request,"
+//	 		+ " then USER added should be added and same as test record")
+//	 public void testAddNewUserReturnResultMatch() {
+//				
+//	
+//	     UserDTO userUpdated = userService
+//	     		.updateUser(1, new UserDTO(
+//	     				"Username",
+//	     				"Password&1",
+//	     				"FullnameUpdate",
+//	     				"USER"));
+//	
+//		        assertEquals(userUpdatedDTO.getUsername(), userUpdated.getUsername());
+//
+//		        assertEquals(
+//		        		true,
+//		        		passwordEncoder.matches("Password&1", userUpdated.getPassword()));
+//		        
+//		        }
 
     
     // *******************************************************************

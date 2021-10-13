@@ -155,7 +155,7 @@ class UserControllerPostUpdate_IT {
 
         String content = result.getResponse().getContentAsString();
         
-        assertThat(content).contains("Should be alphanumeric and minimum more than 2 characters");
+        assertThat(content).contains("Should be alphanumeric or email and minimum more than 2 characters");
     }
 
     // ********************************************************************

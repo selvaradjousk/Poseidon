@@ -64,7 +64,7 @@ class BidListServiceGetList_IT {
            List<BidListDTO> result = bidListService.getAllBidList();
            
            // THEN
-           assertEquals(5, result.size());
+           assertEquals(6, result.size());
 
         }    
         

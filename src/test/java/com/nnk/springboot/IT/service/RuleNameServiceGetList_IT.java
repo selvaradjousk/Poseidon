@@ -50,7 +50,7 @@ class RuleNameServiceGetList_IT {
       // *******************************************************************    
 
         
-        @DisplayName("Check <Execution Order>"
+        @DisplayName("Check <List Count>"
           		+ " - Given a RuleName List,"
           		+ " when Get RuleName List action request,"
           		+ " then return expected Number of RuleNames")    
@@ -64,7 +64,7 @@ class RuleNameServiceGetList_IT {
             		 .getAllRuleName();
              
              // THEN
-             assertEquals(5, result.size());
+             assertEquals(4, result.size());
 
           }    
           

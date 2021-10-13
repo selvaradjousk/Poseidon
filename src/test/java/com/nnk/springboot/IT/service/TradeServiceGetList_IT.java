@@ -48,7 +48,7 @@ class TradeServiceGetList_IT {
                       
 
 
-          @DisplayName("Check <Execution Order>"
+          @DisplayName("Check <List Count>"
           		+ " - Given a Trade List,"
           		+ " when Get Trade List action request,"
           		+ " then return expected Number of Trades")    
@@ -61,7 +61,7 @@ class TradeServiceGetList_IT {
              List<TradeDTO> result = tradeService.getAllTrade();
              
              // THEN
-             assertEquals(5, result.size());
+             assertEquals(4, result.size());
 
           }    
           
