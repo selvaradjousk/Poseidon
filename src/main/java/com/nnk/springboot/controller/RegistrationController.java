@@ -22,21 +22,25 @@ public class RegistrationController {
     @Autowired
     private IUserService userService;
 
-    // ******************************************************************
+    // ############################################################
 
     public RegistrationController(IUserService userService) {
 		super();
 		this.userService = userService;
 	}
 
-    // ******************************************************************
+    // ############################################################
+
     @GetMapping("/register")
     public String viewRegistrationPage(UserDTO userDTO) {
-        log.info( "Registration GET requested" );
-        return "register";
+
+    	log.info( "Registration GET requested" );
+
+    	return "register";
     }
 
-    // ******************************************************************
+    // ############################################################
+
     @PostMapping("/register")
     public String registrationValidate(
     		@Valid final UserDTO userDTO,
@@ -51,7 +55,8 @@ public class RegistrationController {
                 UserDTO userToAddDTO = userService
                 		.addUser(userDTO);
 
-                log.info("New user is registered successfully");
+                log.info("New user {} is registered successfully"
+                		+ userToAddDTO.getUsername());
 
                 return "redirect:/login";
             }
@@ -66,6 +71,7 @@ public class RegistrationController {
         return "register";
     }    
 
-    // ******************************************************************
+	  // ############################################################
+
     
 }

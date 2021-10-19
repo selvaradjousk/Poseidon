@@ -25,13 +25,13 @@ public class TradeController {
 	@Autowired
 	private final ITradeService tradeService;
 
-    // ********************************************************************
+	// ############################################################
 
     public TradeController(final ITradeService tradeService) {
         this.tradeService = tradeService;
     }
 
-    // ********************************************************************
+	// ############################################################
 
 	@GetMapping("/list")
     public String home(final Model model)
@@ -60,7 +60,7 @@ public class TradeController {
     }
 
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/add")
     public String addTrade(final TradeDTO tradeDTO) {
@@ -72,7 +72,7 @@ public class TradeController {
     	return "trade/add";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @PostMapping("/validate")
     public String validate(
@@ -88,7 +88,8 @@ public class TradeController {
 
     		return "trade/add";
         }
-        tradeService.addTrade(tradeDTO);
+
+    	tradeService.addTrade(tradeDTO);
 
        	log.info("Request post for trade/validate SUCCESS");
 
@@ -96,7 +97,7 @@ public class TradeController {
     }
 
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(
@@ -114,7 +115,7 @@ public class TradeController {
     	return "trade/update";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @PostMapping("/update/{id}")
     public String updateTrade(
@@ -144,7 +145,7 @@ public class TradeController {
         return "redirect:/trade/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/delete/{id}")
     public String deleteTrade(
@@ -160,6 +161,6 @@ public class TradeController {
     	return "redirect:/trade/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 }

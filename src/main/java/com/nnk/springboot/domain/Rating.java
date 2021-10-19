@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 public class Rating {
 
-	
+
 	@Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -47,6 +47,8 @@ public class Rating {
     @Column(name = "order_number")
     private Integer orderNumber;
 
+	// ############################################################
+
     public Rating(
     		final String moodysRating,
     		final String sandPRating,
@@ -58,5 +60,7 @@ public class Rating {
         this.fitchRating = fitchRating;
         this.orderNumber = orderNumber;
     }
+
+	// ############################################################
 
 }

@@ -25,10 +25,8 @@ public class UserController {
 
 	@Autowired
     private final IUserService userService;
-    //    private UserService userService;
 
-    
-	// ********************************************************************
+	// ############################################################
     
 
 	public UserController(
@@ -37,12 +35,11 @@ public class UserController {
     }
 
     
-	// ********************************************************************
+	// ############################################################
     
 
     @GetMapping("/list")
-    public String home(Model model)
-    {
+    public String home(Model model) {
 
     	log.info("Request GET for user/list received");
 
@@ -68,9 +65,8 @@ public class UserController {
     	return "user/list";
     }
 
-    
-	// ********************************************************************
-    
+	// ############################################################
+
     @GetMapping("/add")
     public String addUser(UserDTO bid) {
 
@@ -80,9 +76,9 @@ public class UserController {
 
     	return "user/add";
     }
-    
-	// ********************************************************************
-    
+
+	// ############################################################
+
     @PostMapping("/validate")
     public String validate(
     		@Valid UserDTO userDTO,
@@ -91,8 +87,6 @@ public class UserController {
 
     	if (!result.hasErrors()) {
 
-        	// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        	// user.setPassword(encoder.encode(user.getPassword()));
     		try {
 
     			userService.addUser(userDTO);
@@ -100,7 +94,7 @@ public class UserController {
     			model.addAttribute(
     					"users",
     					userService.getAllUser());
-    			
+
     			return  "redirect:/user/list";
 
     		} catch (DataAlreadyExistsException e){
@@ -115,8 +109,8 @@ public class UserController {
         return "user/add";
 
     }
-    
-	// ********************************************************************
+
+	// ############################################################
     
     @GetMapping("/update/{id}")
     public String showUpdateForm(
@@ -133,7 +127,7 @@ public class UserController {
         return "user/update";
     }
     
-	// ********************************************************************
+	// ############################################################
     
     @PostMapping("/update/{id}")
     public String updateUser(
@@ -146,11 +140,6 @@ public class UserController {
             return "user/update";
         }
 
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        user.setPassword(encoder.encode(user.getPassword()));
-//        user.setId(id);
-
-//        try {
         	userService.updateUser(id, userDTO);
 
 			model.addAttribute(
@@ -158,17 +147,11 @@ public class UserController {
 					userService.getAllUser());
 
         	return "redirect:/user/list";
-//
-//        } catch (DataAlreadyExistsException e){
-//
-//        	model.addAttribute("error", e);
-//
-//        	return "/user/update";
-//        }
+
     }
 
 
-    // ********************************************************************
+	// ############################################################
     
     @GetMapping("/delete/{id}")
     public String deleteUser(
@@ -176,8 +159,6 @@ public class UserController {
     		Model model) {
 
     	userService.getUserById(id);
-
-//    	.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
     	userService.deleteUser(id);
 
@@ -189,7 +170,7 @@ public class UserController {
 
     }
     
-	// ********************************************************************
-    
+	// ############################################################
+
 
 }

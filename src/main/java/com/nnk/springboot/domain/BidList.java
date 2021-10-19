@@ -102,6 +102,8 @@ public class BidList {
 
     private String side;
 
+	// ############################################################
+
     public BidList(
     		final String account,
     		final String type,
@@ -111,5 +113,7 @@ public class BidList {
         this.type = type;
         this.bidQuantity = bidQuantity;
     }
-    
+
+	// ############################################################
+   
 }

@@ -26,7 +26,7 @@ import lombok.ToString;
 @ToString
 public class RuleName {
 
-	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -56,6 +56,8 @@ public class RuleName {
     		length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String sqlPart;
 
+	// ############################################################
+
     public RuleName(
     		final String name,
     		final String description,
@@ -71,5 +73,7 @@ public class RuleName {
         this.sqlStr = sqlStr;
         this.sqlPart = sqlPart;
     }
-    
+
+	// ############################################################
+
 }

@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nnk.springboot.config.AuthTokenFilter;
 import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.RuleNameController;
@@ -33,6 +34,9 @@ import com.nnk.springboot.service.RuleNameService;
 class RuleNameControllerGetDeleteTest {
 
 
+	@MockBean
+	AuthTokenFilter authenticationJwtTokenFilter;
+	
     @MockBean
     private RuleNameService ruleNameService;
 

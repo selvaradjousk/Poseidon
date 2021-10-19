@@ -55,6 +55,8 @@ public class RuleNameDTO {
     private String sqlPart;
 
 
+	// ############################################################
+
     public RuleNameDTO(
     		final String name,
     		final String description,
@@ -70,4 +72,7 @@ public class RuleNameDTO {
         this.sqlStr = sqlStr;
         this.sqlPart = sqlPart;
     }
+
+	// ############################################################
+
 }

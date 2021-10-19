@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.nnk.springboot.config.AuthTokenFilter;
 import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.LoginController;
@@ -28,6 +29,9 @@ import com.nnk.springboot.service.UserService;
 @WebMvcTest(LoginController.class)
 class LoginControllerTest {
 
+	@MockBean
+	AuthTokenFilter authenticationJwtTokenFilter;
+	
     @MockBean
     private UserService userService;
 

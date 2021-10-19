@@ -25,18 +25,17 @@ public class BidListController {
 	@Autowired
 	private final IBidListService bidListService;
 
-    // ********************************************************************
+	// ############################################################
 
 	public BidListController(
 			final IBidListService bidListService) {
         this.bidListService = bidListService;
     }
 
-    // ********************************************************************
+	// ############################################################
 
 	@GetMapping("/list")
-    public String home(final Model model)
-    {
+    public String home(final Model model) {
 
     	log.info("Request GET for bidList/list received");
 
@@ -53,26 +52,29 @@ public class BidListController {
         	model.addAttribute("admin", "admin");
         }
 
-		model.addAttribute("bids", bidListService.getAllBidList());
+		model.addAttribute("bids", bidListService
+				.getAllBidList());
 
-    	log.info("Request GET for bidList/list reponse SUCCESS(200 OK)");
+    	log.info("Request GET for bidList/list reponse"
+    			+ " SUCCESS(200 OK)");
 
 		return "bidList/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/add")
     public String addBidForm(BidListDTO bid) {
 
     	log.info("Request GET for bidList/add received");
 
-    	log.info("Request GET for bidList/add reponse SUCCESS(200 OK)");
+    	log.info("Request GET for bidList/add reponse"
+    			+ " SUCCESS(200 OK)");
 
     	return "bidList/add";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @PostMapping("/validate")
     public String validate(
@@ -80,42 +82,47 @@ public class BidListController {
     		final BindingResult result,
     		final Model model) {
 
-    	log.info("Request post for bidList/validate received");
+    	log.info("Request post for bidList/validate"
+    			+ " received");
 
     	if(result.hasErrors()){
 
-        	log.error("Request post for bidList/validate Error(s) {} ", result);
+        	log.error("Request post for bidList/validate"
+        			+ " Error(s) {} ", result);
 
     		return "bidList/add";
         }
 
     	bidListService.addBidList(bidListDTO);
 
-       	log.info("Request post for bidList/validate SUCCESS");
+       	log.info("Request post for bidList/validate"
+       			+ " SUCCESS");
 
         return "redirect:/bidList/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request GET bidList/update/{id} received - ID: {}", id);
+       	log.info("Request GET bidList/update/{id} received"
+       			+ " - ID: {}", id);
 
         BidListDTO bidListDTO = bidListService
         		.getBidListById(id);
 
         model.addAttribute("bidListDTO", bidListDTO);
 
-    	log.info("Request GET for bidList/update{id} SUCCESS");
+    	log.info("Request GET for bidList/update{id}"
+    			+ " SUCCESS");
 
     	return "bidList/update";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @PostMapping("/update/{id}")
     public String updateBid(
@@ -124,7 +131,8 @@ public class BidListController {
     		final BindingResult result,
     		final Model model) {
 
-       	log.info("Request POST bidList/update/{id} received - ID: {}", id);
+       	log.info("Request POST bidList/update/{id} received"
+       			+ " - ID: {}", id);
 
         if(result.hasErrors()){
 
@@ -132,34 +140,38 @@ public class BidListController {
 
             model.addAttribute(id);
 
-        	log.error("Request post for bidList/update{id} Error(s) {} ", result);
+        	log.error("Request post for bidList/update{id}"
+        			+ " Error(s) {} ", result);
 
             return "bidList/update";
         }
 
         bidListService.updateBidList(id, bidListDTO);
 
-        log.info("Request POST bidList/update/{id} SUCCESS for - ID: {}", id);
+        log.info("Request POST bidList/update/{id} SUCCESS for"
+        		+ " - ID: {}", id);
 
         return "redirect:/bidList/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/delete/{id}")
     public String deleteBid(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request DELETE bidList/delete/{id} received - ID: {}", id);
+       	log.info("Request DELETE bidList/delete/{id} received"
+       			+ " - ID: {}", id);
 
     	bidListService.deleteBidList(id);
 
-    	log.info("Request DELETE for bidList/delete/{} SUCCESS", id);
+    	log.info("Request DELETE for bidList/delete/{}"
+    			+ " SUCCESS", id);
 
     	return "redirect:/bidList/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 }

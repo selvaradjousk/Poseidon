@@ -52,6 +52,8 @@ public class CurvePoint {
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
 
+	// ############################################################
+
     public CurvePoint(
     		final Integer curveId,
     		final Double term,
@@ -61,5 +63,7 @@ public class CurvePoint {
         this.term = term;
         this.value = value;
     }	
+
+	// ############################################################
 	
 }

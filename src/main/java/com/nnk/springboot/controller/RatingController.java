@@ -26,18 +26,17 @@ public class RatingController {
     @Autowired
     private final IRatingService ratingService;
 
-  	// ********************************************************************
+	// ############################################################
 
     public RatingController(
     		final IRatingService ratingService) {
         this.ratingService = ratingService;
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @GetMapping("/list")
-    public String home(final Model model)
-    {
+    public String home(final Model model) {
 
     	log.info("Request GET for rating/list received");
 
@@ -62,7 +61,7 @@ public class RatingController {
     	return "rating/list";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
 
     @GetMapping("/add")
@@ -75,7 +74,7 @@ public class RatingController {
     	return "rating/add";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @PostMapping("/validate")
     public String validate(
@@ -91,14 +90,15 @@ public class RatingController {
 
     		return "rating/add";
         }
-        ratingService.addRating(ratingDTO);
+
+    	ratingService.addRating(ratingDTO);
 
        	log.info("Request post for rating/validate SUCCESS");
 
         return "redirect:/rating/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(
@@ -116,7 +116,7 @@ public class RatingController {
     	return "rating/update";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 
     @PostMapping("/update/{id}")
@@ -126,16 +126,19 @@ public class RatingController {
     		final BindingResult result,
     		final Model model) {
 
-       	log.info("Request POST rating/update/{id} received - ID: {}", id);
+       	log.info("Request POST rating/update/{id} received"
+       			+ " - ID: {}", id);
 
         if (result.hasErrors()) {
 
-        	log.error("Request post for rating/update{id} Error(s) {} ", result);
+        	log.error("Request post for rating/update{id}"
+        			+ " Error(s) {} ", result);
 
         	model.addAttribute("ratingDTO", ratingDTO);
             model.addAttribute(id);
 
-          	log.info("Request POST rating/update/{id} SUCCESS for - ID: {}", id);
+          	log.info("Request POST rating/update/{id} SUCCESS for"
+          			+ " - ID: {}", id);
 
         	return "rating/update";
         }
@@ -147,14 +150,15 @@ public class RatingController {
         return "redirect:/rating/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
     @GetMapping("/delete/{id}")
     public String deleteRating(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request DELETE rating/delete/{id} received - ID: {}", id);
+       	log.info("Request DELETE rating/delete/{id} received"
+       			+ " - ID: {}", id);
 
        	ratingService.deleteRating(id);
 
@@ -163,6 +167,6 @@ public class RatingController {
     	return "redirect:/rating/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 }

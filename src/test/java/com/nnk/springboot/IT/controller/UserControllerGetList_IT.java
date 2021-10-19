@@ -75,7 +75,7 @@ class UserControllerGetList_IT {
                 .andExpect(view().name("user/list"))
                 .andExpect(status().isOk());
 
-        assertEquals(6, (userService.getAllUser()).size());
+        assertEquals(7, (userService.getAllUser()).size());
     }
 
     // ********************************************************************

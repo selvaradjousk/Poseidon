@@ -25,18 +25,17 @@ public class CurveController {
     @Autowired
     private final ICurvePointService curvePointService;
 
-  	// ********************************************************************
+	// ############################################################
 
     public CurveController(
     		final ICurvePointService curvePointService) {
         this.curvePointService = curvePointService;
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @GetMapping("/list")
-    public String home(final Model model)
-    {
+    public String home(final Model model) {
 
     	log.info("Request GET for curvePoint/list received");
 
@@ -56,24 +55,26 @@ public class CurveController {
     	model.addAttribute("curvePoints", curvePointService
     			.getAllCurvePoint());
 
-    	log.info("Request GET for curvePoint/list reponse SUCCESS(200 OK)");
+    	log.info("Request GET for curvePoint/list reponse"
+    			+ " SUCCESS(200 OK)");
 
     	return "curvePoint/list";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @GetMapping("/add")
     public String addBidForm(final CurvePointDTO curvePointDTO) {
 
     	log.info("Request GET for curvePoint/add received");
 
-    	log.info("Request GET for curvePoint/add reponse SUCCESS(200 OK)");
+    	log.info("Request GET for curvePoint/add reponse"
+    			+ " SUCCESS(200 OK)");
 
     	return "curvePoint/add";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @PostMapping("/validate")
     public String validate(
@@ -81,40 +82,47 @@ public class CurveController {
     		final BindingResult result,
     		final Model model) {
 
-    	log.info("Request post for curvePoint/validate received");
+    	log.info("Request post for curvePoint/validate"
+    			+ " received");
 
     	if (result.hasErrors()) {
 
-        	log.error("Request post for curvePoint/validate Error(s) {} ", result);
+        	log.error("Request post for curvePoint/validate"
+        			+ " Error(s) {} ", result);
 
     		return "curvePoint/add";
         }
-        curvePointService.addCurvePoint(curvePointDTO);
 
-       	log.info("Request post for curvePoint/validate SUCCESS");
+    	curvePointService.addCurvePoint(curvePointDTO);
+
+       	log.info("Request post for curvePoint/validate"
+       			+ " SUCCESS");
 
         return "redirect:/curvePoint/list";
     }
 
 
-  	// ********************************************************************
+	// ############################################################
 
     @GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
-      	log.info("Request GET curvePoint/update/{id} received - ID: {}", id);
+      	log.info("Request GET curvePoint/update/{id} received"
+      			+ " - ID: {}", id);
 
-    	CurvePointDTO curvePointDTO = curvePointService.getCurvePointById(id);
+    	CurvePointDTO curvePointDTO = curvePointService
+    			.getCurvePointById(id);
 
     	model.addAttribute("curvePointDTO", curvePointDTO);
 
-    	log.info("Request GET for curvePoint/update{id} SUCCESS");
+    	log.info("Request GET for curvePoint/update{id}"
+    			+ " SUCCESS");
 
     	return "curvePoint/update";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @PostMapping("/update/{id}")
     public String updateBid(
@@ -123,28 +131,32 @@ public class CurveController {
     		final BindingResult result,
     		final Model model) {
 
-    	log.info("Request POST curvePoint/update/{id} received - ID: {}", id);
+    	log.info("Request POST curvePoint/update/{id} received"
+    			+ " - ID: {}", id);
 
         if (result.hasErrors()) {
 
-        	log.error("Request post for curvePoint/update{id} Error(s) {} ", result);
+        	log.error("Request post for curvePoint/update{id}"
+        			+ " Error(s) {} ", result);
 
         	model.addAttribute("curvePointDTO", curvePointDTO);
             model.addAttribute(id);
 
-          	log.info("Request POST curvePoint/update/{id} SUCCESS for - ID: {}", id);
+          	log.info("Request POST curvePoint/update/{id}"
+          			+ " SUCCESS for - ID: {}", id);
 
         	return "curvePoint/update";
         }
 
         curvePointService.updateCurvePoint(id, curvePointDTO);
 
-    	log.info("Request POST for curvePoint/update{id} SUCCESS");
+    	log.info("Request POST for curvePoint/update{id}"
+    			+ " SUCCESS");
 
         return "redirect:/curvePoint/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 
   	// ********************************************************************
@@ -154,15 +166,17 @@ public class CurveController {
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request DELETE curvePoint/delete/{id} received - ID: {}", id);
+       	log.info("Request DELETE curvePoint/delete/{id} received"
+       			+ " - ID: {}", id);
 
     	curvePointService.deleteCurvePoint(id);
 
-    	log.info("Request DELETE for curvePoint/delete/{} SUCCESS", id);
+    	log.info("Request DELETE for curvePoint/delete/{}"
+    			+ " SUCCESS", id);
 
     	return "redirect:/curvePoint/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 }

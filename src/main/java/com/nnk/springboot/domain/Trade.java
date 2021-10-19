@@ -120,10 +120,14 @@ public class Trade {
     		length = GeneralConstraints.VARIABLE_LENGTH_125)
     private String side;
 
+	// ############################################################
+
     public Trade(String account, String type) {
         this.account = account;
         this.type = type;
     }
+
+	// ############################################################
 
     public Trade(
     		final String account,
@@ -134,5 +138,7 @@ public class Trade {
         this.type = type;
         this.buyQuantity = buyQuantity;
     }
-    
+
+	// ############################################################
+
 }

@@ -25,7 +25,7 @@ public class RuleNameController {
     @Autowired
     private final IRuleNameService ruleNameService;
 
-  	// ********************************************************************
+	// ############################################################
 
     public RuleNameController(
     		final IRuleNameService ruleNameService) {
@@ -33,7 +33,7 @@ public class RuleNameController {
     }
 
 
-  	// ********************************************************************
+	// ############################################################
 
 
     @RequestMapping("/list")
@@ -62,7 +62,7 @@ public class RuleNameController {
     	return "ruleName/list";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
 
     @GetMapping("/add")
@@ -75,7 +75,7 @@ public class RuleNameController {
     	return "ruleName/add";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
 
     @PostMapping("/validate")
@@ -92,14 +92,15 @@ public class RuleNameController {
 
     		return "ruleName/add";
         }
-        ruleNameService.addRuleName(ruleNameDTO);
+
+    	ruleNameService.addRuleName(ruleNameDTO);
 
        	log.info("Request post for ruleName/validate SUCCESS");
 
         return "redirect:/ruleName/list";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
 
     @GetMapping("/update/{id}")
@@ -118,7 +119,7 @@ public class RuleNameController {
     	return "ruleName/update";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @PostMapping("/update/{id}")
     public String updateRuleName(
@@ -127,16 +128,19 @@ public class RuleNameController {
     		final BindingResult result,
     		final Model model) {
 
-       	log.info("Request POST ruleName/update/{id} received - ID: {}", id);
+       	log.info("Request POST ruleName/update/{id} received"
+       			+ " - ID: {}", id);
 
         if (result.hasErrors()) {
 
-        	log.error("Request post for ruleName/update{id} Error(s) {} ", result);
+        	log.error("Request post for ruleName/update{id}"
+        			+ " Error(s) {} ", result);
 
         	model.addAttribute("ruleNameDTO", ruleNameDTO);
             model.addAttribute(id);
 
-          	log.info("Request POST ruleName/update/{id} SUCCESS for - ID: {}", id);
+          	log.info("Request POST ruleName/update/{id}"
+          			+ " SUCCESS for - ID: {}", id);
 
         	return "ruleName/update";
         }
@@ -148,10 +152,12 @@ public class RuleNameController {
         return "redirect:/ruleName/list";
     }
 
-  	// ********************************************************************
+	// ############################################################
 
     @GetMapping("/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+    public String deleteRuleName(
+    		@PathVariable("id") Integer id,
+    		Model model) {
 
        	log.info("Request DELETE ruleName/delete/{id} received - ID: {}", id);
 
@@ -162,6 +168,6 @@ public class RuleNameController {
     	return "redirect:/ruleName/list";
     }
 
-    // ********************************************************************
+	// ############################################################
 
 }

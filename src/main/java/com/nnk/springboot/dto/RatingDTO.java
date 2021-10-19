@@ -49,6 +49,7 @@ public class RatingDTO {
     @Min(value = 0 , message ="The value must be positive")
     private Integer orderNumber;
 
+	// ############################################################
 
     public RatingDTO(
     		final String moodysRating,
@@ -61,4 +62,7 @@ public class RatingDTO {
         this.fitchRating = fitchRating;
         this.orderNumber = orderNumber;
     }
+
+	// ############################################################
+
 }

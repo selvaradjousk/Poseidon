@@ -46,6 +46,8 @@ public class TradeDTO {
     @Min(value = 0 , message ="The value must be positive")
     private Double buyQuantity;
 
+	// ############################################################
+
     public TradeDTO(
     		final String account,
     		final String type,
@@ -55,5 +57,7 @@ public class TradeDTO {
         this.type = type;
         this.buyQuantity = buyQuantity;
     }
+
+	// ############################################################
 
 }

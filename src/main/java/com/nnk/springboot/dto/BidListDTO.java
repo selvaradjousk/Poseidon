@@ -47,6 +47,8 @@ public class BidListDTO {
     @Min(value = 0 , message ="The bidQuantity must be positive")
     private Double bidQuantity;
 
+	// ############################################################
+
     public BidListDTO(
     		final String account,
     		final String type,
@@ -56,5 +58,7 @@ public class BidListDTO {
         this.type = type;
         this.bidQuantity = bidQuantity;
     }
+
+	// ############################################################
 
 }

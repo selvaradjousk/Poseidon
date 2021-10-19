@@ -39,6 +39,7 @@ public class CurvePointDTO {
     @Min(value = 0 , message ="The value must be positive")
     private Double value;
 
+	// ############################################################
 
     public CurvePointDTO(
     		final Integer curveId,
@@ -49,5 +50,7 @@ public class CurvePointDTO {
         this.term = term;
         this.value = value;
     }
+
+	// ############################################################
 
 }

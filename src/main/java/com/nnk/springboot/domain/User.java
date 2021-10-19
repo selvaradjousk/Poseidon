@@ -52,7 +52,9 @@ public class User {
 			nullable = false)
     private String role;
 
-    public User(
+	// ############################################################
+
+	public User(
     		final String username,
     		final String password,
     		final String fullname,
@@ -63,5 +65,7 @@ public class User {
         this.fullname = fullname;
         this.role = role;
     }
+
+	// ############################################################
 
 }

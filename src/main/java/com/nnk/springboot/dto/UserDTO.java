@@ -55,6 +55,7 @@ public class UserDTO {
 	message = "Should be alphabets and minimum more than 2 characters")
 	private String role;
 
+	// ############################################################
 
     public UserDTO(
     		final String username,
@@ -67,5 +68,7 @@ public class UserDTO {
         this.fullname = fullname;
         this.role = role;
     }
+
+	// ############################################################
 
 }
