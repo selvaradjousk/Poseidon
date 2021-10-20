@@ -1,11 +1,12 @@
 package com.nnk.springboot.IT.config;
 
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by Khang Nguyen.
@@ -22,6 +23,7 @@ public class PasswordEncodeTest {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String pw = encoder.encode("123456");
         System.out.println("[ "+ pw + " ]");
+        assertTrue(encoder.matches("123456", pw));
     }
     
     

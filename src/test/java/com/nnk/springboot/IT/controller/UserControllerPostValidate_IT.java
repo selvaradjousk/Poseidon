@@ -79,7 +79,7 @@ class UserControllerPostValidate_IT {
     @DisplayName(" Url request /user/validate - "
     		+ " - Given a User,"
     		+ " when POST /user/validate action request,"
-    		+ " then returns redirect /user/validate page")    
+    		+ " then returns redirect /user/list page")    
     @Test
     public void testPostUserValidate() throws Exception {
 
