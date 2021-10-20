@@ -17,18 +17,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.log4j.Log4j2;
 
+// This class is responsible to club everything
+// (Spring Security Configurations) together
 @Log4j2
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+	// ####################### WORKFLOW #############################
+
+    // User send a request with a username and password.
+    // Spring security return token back to client API.
+    // Client API sends token in each request as part of authentication.
+    // Token invalidated on log out.
+	// ##############################################################
+
+
+
+    // ##############################################################
+
+	// Core interface in Spring Security framework
+	// to retrieve the user's authentication and authorisation information
     @Autowired
     MyUserDetailsService userDetailsService;
 
 
     // ##############################################################
 
+    // Configuration class to extract the authentication token
+    // from the request headers
+    // & and call the authentication manager for authentication
     @Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 
@@ -40,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
     // ##############################################################
 
+    // Configuration to encode the password
+    // the passwords are encoded with the bcrypt algorithm
     @Bean
     public PasswordEncoder passwordEncoder(){
 
@@ -68,6 +90,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     // Helper class that eases the set up of UserDetailService
+    // & for setting up in-memory, JDBC, or LDAP
+    // user details or for adding a custom UserDetailsService
     @Override
     protected void configure(final AuthenticationManagerBuilder auth)
     		throws Exception {
@@ -80,12 +104,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	log.info("#### Calling auth.userDetailsService(userDetailsService)");
 
     }
+
     // ##############################################################
 
 
-    // Allows configuring web based security for specific http requests
+    // Allows configuring web based security for specific
+    // http requests & URL paths
     @Override
-    public void configure(HttpSecurity http) throws Exception{
+    public void configure(
+    		HttpSecurity http) throws Exception{
 
     	log.info("#### configure(HttpSecurity http) initialized");
 
@@ -119,6 +146,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.authorizeRequests()
         // ##############################################################
 
+    	// Endpoint used in this method ignores the authentication for
+    	// endpoints used in antMatchers.
 	    			// ----------------
 	    			// PUBLIC ENDPOINTS
 	    			// -----------------
@@ -149,10 +178,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.formLogin()
         // ##############################################################
 
-    			// when authentication is required, redirect the browser to /login
+    			// when authentication is required,
+    			// redirect the browser to /login
     			.loginPage("/login")
 
-    			// process the submitted credentials when sent the specified path
+    			// process the submitted credentials when
+    			// sent the specified path
     			// i.e. URL to validate username and password
         		.loginProcessingUrl("/login")
         		
@@ -226,6 +257,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // (ignore resources, set debug mode, reject requests by implementing
     // a custom firewall definition)
 
+    // WebSecurity ignoring() bypasses spring security entirely and
+    // HttpSecurity permitAll() allows anonymous access to
+    // the configured endpoint
 
     @Override
     public void configure( WebSecurity web ) throws Exception

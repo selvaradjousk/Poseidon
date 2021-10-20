@@ -29,6 +29,7 @@ import com.nnk.springboot.service.BidListService;
 class BidListControllerGetAddTest {
 
 
+	
 	@MockBean
 	AuthTokenFilter authenticationJwtTokenFilter;
 	
