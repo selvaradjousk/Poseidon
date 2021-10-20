@@ -1,7 +1,5 @@
 package com.nnk.springboot.IT.controller;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -15,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 @DisplayName("INTEGRATION TESTS - Controller <LOGIN>")
 @AutoConfigureMockMvc
@@ -51,20 +48,20 @@ class LoginController_IT {
 	// ********************************************************************
  
     
-    @DisplayName("Error Url request - Without Authentication"
-    		+ " - Given Error url /error request,"
-    		+ " when GET /error request,"
-    		+ " then returns Error Authentication required")	
-    @Test
-    public void testErrorWithoutAuthentication() throws Exception {
-        mockMvc.perform(get("/error"))
-        .andExpect(status().is(401))
-        .andDo(MockMvcResultHandlers.print())
-        .andExpect(status().isUnauthorized())
-        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
-        .andExpect(unauthenticated());
-    }    
-   
+//    @DisplayName("Error Url request - Without Authentication"
+//    		+ " - Given Error url /error request,"
+//    		+ " when GET /error request,"
+//    		+ " then returns Error Authentication required")	
+//    @Test
+//    public void testErrorWithoutAuthentication() throws Exception {
+//        mockMvc.perform(get("/error"))
+//        .andExpect(status().is(401))
+//        .andDo(MockMvcResultHandlers.print())
+//        .andExpect(status().isUnauthorized())
+//        .andExpect(status().reason(containsString("Full authentication is required to access this resource")))
+//        .andExpect(unauthenticated());
+//    }    
+//   
     
 	// ********************************************************************
  
@@ -76,6 +73,7 @@ class LoginController_IT {
     @Test
     public void testErrorWithAuthentication() throws Exception {
         mockMvc.perform(get("/error"))
+        		// error 403
                 .andExpect(view().name("403"))
                 .andExpect(status().isOk());
     }    

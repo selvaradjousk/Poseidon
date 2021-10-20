@@ -1,18 +1,51 @@
 package com.nnk.springboot.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.nnk.springboot.config.JwtUtils;
+import com.nnk.springboot.config.LoginDTO;
+import com.nnk.springboot.repository.UserRepository;
 
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Controller
 public class LoginController {
+
+	@Value("${poseidon.app.jwtExpirationMs}")
+    private int cookieExpirationSec;
+
+
+    @Autowired
+	AuthenticationManager authenticationManager;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	PasswordEncoder encoder;
+
+	@Autowired
+	JwtUtils jwtUtils;
+
 
 
 
@@ -29,11 +62,61 @@ public class LoginController {
 
 	// ##############################################################
 
+    @PostMapping("/login")
+    public String authenticateUser(
+    		@Valid final LoginDTO loginDTO,
+    		final BindingResult result,
+    		final HttpServletResponse response) {
 
+
+    	log.debug("/login user from LoginRequuest: {}", loginDTO.getUsername());
+    	log.debug("/login user from LoginRequuest: {}", loginDTO.getPassword());
+
+    	log.debug("POST LOGIN CALLED ***************");
+
+
+        if (result.hasErrors()) {
+
+            return "/login";
+        }
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                		loginDTO.getUsername(),
+                		loginDTO.getPassword()));
+
+		log.info("*********** Authentication: " + authentication
+				+ "Login Request: " + loginDTO
+				+ "Response: " + response);
+
+
+
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+    	log.debug("JWT token generated " + jwt+ "*******************");       
+
+        // Creates a cookie and secures it
+        Cookie cookie = new Cookie("Token", jwt);
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(cookieExpirationSec);
+        response.addCookie(cookie);
+
+        
+    	log.debug("*********************COOKIE: " + cookie);
+
+        return "redirect:/bidList/list";
+    }
+
+
+
+
+	// ##############################################################
 
     @GetMapping("error")
-    public ModelAndView error(@AuthenticationPrincipal OAuth2User principal) {
-        ModelAndView mav = new ModelAndView();
+    public ModelAndView error(
+    		@AuthenticationPrincipal OAuth2User principal) {
+
+    	ModelAndView mav = new ModelAndView();
 
         String errorMessage= "You are not authorized"
         		+ " for the requested data.";

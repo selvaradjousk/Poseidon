@@ -31,7 +31,9 @@ public class MyUserDetails  implements UserDetails {
     /** The authorities. */
     private GrantedAuthority authorities;
 
-    // ************************************************************************
+
+    // ##############################################################
+
 
     /**
      * Instantiates a new my user details.
@@ -46,7 +48,9 @@ public class MyUserDetails  implements UserDetails {
 				this.authorities = authorities;
 				}
 
-    // ************************************************************************
+
+    // ##############################################################
+
 
 
 	public static MyUserDetails build(User user) {
@@ -59,6 +63,8 @@ public class MyUserDetails  implements UserDetails {
                 authorities);
     }
 
+    // ##############################################################
+
     /**
      * Gets the authorities.
      *
@@ -69,6 +75,8 @@ public class MyUserDetails  implements UserDetails {
         return List.of(authorities);
     }
 
+
+    // ##############################################################
 
     public Integer getId() {
         return id;
@@ -135,6 +143,8 @@ public class MyUserDetails  implements UserDetails {
     }
 
 
+    // ##############################################################
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -146,17 +156,7 @@ public class MyUserDetails  implements UserDetails {
     }
 
     
-    
-    //    /**
-//     * To string.
-//     *
-//     * @return the string
-//     */
-//    @Override
-//	public String toString() {
-//		return "MyUserDetailsDTO ["
-//				+ "userName=" + userName
-//				+ ", password=" + password
-//				+ ", authorities=" + authorities + "]";
-//	}
+
+    // ##############################################################
+
 }

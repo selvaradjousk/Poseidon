@@ -19,77 +19,87 @@ import lombok.extern.log4j.Log4j2;
 public class JwtUtils {
 
 
-	@Value("${poseidon.app.jwtSecret}")
-	private String jwtSecret;
+    @Value("${poseidon.app.jwtSecret}")
+    private String jwtSecret;
 
-	@Value("${poseidon.app.jwtExpirationMs}")
-	private int jwtExpirationMs;
+ 
+    @Value("${poseidon.app.jwtExpirationMs}")
+    private int jwtExpirationMs;
 
-	public String generateJwtToken(
-			Authentication authentication) {
 
-		log.debug("### GENREATE JWT TOKEN called");
-		log.debug("### Authentication input :"
-				+ " {}", authentication );
+	// ##############################################################
 
-		MyUserDetails userPrincipal
-				= (MyUserDetails) authentication.getPrincipal();
+    public String generateJwtToken(final Authentication authentication) {
 
-		log.debug("### (MyUserDetails) authentication"
-				+ ".getPrincipal() : {}", userPrincipal);
+        log.error("generateJwtToken - authentication: {}", authentication);
 
-		return Jwts.builder()
-				.setSubject((userPrincipal.getUsername()))
-				.setIssuedAt(new Date())
-				.setExpiration(new Date((new Date())
-						.getTime() + jwtExpirationMs))
-				.signWith(SignatureAlgorithm.HS512, jwtSecret)
-				.compact();
-	}
+		log.error("===> Authentication input : {}", authentication );
 
-	public String getUserNameFromJwtToken(String token) {
+       MyUserDetails userPrincipal = (MyUserDetails) authentication
+    		   .getPrincipal();
 
-		log.debug("###  getUserNameFromJwtToken(String token)"
-				+ " called TOKEN: {}", token);
+		log.error("===> (MyUserDetails) authentication.getPrincipal()"
+				+ " : {}", userPrincipal);
 
-		return Jwts.parser().setSigningKey(jwtSecret)
-				.parseClaimsJws(token).getBody().getSubject();
+        return Jwts.builder()
+                .setSubject((userPrincipal.getUsername()))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date((new Date()).getTime()
+                		+ jwtExpirationMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                		.compact();
+    }
 
-	}
 
-	public boolean validateJwtToken(String authToken) {
+	// ##############################################################
 
-		log.debug("### VALIDATE JWT TOKEN: {}", authToken);
+    public String getUserNameFromJwtToken(final String token) {
 
-		try {
+		log.error("===> getUserNameFromJwtToken - token: {}", token);
 
-			Jwts.parser().setSigningKey(jwtSecret)
-			.parseClaimsJws(authToken);
+        return Jwts.parser().setSigningKey(jwtSecret)
+        		.parseClaimsJws(token).getBody().getSubject();
+    }
 
-			return true;
 
-		} catch (SignatureException e) {
+	// ##############################################################
 
-			log.error("### Invalid JWT signature: {}", e.getMessage());
+    public boolean validateJwtToken(final String authToken) {
 
-		} catch (MalformedJwtException e) {
+		log.error("===>   VALIDATE JWT TOKEN: {}", authToken);
 
-			log.error("### Invalid JWT token: {}", e.getMessage());
+        try {
 
-		} catch (ExpiredJwtException e) {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
 
-			log.error("### JWT token is expired: {}", e.getMessage());
+            return true;
 
-		} catch (UnsupportedJwtException e) {
+        } catch (SignatureException e) {
 
-			log.error("### JWT token is unsupported: {}", e.getMessage());
+			log.error("Invalid JWT signature: {}", e.getMessage());
 
-		} catch (IllegalArgumentException e) {
+        } catch (MalformedJwtException e) {
 
-			log.error("### JWT claims string is empty: {}", e.getMessage());
+			log.error("Invalid JWT token: {}", e.getMessage());
 
-		}
+        } catch (ExpiredJwtException e) {
 
-		return false;
-	}
+			log.error("JWT token is expired: {}", e.getMessage());
+
+        } catch (UnsupportedJwtException e) {
+
+			log.error("JWT token is unsupported: {}", e.getMessage());
+
+        } catch (IllegalArgumentException e) {
+
+			log.error("JWT claims string is empty: {}", e.getMessage());
+
+        }
+
+        return false;
+    }
+
+
+	// ##############################################################
+
 }

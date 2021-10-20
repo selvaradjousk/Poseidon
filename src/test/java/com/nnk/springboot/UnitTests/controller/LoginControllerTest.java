@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.nnk.springboot.config.AuthTokenFilter;
+import com.nnk.springboot.config.JwtAuthenticationSuccessHandler;
 import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.LoginController;
@@ -31,6 +32,9 @@ class LoginControllerTest {
 
 	@MockBean
 	AuthTokenFilter authenticationJwtTokenFilter;
+
+	@MockBean
+	JwtAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 	
     @MockBean
     private UserService userService;
@@ -87,6 +91,7 @@ class LoginControllerTest {
     public void testError() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
         		.get("/error"))
+        		// error 403
                 .andExpect(view().name("403"))
                 .andExpect(status().isOk());
     }    

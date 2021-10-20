@@ -21,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.config.AuthTokenFilter;
+import com.nnk.springboot.config.JwtAuthenticationSuccessHandler;
 import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.UserController;
@@ -32,10 +33,12 @@ import com.nnk.springboot.service.UserService;
 @WebMvcTest(UserController.class)
 class UserControllerGetUpdateTest {
 
-
 	@MockBean
 	AuthTokenFilter authenticationJwtTokenFilter;
-	
+
+	@MockBean
+	JwtAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
     @MockBean
     private UserService userService;
 
