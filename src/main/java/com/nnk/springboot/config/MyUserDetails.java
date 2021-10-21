@@ -10,16 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.nnk.springboot.domain.User;
 
-
-
 /**
  * The Class MyUserDetails.
  * @author Senthil
  */
 public class MyUserDetails  implements UserDetails {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+    /** The id. */
     private Integer id;
 
 	/** The user name. */
@@ -36,10 +36,15 @@ public class MyUserDetails  implements UserDetails {
     /**
      * Instantiates a new my user details.
      *
-     * @param user the user
+     * @param id the id
+     * @param username the username
+     * @param password the password
+     * @param authorities the authorities
      */
-    public MyUserDetails(Integer id, String username, String password,
-            GrantedAuthority authorities) {
+    public MyUserDetails(final Integer id,
+    		final String username,
+    		final String password,
+            final GrantedAuthority authorities) {
 				this.id = id;
 				this.username = username;
 				this.password = password;
@@ -49,8 +54,15 @@ public class MyUserDetails  implements UserDetails {
     // ************************************************************************
 
 
-	public static MyUserDetails build(User user) {
-        GrantedAuthority authorities = new SimpleGrantedAuthority(user.getRole());
+	/**
+     * Builds the.
+     *
+     * @param user the user
+     * @return the my user details
+     */
+    public static MyUserDetails build(final User user) {
+        final GrantedAuthority authorities 
+        		= new SimpleGrantedAuthority(user.getRole());
 
         return new MyUserDetails(
                 user.getId(),
@@ -136,7 +148,7 @@ public class MyUserDetails  implements UserDetails {
 
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o)
             return true;
         if (o == null || getClass() != o.getClass())
@@ -145,18 +157,5 @@ public class MyUserDetails  implements UserDetails {
         return Objects.equals(id, user.id);
     }
 
-    
-    
-    //    /**
-//     * To string.
-//     *
-//     * @return the string
-//     */
-//    @Override
-//	public String toString() {
-//		return "MyUserDetailsDTO ["
-//				+ "userName=" + userName
-//				+ ", password=" + password
-//				+ ", authorities=" + authorities + "]";
-//	}
+
 }

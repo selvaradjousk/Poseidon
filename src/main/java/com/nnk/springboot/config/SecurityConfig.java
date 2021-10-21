@@ -17,7 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.log4j.Log4j2;
 
-// This class is responsible to club everything
+
+/**
+ * The Class SecurityConfig.
+ */
+//This class is responsible to club everything
 // (Spring Security Configurations) together
 @Log4j2
 @Configuration
@@ -40,8 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// Core interface in Spring Security framework
 	// to retrieve the user's authentication and authorisation information
-    @Autowired
-    MyUserDetailsService userDetailsService;
+	/** The user details service. */
+	@Autowired
+    private MyUserDetailsService userDetailsService;
 
 
     // ##############################################################
@@ -49,6 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Configuration class to extract the authentication token
     // from the request headers
     // & and call the authentication manager for authentication
+
+	/**
+     * Authentication jwt token filter.
+     *
+     * @return the auth token filter
+     */
     @Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 
@@ -56,14 +67,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return new AuthTokenFilter();
 	}
- 
- 
+
+
     // ##############################################################
 
     // Configuration to encode the password
     // the passwords are encoded with the bcrypt algorithm
+
+    /**
+     * Password encoder.
+     *
+     * @return the password encoder
+     */
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
 
     	log.info("### Calling login password Encoder Bcrypt");
 
@@ -75,6 +92,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //  Interface for authentication - On valid authentication
     // returns an Authentication instance with the authenticated flag
+
+    /**
+     * Authentication manager bean.
+     *
+     * @return the authentication manager
+     * @throws Exception the exception
+     */
     @Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean()
@@ -92,6 +116,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // Helper class that eases the set up of UserDetailService
     // & for setting up in-memory, JDBC, or LDAP
     // user details or for adding a custom UserDetailsService
+
+    /**
+     * Configure AuthenticationManagerBuilder.
+     *
+     * @param auth the auth
+     * @throws Exception the exception
+     */
     @Override
     protected void configure(final AuthenticationManagerBuilder auth)
     		throws Exception {
@@ -110,15 +141,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Allows configuring web based security for specific
     // http requests & URL paths
+
+    /**
+     * Configure HttpSecurity.
+     *
+     * @param http the http
+     * @throws Exception the exception
+     */
     @Override
     public void configure(
-    		HttpSecurity http) throws Exception{
+    		final HttpSecurity http) throws Exception {
 
     	log.info("#### configure(HttpSecurity http) initialized");
 
         // ##############################################################
         // Enable CORS and disable CSRF
-        http = http.cors().and().csrf().disable();
+        http.cors().and().csrf().disable();
         // ##############################################################
 
     	log.info("#### http.cors().and().csrf().disable() ... settings DONE");
@@ -126,7 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // ##############################################################
         // Set unauthorized requests exception handler
         // ##############################################################
-        http = http
+        http
             .exceptionHandling()
             .authenticationEntryPoint(
                 (request, response, ex) -> {
@@ -136,8 +174,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     );
                 }
             )
-            
-            .and();        
+
+            .and();
 
     	log.info("#### http.exceptionHandling() ... settings DONE");
 
@@ -157,7 +195,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                .antMatchers("/register/**").permitAll()
 	                .antMatchers("/login/**").permitAll()
 	                .antMatchers("/validate").permitAll()
-	                
+
 
 	            	// -----------------
 	            	// PRIVATE ADMIN SPECIFIC ACCESS ENDPOINTS
@@ -167,13 +205,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 	// PRIVATE ENDPOINTS for USERS & ADMIN
-                   .anyRequest().authenticated()
-                ;
+                   .anyRequest().authenticated();
 
     	log.info("#### http.authorizeRequests() ... settings DONE");
 
 
-        // ##############################################################   	
+        // ##############################################################
     	// SET LOGIN CONFIGURATION
     	http.formLogin()
         // ##############################################################
@@ -186,7 +223,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			// sent the specified path
     			// i.e. URL to validate username and password
         		.loginProcessingUrl("/login")
-        		
+
         		// redirect URL on successful login
         		.defaultSuccessUrl("/bidList/list")
 
@@ -197,7 +234,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	log.info("#### http.formLogin() ... settings DONE");
 
 
-        // ##############################################################   	
+        // ##############################################################
     	http.oauth2Login()
         // ##############################################################
         		.loginPage("/login")
@@ -261,13 +298,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // HttpSecurity permitAll() allows anonymous access to
     // the configured endpoint
 
+    /**
+     * Configure.
+     *
+     * @param web the WebSecurity
+     * @throws Exception the exception
+     */
     @Override
-    public void configure( WebSecurity web ) throws Exception
-    {
+    public void configure(
+    		final WebSecurity web) throws Exception {
 //    	web.ignoring().antMatchers( "/**/*.*" );
-        web.ignoring().antMatchers( "/**/*.png", "/**/*.PNG",
+        web.ignoring().antMatchers("/**/*.png", "/**/*.PNG",
         		"/**/*.GIF", "/**/*.gif", "/static/**",
-        		"error.html", "/403.html", "/home.html", 
+        		"error.html", "/403.html", "/home.html",
         		"login.html", "register.html");
     }
 

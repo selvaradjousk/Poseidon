@@ -14,16 +14,28 @@ import com.nnk.springboot.util.TradeMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * The Class TradeService.
+ */
 @Log4j2
 @Service
 public class TradeService implements ITradeService {
 
+    /** The trade repository. */
     private final TradeRepository tradeRepository;
 
+    /** The trade mapper. */
     private final TradeMapper tradeMapper;
 
     // ******************************************************************
 
+    /**
+     * Instantiates a new trade service.
+     *
+     * @param tradeRepository the trade repository
+     * @param tradeMapper the trade mapper
+     */
     public TradeService(
     		final TradeRepository tradeRepository,
     		final TradeMapper tradeMapper) {
@@ -33,7 +45,12 @@ public class TradeService implements ITradeService {
 
     // ******************************************************************
 
-	@Override
+	/**
+     * Gets the all trade.
+     *
+     * @return the all trade
+     */
+    @Override
     public List<TradeDTO> getAllTrade() {
 
         List<Trade> trades = tradeRepository.findAll();
@@ -56,7 +73,13 @@ public class TradeService implements ITradeService {
 
     // ******************************************************************
 
-	@Override
+	/**
+     * Gets the trade by id.
+     *
+     * @param tradeId the trade id
+     * @return the trade by id
+     */
+    @Override
     public TradeDTO getTradeById(final int tradeId) {
 
         Trade tradeById = tradeRepository
@@ -74,7 +97,13 @@ public class TradeService implements ITradeService {
 
     // ******************************************************************
 
-	@Override
+	/**
+     * Adds the trade.
+     *
+     * @param tradeDTO the trade DTO
+     * @return the trade DTO
+     */
+    @Override
     public TradeDTO addTrade(final TradeDTO tradeDTO) {
 
         Trade tradeToAdd = tradeMapper
@@ -98,6 +127,13 @@ public class TradeService implements ITradeService {
 
 	// ******************************************************************
 
+	/**
+	 * Update trade.
+	 *
+	 * @param tradeId the trade id
+	 * @param tradeDTO the trade DTO
+	 * @return the trade DTO
+	 */
 	@Override
     public TradeDTO updateTrade(final int tradeId, final TradeDTO tradeDTO) {
 
@@ -108,7 +144,7 @@ public class TradeService implements ITradeService {
         log.info("Request: to UPDATE TRADE FOUND "
         		+ "Trade ID: {} & Account: {} ",
         		tradeId, tradeDTO.getAccount());
-        
+
         Trade tradeToUpdate = tradeMapper
         		.toTrade(tradeDTO);
 
@@ -129,6 +165,11 @@ public class TradeService implements ITradeService {
 	// ******************************************************************
 
 
+	/**
+	 * Delete trade.
+	 *
+	 * @param tradeId the trade id
+	 */
 	@Override
     public void deleteTrade(final int tradeId) {
 

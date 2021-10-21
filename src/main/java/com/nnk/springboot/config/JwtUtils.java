@@ -14,23 +14,36 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * The Class JwtUtils.
+ */
 @Log4j2
 @Component
 public class JwtUtils {
 
 
+	/** The jwt secret. */
 	@Value("${poseidon.app.jwtSecret}")
 	private String jwtSecret;
 
+	/** The jwt expiration ms. */
 	@Value("${poseidon.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
+    // ##############################################################
+
+	/**
+	 * Generate jwt token.
+	 *
+	 * @param authentication the authentication
+	 * @return the string
+	 */
 	public String generateJwtToken(
-			Authentication authentication) {
+			final Authentication authentication) {
 
 		log.debug("### GENREATE JWT TOKEN called");
 		log.debug("### Authentication input :"
-				+ " {}", authentication );
+				+ " {}", authentication);
 
 		MyUserDetails userPrincipal
 				= (MyUserDetails) authentication.getPrincipal();
@@ -47,7 +60,16 @@ public class JwtUtils {
 				.compact();
 	}
 
-	public String getUserNameFromJwtToken(String token) {
+    // ##############################################################
+
+	/**
+	 * Gets the user name from jwt token.
+	 *
+	 * @param token the token
+	 * @return the user name from jwt token
+	 */
+	public String getUserNameFromJwtToken(
+			final String token) {
 
 		log.debug("###  getUserNameFromJwtToken(String token)"
 				+ " called TOKEN: {}", token);
@@ -57,6 +79,14 @@ public class JwtUtils {
 
 	}
 
+    // ##############################################################
+
+	/**
+	 * Validate jwt token.
+	 *
+	 * @param authToken the auth token
+	 * @return true, if successful
+	 */
 	public boolean validateJwtToken(String authToken) {
 
 		log.debug("### VALIDATE JWT TOKEN: {}", authToken);
@@ -70,26 +100,34 @@ public class JwtUtils {
 
 		} catch (SignatureException e) {
 
-			log.error("### Invalid JWT signature: {}", e.getMessage());
+			log.error("### Invalid JWT signature:"
+					+ " {}", e.getMessage());
 
 		} catch (MalformedJwtException e) {
 
-			log.error("### Invalid JWT token: {}", e.getMessage());
+			log.error("### Invalid JWT token:"
+					+ " {}", e.getMessage());
 
 		} catch (ExpiredJwtException e) {
 
-			log.error("### JWT token is expired: {}", e.getMessage());
+			log.error("### JWT token is expired:"
+					+ " {}", e.getMessage());
 
 		} catch (UnsupportedJwtException e) {
 
-			log.error("### JWT token is unsupported: {}", e.getMessage());
+			log.error("### JWT token is unsupported:"
+					+ " {}", e.getMessage());
 
 		} catch (IllegalArgumentException e) {
 
-			log.error("### JWT claims string is empty: {}", e.getMessage());
+			log.error("### JWT claims string is empty:"
+					+ " {}", e.getMessage());
 
 		}
 
 		return false;
 	}
+
+    // ##############################################################
+
 }

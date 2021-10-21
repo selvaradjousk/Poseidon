@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.nnk.springboot.domain.CurvePoint;
 
+/**
+ * The Interface CurvePointRepository.
+ */
 @Repository
 public interface CurvePointRepository extends JpaRepository<CurvePoint, Integer> {
 

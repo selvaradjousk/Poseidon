@@ -16,24 +16,36 @@ import com.nnk.springboot.util.UserMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * The Class UserService.
+ */
 @Log4j2
 @Service
 public class UserService implements IUserService {
 
+	/** The user repository. */
 	@Autowired
 	private final UserRepository userRepository;
 
+	/** The user mapper. */
 	@Autowired
 	private final UserMapper userMapper;
 
-	BCryptPasswordEncoder passwordEncoder;
+	/** The password encoder. */
+	private BCryptPasswordEncoder passwordEncoder;
 
 
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
-	
+
+	/**
+	 * Instantiates a new user service.
+	 *
+	 * @param userRepository the user repository
+	 * @param userMapper the user mapper
+	 */
 	public UserService(
 			final UserRepository userRepository,
 			final UserMapper userMapper) {
@@ -44,9 +56,14 @@ public class UserService implements IUserService {
 
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
+	/**
+	 * Gets the all user.
+	 *
+	 * @return the all user
+	 */
 	@Override
 	public List<UserDTO> getAllUser() {
 
@@ -58,8 +75,9 @@ public class UserService implements IUserService {
 
         if (users.isEmpty()) {
 
-        	log.error("ERROR on Request: UserService.userRepository.findAll()"
-    				+ " - ListSize EMPTY: {} users", users.size());	
+        	log.error("ERROR on Request: UserService"
+        			+ ".userRepository.findAll()"
+    				+ " - ListSize EMPTY: {} users", users.size());
         	throw new DataNotFoundException("User List Not Available");
         }
 
@@ -76,11 +94,17 @@ public class UserService implements IUserService {
 	    }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
+	/**
+	 * Gets the user by id.
+	 *
+	 * @param userId the user id
+	 * @return the user by id
+	 */
 	@Override
-	public UserDTO getUserById(int userId) {
+	public UserDTO getUserById(final int userId) {
 
         User user = userRepository
         		.findById(userId).orElseThrow(() ->
@@ -96,11 +120,17 @@ public class UserService implements IUserService {
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
+	/**
+	 * Adds the user.
+	 *
+	 * @param userDTO the user DTO
+	 * @return the user DTO
+	 */
 	@Override
-	public UserDTO addUser(UserDTO userDTO) {
+	public UserDTO addUser(final UserDTO userDTO) {
 
 		User userExistsCheck = userRepository
 				.findByUsername(userDTO.getUsername());
@@ -147,9 +177,16 @@ public class UserService implements IUserService {
 
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
+	/**
+	 * Update user.
+	 *
+	 * @param userId the user id
+	 * @param userDTO the user DTO
+	 * @return the user DTO
+	 */
 	@Override
     public UserDTO updateUser(final int userId, final UserDTO userDTO) {
 
@@ -164,19 +201,19 @@ public class UserService implements IUserService {
 
         User userToUpdate = userMapper
         		.toUser(userDTO);
-        
-		log.info("Request: userToUpdate => {}"
-				, userToUpdate.getUsername());
+
+		log.info("Request: userToUpdate => {}",
+				userToUpdate.getUsername());
 		log.info("Request: UserPassword Before Encoding => {}",
 				userToUpdate.getPassword());
 
         userToUpdate.setId(userId);
-        
+
         passwordEncoder = new BCryptPasswordEncoder();
 
         userToUpdate.setPassword(passwordEncoder
         		.encode(userDTO.getPassword()));
-        
+
 
 		log.info("Request: UserPassword After Encoding => {}",
 				userToUpdate.getPassword());
@@ -193,9 +230,14 @@ public class UserService implements IUserService {
 
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
+	/**
+	 * Delete user.
+	 *
+	 * @param userId the user id
+	 */
 	@Override
 	   public void deleteUser(final int userId) {
 
@@ -217,7 +259,7 @@ public class UserService implements IUserService {
 
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 
 }

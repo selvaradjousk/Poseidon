@@ -38,7 +38,7 @@ class UserServiceGetById_IT {
     public void setUp() {
         objectMapper = new ObjectMapper();
         testUserDTO1 = UserDTO.builder()
-        		.id(1)
+        		.id(4)
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
@@ -60,7 +60,7 @@ class UserServiceGetById_IT {
 			
 
     		UserDTO result = userService
-    				.getUserById(1);
+    				.getUserById(4);
 
 	        assertNotNull(result);
 	    }
@@ -75,13 +75,13 @@ class UserServiceGetById_IT {
     public void testAddNewPersonReturnResultMatch() {
 			
     	UserDTO result = userService
-    			.getUserById(1);
+    			.getUserById(4);
 
         assertEquals(
         		passwordEncoder.matches("Password&1", testUserDTO1.getPassword()),
         		passwordEncoder.matches("Password&1", result.getPassword()));
-	    assertEquals("user1", result.getUsername());
-	    assertEquals(1, result.getId());
+	    assertEquals("user4", result.getUsername());
+	    assertEquals(4, result.getId());
     }
 
     

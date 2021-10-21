@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The Login Controller class. */
 @Log4j2
 @Controller
 public class LoginController {
@@ -19,11 +21,19 @@ public class LoginController {
 	// ##############################################################
 
 
-    @GetMapping("login")
+    /**
+	 * Login.
+	 *
+	 * @return the model and view
+	 */
+	@GetMapping("login")
     public ModelAndView login() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login");
-        return mav;
+
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("login");
+
+		return mav;
     }
 
 
@@ -31,11 +41,19 @@ public class LoginController {
 
 
 
-    @GetMapping("error")
-    public ModelAndView error(@AuthenticationPrincipal OAuth2User principal) {
-        ModelAndView mav = new ModelAndView();
+    /**
+	 * Error.
+	 *
+	 * @param principal the principal
+	 * @return the model and view
+	 */
+	@GetMapping("error")
+    public ModelAndView error(
+    		@AuthenticationPrincipal final OAuth2User principal) {
 
-        String errorMessage= "You are not authorized"
+		ModelAndView mav = new ModelAndView();
+
+        String errorMessage = "You are not authorized"
         		+ " for the requested data.";
 
         mav.addObject("errorMsg", errorMessage);
@@ -56,8 +74,14 @@ public class LoginController {
 	// ##############################################################
 
 
-    @RequestMapping("/login-error")
-    public String loginError(Model model) {
+    /**
+	 * Login error.
+	 *
+	 * @param model the model
+	 * @return the string login
+	 */
+	@RequestMapping("/login-error")
+    public String loginError(final Model model) {
 
     	log.error("invalid user login attempt");
 

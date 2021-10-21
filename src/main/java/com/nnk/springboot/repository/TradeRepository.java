@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.nnk.springboot.domain.Trade;
 
+/**
+ * The Interface TradeRepository.
+ */
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Integer> {
 }

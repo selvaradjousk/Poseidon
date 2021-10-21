@@ -62,7 +62,7 @@ class UserControllerGetUpdate_IT {
     @Test
     public void testGetUserUpdateById() throws Exception {
 
-        mockMvc.perform(get("/user/update/1"))
+        mockMvc.perform(get("/user/update/3"))
                 .andExpect(model().attributeExists("userDTO"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("user/update"))

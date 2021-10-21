@@ -13,17 +13,29 @@ import com.nnk.springboot.util.BidListMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * The Class BidListService.
+ */
 @Log4j2
 @Service
 public class BidListService implements IBidListService {
 
+	/** The bid list repository. */
 	private final BidListRepository bidListRepository;
 
+    /** The bid list mapper. */
     private final BidListMapper bidListMapper;
 
    	// *******************************************************************
 
-    public BidListService(
+    /**
+	    * Instantiates a new bid list service.
+	    *
+	    * @param bidListRepository the bid list repository
+	    * @param bidListMapper the bid list mapper
+	    */
+	   public BidListService(
     		final BidListRepository bidListRepository,
     		final BidListMapper bidListMapper) {
 
@@ -35,7 +47,12 @@ public class BidListService implements IBidListService {
 
 
 
-    @Override
+    /**
+	    * Gets the all bid list.
+	    *
+	    * @return the all bid list
+	    */
+	   @Override
     public List<BidListDTO> getAllBidList() {
 
 
@@ -43,9 +60,11 @@ public class BidListService implements IBidListService {
 
     	List<BidList> bidLists = bidListRepository
         		.findAll();
-        
-		log.info("Request: BidListService.bitListRepository.findAll()"
-				+ " - ListSize: {} BidLists",bidLists.size());
+
+		log.info("Request: BidListService"
+				+ ".bitListRepository.findAll()"
+				+ " - ListSize: {} BidLists",
+				bidLists.size());
 
         for (BidList bidList : bidLists) {
             BidListDTO bidListDTO = bidListMapper
@@ -56,25 +75,36 @@ public class BidListService implements IBidListService {
 
         log.info("Request: bidListList.add(bidListDTO)"
         		+ " after bidListMapper.toBidListDTO(user)"
-				+ " - ListSize: {} bidLists", bidListList.size());
+				+ " - ListSize: {} bidLists",
+				bidListList.size());
 
         return bidListList;
     }
 
    	// *******************************************************************
 
-	@Override
-    public BidListDTO getBidListById(final int bidListId) {
+	/**
+	    * Gets the bid list by id.
+	    *
+	    * @param bidListId the bid list id
+	    * @return the bid list by id
+	    */
+	   @Override
+    public BidListDTO getBidListById(
+    		final int bidListId) {
 
 
         BidList bidListById = bidListRepository
         		.findById(bidListId)
         		.orElseThrow(() ->
-                new DataNotFoundException("BIDLIST ID NOT FOUND"));
+                new DataNotFoundException(
+                		"BIDLIST ID NOT FOUND"));
 
-        log.info("Request: bidListRepository.findById(bidListId)"
+        log.info("Request: bidListRepository"
+        		+ ".findById(bidListId)"
         		+ "BIDLIST ID: {} & Account: {} ",
-        		bidListById.getBidListId(), bidListById.getAccount());
+        		bidListById.getBidListId(),
+        		bidListById.getAccount());
 
         return bidListMapper
         		.toBidListDTO(bidListById);
@@ -83,7 +113,14 @@ public class BidListService implements IBidListService {
    	// *******************************************************************
 
 
-    public BidListDTO addBidList(final BidListDTO bidListDTO) {
+    /**
+	    * Adds the bid list.
+	    *
+	    * @param bidListDTO the bid list DTO
+	    * @return the bid list DTO
+	    */
+	   public BidListDTO addBidList(
+			   final BidListDTO bidListDTO) {
 
 
     	BidList bidListToAdd = bidListMapper
@@ -91,14 +128,16 @@ public class BidListService implements IBidListService {
 
         log.info("Request: to ADD BIDLIST "
         		+ "BidList ID: {} & Account: {} ",
-        		bidListToAdd.getBidListId(), bidListToAdd.getAccount());
+        		bidListToAdd.getBidListId(),
+        		bidListToAdd.getAccount());
     	
         BidList bidListAdded = bidListRepository
         		.save(bidListToAdd);
 
         log.info("BIDLIST ADDED SUCCESSFULLY - "
         		+ "BidList ID: {} & Account: {} ",
-        		bidListToAdd.getBidListId(), bidListToAdd.getAccount());
+        		bidListToAdd.getBidListId(),
+        		bidListToAdd.getAccount());
 
         return bidListMapper
         		.toBidListDTO(bidListAdded);
@@ -107,6 +146,13 @@ public class BidListService implements IBidListService {
 	// *******************************************************************
 
 
+	/**
+	 * Update bid list.
+	 *
+	 * @param bidListId the bid list id
+	 * @param bidListDTO the bid list DTO
+	 * @return the bid list DTO
+	 */
 	@Override
     public BidListDTO updateBidList(
     		final int bidListId,
@@ -115,11 +161,13 @@ public class BidListService implements IBidListService {
 
         bidListRepository.findById(bidListId)
         		.orElseThrow(() ->
-                new DataNotFoundException("BidList ID Not FOUND"));
+                new DataNotFoundException(
+                		"BidList ID Not FOUND"));
 
         log.info("Request: to UPDATE BIDLIST "
         		+ "BidList ID: {} & Account: {} ",
-        		bidListDTO.getBidListId(), bidListDTO.getAccount());
+        		bidListDTO.getBidListId(),
+        		bidListDTO.getAccount());
 
         BidList bidListToUpdate = bidListMapper
         		.toBidList(bidListDTO);
@@ -141,6 +189,11 @@ public class BidListService implements IBidListService {
 
 	// *******************************************************************
 
+	/**
+	 * Delete bid list.
+	 *
+	 * @param bidListId the bid list id
+	 */
 	@Override
     public void deleteBidList(final int bidListId) {
 
@@ -149,14 +202,17 @@ public class BidListService implements IBidListService {
 
         bidListRepository.findById(bidListId)
         	.orElseThrow(() ->
-                new DataNotFoundException("BidListID NOT FOUND"));
+                new DataNotFoundException(
+                		"BidListID NOT FOUND"));
 
-		log.info("Request: BidListToDelete ID => {} FOUND",
+		log.info("Request: BidListToDelete ID"
+				+ " => {} FOUND",
 				bidListId);
 
         bidListRepository.deleteById(bidListId);
 
-		log.info("Request: BidListToDelete ID => {} DELETED",
+		log.info("Request: BidListToDelete ID"
+				+ " => {} DELETED",
 				bidListId);
 
 	}

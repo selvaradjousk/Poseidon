@@ -17,9 +17,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * The Class User.
+ */
 @Builder
 @Entity
-@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
+@Table(name = "users", uniqueConstraints 
+	= {@UniqueConstraint(columnNames = "username")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,26 +31,31 @@ import lombok.ToString;
 @ToString
 public class User {
 
+	/** The id. */
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
+	/** The username. */
 	@Column(name = "username",
 			length = GeneralConstraints.VARIABLE_LENGTH_125,
 			nullable = false)
     private String username;
 
+	/** The password. */
 	@Column(name = "password",
 			length = GeneralConstraints.VARIABLE_LENGTH_125,
 			nullable = false)
     private String password;
 
+	/** The fullname. */
 	@Column(name = "fullname",
 			length = GeneralConstraints.VARIABLE_LENGTH_125,
 			nullable = false)
     private String fullname;
 
+	/** The role. */
 	@Column(name = "role",
 			length = GeneralConstraints.VARIABLE_LENGTH_125,
 			nullable = false)
@@ -54,12 +63,20 @@ public class User {
 
 	// ############################################################
 
+	/**
+	 * Instantiates a new user.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param fullname the fullname
+	 * @param role the role
+	 */
 	public User(
     		final String username,
     		final String password,
     		final String fullname,
     		final String role) {
- 
+
     	this.username = username;
         this.password = password;
         this.fullname = fullname;

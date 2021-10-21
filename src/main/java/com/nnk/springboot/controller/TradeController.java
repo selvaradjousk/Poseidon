@@ -17,25 +17,38 @@ import com.nnk.springboot.service.ITradeService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The TradeController class. */
 @Log4j2
 @Controller
 @RequestMapping("/trade")
 public class TradeController {
 
+	/** The trade service. */
 	@Autowired
 	private final ITradeService tradeService;
 
 	// ############################################################
 
-    public TradeController(final ITradeService tradeService) {
+    /**
+	 * Instantiates a new trade controller.
+	 *
+	 * @param tradeService the trade service
+	 */
+	public TradeController(final ITradeService tradeService) {
         this.tradeService = tradeService;
     }
 
 	// ############################################################
 
+	/**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@GetMapping("/list")
-    public String home(final Model model)
-    {
+    public String home(final Model model) {
 
     	log.info("Request GET for trade/list received");
 
@@ -47,7 +60,7 @@ public class TradeController {
 
 		if (adminSession){
 
-        	log.info("Session ADMIN  - USER LIST is accessible" );
+        	log.info("Session ADMIN  - USER LIST is accessible");
 
         	model.addAttribute("admin", "admin");
         }
@@ -62,7 +75,13 @@ public class TradeController {
 
 	// ############################################################
 
-    @GetMapping("/add")
+    /**
+	 * Adds the trade.
+	 *
+	 * @param tradeDTO the trade DTO
+	 * @return the string
+	 */
+	@GetMapping("/add")
     public String addTrade(final TradeDTO tradeDTO) {
 
     	log.info("Request GET for trade/add received");
@@ -74,7 +93,15 @@ public class TradeController {
 
 	// ############################################################
 
-    @PostMapping("/validate")
+    /**
+	 * Validate.
+	 *
+	 * @param tradeDTO the trade DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/validate")
     public String validate(
     		@Valid final TradeDTO tradeDTO,
     		final BindingResult result,
@@ -99,12 +126,20 @@ public class TradeController {
 
 	// ############################################################
 
-    @GetMapping("/update/{id}")
+    /**
+	 * Show update form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request GET trade/update/{id} received - ID: {}", id);
+       	log.info("Request GET trade/update/{id} received "
+       			+ "- ID: {}", id);
 
     	TradeDTO tradeDTO = tradeService.getTradeById(id);
 
@@ -117,23 +152,35 @@ public class TradeController {
 
 	// ############################################################
 
-    @PostMapping("/update/{id}")
+    /**
+	 * Update trade.
+	 *
+	 * @param id the id
+	 * @param tradeDTO the trade DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/update/{id}")
     public String updateTrade(
     		@PathVariable("id") final Integer id,
     		@Valid final TradeDTO tradeDTO,
     		final BindingResult result,
     		final Model model) {
 
-       	log.info("Request POST trade/update/{id} received - ID: {}", id);
+       	log.info("Request POST trade/update/{id} received"
+       			+ " - ID: {}", id);
 
         if (result.hasErrors()) {
 
-        	log.error("Request post for trade/update{id} Error(s) {} ", result);
+        	log.error("Request post for trade/update{id}"
+        			+ " Error(s) {} ", result);
 
         	model.addAttribute("tradeDTO", tradeDTO);
             model.addAttribute(id);
 
-          	log.info("Request POST trade/update/{id} SUCCESS for - ID: {}", id);
+          	log.info("Request POST trade/update/{id}"
+          			+ " SUCCESS for - ID: {}", id);
 
         	return "trade/update";
         }
@@ -147,7 +194,14 @@ public class TradeController {
 
 	// ############################################################
 
-    @GetMapping("/delete/{id}")
+    /**
+	 * Delete trade.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/delete/{id}")
     public String deleteTrade(
     		@PathVariable("id") final Integer id,
     		final Model model) {

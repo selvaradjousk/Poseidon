@@ -494,14 +494,22 @@
 
 				</executions>
 				
-		<!--		<configuration>
+		<configuration>
         			<systemPropertyVariables>
             		<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
         		</systemPropertyVariables>
         		<excludes>
-            		<exclude>paymybuddy.webapp.model/*.class</exclude>
+            		<!--<exclude>com.nnk.springboot.constant/*.class</exclude>
+            		<exclude>com.nnk.springboot/Application.class</exclude>
+            		<exclude>com.nnk.springboot.exception/*.class</exclude>
+            		<exclude>com.nnk.springboot.config/AuthTokenFilter.class</exclude>
+            		<exclude>com.nnk.springboot.config/JwtUtils.class</exclude>
+            		<exclude>com.nnk.springboot.config/AuthEntryPointJwt.class</exclude>
+            		<exclude>com.nnk.springboot.config/JwtAuthenticationSuccessHandler.class</exclude>
+            		<exclude>com.nnk.springboot.config/LoginRequest.class</exclude>-->
+            		
         		</excludes>
-				</configuration>	-->
+				</configuration>
 				
 			</plugin>
 
@@ -610,11 +618,11 @@
 			<!-- ===================================================================== -->
 			<!-- static analysis to inspect Java bytecode for occurrences of bug patterns -->
 			<!-- ===================================================================== -->
-			<plugin>
+			<!--<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.0.0</version>
-			</plugin>
+			</plugin>-->
 
 			<!-- ===================================================================== -->
 			<!-- jacoco-maven-plugin -->
@@ -627,7 +635,7 @@
 						<reports>
 							<report>report</report>
 							<report>report-integration</report>
-							<report>report-aggregate</report>
+							<!--<report>report-aggregate</report> -->
 						</reports>
 					</reportSet>
 				</reportSets>

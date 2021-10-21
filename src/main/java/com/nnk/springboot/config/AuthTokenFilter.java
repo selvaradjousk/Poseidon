@@ -25,40 +25,55 @@ import com.nnk.springboot.service.UserService;
 
 import lombok.extern.log4j.Log4j2;
 
+
 //############################################################
 // Present implementation focuses on session based implementation
 // OAuth2AuthenticationToken & UsernamePasswordAuthenticationToken
 // ############################################################
 
+/**
+ * The Class AuthTokenFilter.
+ */
 @Log4j2
 public class AuthTokenFilter extends OncePerRequestFilter {
 
 
+	/** The user repository. */
 	@Autowired
 	UserRepository userRepository;
-	
+
+	/** The user service. */
 	@Autowired
 	UserService userService;
-	
+
+	/** The jwt utils. */
 	@Autowired
 	private JwtUtils jwtUtils;
 
+    /** The authentication manager. */
     @Autowired
 	AuthenticationManager authenticationManager;
 
+	/** The user details service. */
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 
-//	
-//	@Autowired
-//	PasswordEncoder passwordEncoder;
 
-
-	@Override
+	/**
+ * Do filter internal.
+ *
+ * @param request the request
+ * @param response the response
+ * @param filterChain the filter chain
+ * @throws ServletException the servlet exception
+ * @throws IOException Signals that an I/O exception has occurred.
+ */
+@Override
 	protected void doFilterInternal(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			FilterChain filterChain) throws ServletException, IOException {
+			FilterChain filterChain)
+					throws ServletException, IOException {
 
 
 		log.debug("### doFilterInternal called");
@@ -113,7 +128,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 
 
-		log.debug("### HttpServletResponse - response.getHeaderNames():"
+		log.debug("### HttpServletResponse - response"
+				+ ".getHeaderNames():"
 				+ " {}", response.getHeaderNames());
 		log.debug("### FilterChain: {}", filterChain);
 
@@ -132,7 +148,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 		// UserPrincipal null condition is checked to prevent recursive
 		// conditional check on static resources files which are
 		// always apparently null (eg. images, css & js files)
-		if (request.getUserPrincipal() != null ) {
+
+		if (request.getUserPrincipal() != null) {
 
 			try {
 			Authentication authentication = null;
@@ -205,8 +222,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	}
 
     // ############################################################
-	
-	private void checkForOauthUserInDatabaseIfAbsentPersistUser(
+
+	/**
+     * Check for oauth user in database if absent persist user.
+     *
+     * @param request the request
+     */
+    private void checkForOauthUserInDatabaseIfAbsentPersistUser(
 			HttpServletRequest request) {
 
 		// ############################################################
@@ -226,7 +248,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 			log.debug("### Oauth user does not exist in the database"
 					+ " {}", userName);
-		
+
 			    UserDTO createUserDto = new UserDTO();
 			    createUserDto.setUsername(request.getRemoteUser());
 
@@ -237,7 +259,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 					log.debug("### Check Oauth user is Github User - {} ? "
 							+ " if so fullname registered with"
 							+ " as Github", userName);
-				
+
 			    	createUserDto.setFullname("Github");
 
 			    	// check if user is OAuth google user
@@ -249,7 +271,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 					log.debug("### Check Oauth user is Google User - {} ? "
 							+ " if so fullname registered with"
 							+ " as Google", userName);
-				
+
 			    } else {
 
 			    	// check if user is from other Oauth provider
@@ -258,9 +280,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 					log.debug("### Check Oauth user is other Provider"
 							+ " if so fullname registered with"
 							+ " as WhoAreYou", userName);
-				
+
 			    }
-			    
+
 			    createUserDto.setRole("USER");
 
 			    log.debug("### Oauth user role set to USER");
@@ -280,9 +302,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 			    if (userFoundAfterUpdate != null) {
 
 			    	log.info("### New oauth user added to database: "
-			    	+ userFoundAfterUpdate.getUsername()+ " SUCCESSFULLY");
+			    	+ userFoundAfterUpdate.getUsername()
+			    	+ " SUCCESSFULLY");
 			    }
- 
+
 		  } else {
 
 			  log.debug("### User already registered in the database");

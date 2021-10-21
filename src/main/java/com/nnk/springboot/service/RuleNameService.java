@@ -13,19 +13,31 @@ import com.nnk.springboot.util.RuleNameMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * The Class RuleNameService.
+ */
 @Log4j2
 @Service
 public class RuleNameService implements IRuleNameService {
 
 
+    /** The rule name repository. */
     private final RuleNameRepository ruleNameRepository;
 
+    /** The rule name mapper. */
     private final RuleNameMapper ruleNameMapper;
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
-    public RuleNameService(
+    /**
+	 * Instantiates a new rule name service.
+	 *
+	 * @param ruleNameRepository the rule name repository
+	 * @param ruleNameMapper the rule name mapper
+	 */
+	public RuleNameService(
     		final RuleNameRepository ruleNameRepository,
             final RuleNameMapper ruleNameMapper) {
     	this.ruleNameRepository = ruleNameRepository;
@@ -33,8 +45,13 @@ public class RuleNameService implements IRuleNameService {
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
+	/**
+	 * Gets the all rule name.
+	 *
+	 * @return the all rule name
+	 */
 	@Override
 	   	public List<RuleNameDTO> getAllRuleName() {
 
@@ -55,15 +72,23 @@ public class RuleNameService implements IRuleNameService {
         }
 
         log.info("Request: ruleNameList.add(ruleNameDTO)"
-        		+ " after ruleNameMapper.toRuleNameeDTO(ruleName)"
-				+ " - ListSize: {} ruleNames", ruleNameList.size());
+        		+ " after ruleNameMapper"
+        		+ ".toRuleNameeDTO(ruleName)"
+				+ " - ListSize: {} ruleNames",
+				ruleNameList.size());
 
         return ruleNameList;
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
+	/**
+	 * Gets the rule name by id.
+	 *
+	 * @param ruleNameId the rule name id
+	 * @return the rule name by id
+	 */
 	@Override
     public RuleNameDTO getRuleNameById(final int ruleNameId) {
 
@@ -81,8 +106,14 @@ public class RuleNameService implements IRuleNameService {
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
+	/**
+	 * Adds the rule name.
+	 *
+	 * @param ruleNameDTO the rule name DTO
+	 * @return the rule name DTO
+	 */
 	@Override
     public RuleNameDTO addRuleName(final RuleNameDTO ruleNameDTO) {
 
@@ -91,21 +122,31 @@ public class RuleNameService implements IRuleNameService {
 
         log.info("Request: RuleName to ADD  "
         		+ "Name: {} & Description: {} ",
-        		ruleNameToAdd.getName(), ruleNameToAdd.getDescription());
+        		ruleNameToAdd.getName(), ruleNameToAdd
+        		.getDescription());
 
-        RuleName ruleNameAdded = ruleNameRepository.save(ruleNameToAdd);
+        RuleName ruleNameAdded = ruleNameRepository
+        		.save(ruleNameToAdd);
 
         log.info("Request: RuleName ADDED "
         		+ "Name: {} & Description: {} ",
-        		ruleNameToAdd.getName(), ruleNameToAdd.getDescription());
+        		ruleNameToAdd.getName(), ruleNameToAdd
+        		.getDescription());
 
         return ruleNameMapper
         		.toRuleNameDTO(ruleNameAdded);
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
+	/**
+	 * Update rule name.
+	 *
+	 * @param ruleNameId the rule name id
+	 * @param ruleNameDTO the rule name DTO
+	 * @return the rule name DTO
+	 */
 	@Override
     public RuleNameDTO updateRuleName(
     		final int ruleNameId,
@@ -139,8 +180,13 @@ public class RuleNameService implements IRuleNameService {
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
+	/**
+	 * Delete rule name.
+	 *
+	 * @param ruleNameId the rule name id
+	 */
 	@Override
     public void deleteRuleName(final int ruleNameId) {
 
@@ -160,6 +206,6 @@ public class RuleNameService implements IRuleNameService {
     }
 
 
-	// *******************************************************************	
+	// *******************************************************************
 
 }

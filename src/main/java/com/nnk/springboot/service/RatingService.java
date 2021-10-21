@@ -13,19 +13,31 @@ import com.nnk.springboot.util.RatingMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * The Class RatingService.
+ */
 @Log4j2
 @Service
 public class RatingService implements IRatingService {
 
 
+	/** The rating repository. */
 	private final RatingRepository ratingRepository;
 
+	/** The rating mapper. */
 	private final RatingMapper ratingMapper;
 
     // ******************************************************************
 
 
-	public RatingService(
+	/**
+     * Instantiates a new rating service.
+     *
+     * @param ratingRepository the rating repository
+     * @param ratingMapper the rating mapper
+     */
+    public RatingService(
 			final RatingRepository ratingRepository,
 			final RatingMapper ratingMapper) {
 
@@ -36,7 +48,12 @@ public class RatingService implements IRatingService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Gets the all rating.
+     *
+     * @return the all rating
+     */
+    @Override
     public List<RatingDTO> getAllRating() {
 
 
@@ -64,7 +81,13 @@ public class RatingService implements IRatingService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Gets the rating by id.
+     *
+     * @param ratingId the rating id
+     * @return the rating by id
+     */
+    @Override
     public RatingDTO getRatingById(final int ratingId) {
 
 
@@ -85,7 +108,13 @@ public class RatingService implements IRatingService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Adds the rating.
+     *
+     * @param ratingDTO the rating DTO
+     * @return the rating DTO
+     */
+    @Override
     public RatingDTO addRating(final RatingDTO ratingDTO) {
 
 
@@ -113,7 +142,14 @@ public class RatingService implements IRatingService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Update rating.
+     *
+     * @param ratingId the rating id
+     * @param ratingDTO the rating DTO
+     * @return the rating DTO
+     */
+    @Override
     public RatingDTO updateRating(
     		final int ratingId,
     		final RatingDTO ratingDTO) {
@@ -151,7 +187,12 @@ public class RatingService implements IRatingService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Delete rating.
+     *
+     * @param ratingId the rating id
+     */
+    @Override
     public void deleteRating(final int ratingId) {
 
 
