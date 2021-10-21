@@ -26,23 +26,31 @@ import com.nnk.springboot.repository.UserRepository;
 
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * The Class LoginController.
+ */
 @Log4j2
 @Controller
 public class LoginController {
 
+	/** The cookie expiration sec. */
 	@Value("${poseidon.app.jwtExpirationMs}")
     private int cookieExpirationSec;
 
 
+    /** The authentication manager. */
     @Autowired
 	AuthenticationManager authenticationManager;
 
+	/** The user repository. */
 	@Autowired
 	UserRepository userRepository;
 
+	/** The encoder. */
 	@Autowired
 	PasswordEncoder encoder;
 
+	/** The jwt utils. */
 	@Autowired
 	JwtUtils jwtUtils;
 
@@ -52,7 +60,12 @@ public class LoginController {
 	// ##############################################################
 
 
-    @GetMapping("login")
+    /**
+	 * Login.
+	 *
+	 * @return the model and view
+	 */
+	@GetMapping("login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
@@ -62,15 +75,25 @@ public class LoginController {
 
 	// ##############################################################
 
-    @PostMapping("/login")
+    /**
+	 * Authenticate user.
+	 *
+	 * @param loginDTO the login DTO
+	 * @param result the result
+	 * @param response the response
+	 * @return the string
+	 */
+	@PostMapping("/login")
     public String authenticateUser(
     		@Valid final LoginDTO loginDTO,
     		final BindingResult result,
     		final HttpServletResponse response) {
 
 
-    	log.debug("/login user from LoginRequuest: {}", loginDTO.getUsername());
-    	log.debug("/login user from LoginRequuest: {}", loginDTO.getPassword());
+    	log.debug("/login user from LoginRequest: {}",
+    			loginDTO.getUsername());
+    	log.debug("/login user from LoginRequest: {}",
+    			loginDTO.getPassword());
 
     	log.debug("POST LOGIN CALLED ***************");
 
@@ -112,7 +135,13 @@ public class LoginController {
 
 	// ##############################################################
 
-    @GetMapping("error")
+    /**
+	 * Error.
+	 *
+	 * @param principal the principal
+	 * @return the model and view
+	 */
+	@GetMapping("error")
     public ModelAndView error(
     		@AuthenticationPrincipal OAuth2User principal) {
 
@@ -139,7 +168,13 @@ public class LoginController {
 	// ##############################################################
 
 
-    @RequestMapping("/login-error")
+    /**
+	 * Login error.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	@RequestMapping("/login-error")
     public String loginError(Model model) {
 
     	log.error("invalid user login attempt");

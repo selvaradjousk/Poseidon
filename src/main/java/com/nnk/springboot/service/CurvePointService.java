@@ -14,18 +14,30 @@ import com.nnk.springboot.util.CurvePointMapper;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/**
+ * The Class CurvePointService.
+ */
 @Log4j2
 @Service
 public class CurvePointService implements ICurvePointService {
 
 
+	/** The curve point repository. */
 	private final CurvePointRepository curvePointRepository;
 
+    /** The curve point mapper. */
     private final CurvePointMapper curvePointMapper;
 
 
     // ******************************************************************
 
+    /**
+     * Instantiates a new curve point service.
+     *
+     * @param curvePointRepository the curve point repository
+     * @param curvePointMapper the curve point mapper
+     */
     public CurvePointService(
     		final CurvePointRepository curvePointRepository,
     		final CurvePointMapper curvePointMapper) {
@@ -38,7 +50,12 @@ public class CurvePointService implements ICurvePointService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Gets the all curve point.
+     *
+     * @return the all curve point
+     */
+    @Override
     public List<CurvePointDTO> getAllCurvePoint() {
 
         List<CurvePointDTO> curvePointList = new ArrayList<>();
@@ -48,7 +65,8 @@ public class CurvePointService implements ICurvePointService {
 
 		log.info("Request: CurvePointService"
 				+ ".curvePointRepository.findAll()"
-				+ " - ListSize: {} curvePoints", curvePoints.size());
+				+ " - ListSize: {} curvePoints",
+				curvePoints.size());
 
 
         for (CurvePoint curvePoint : curvePoints) {
@@ -58,8 +76,10 @@ public class CurvePointService implements ICurvePointService {
         }
 
         log.info("Request: curvePointList.add(tradeDTO)"
-        		+ " after curvePointMapper.toCurvePointDTO(curvePoint)"
-				+ " - ListSize: {} curvePoints", curvePointList.size());
+        		+ " after curvePointMapper"
+        		+ ".toCurvePointDTO(curvePoint)"
+				+ " - ListSize: {} curvePoints",
+				curvePointList.size());
 
         return curvePointList;
     }
@@ -67,8 +87,15 @@ public class CurvePointService implements ICurvePointService {
     // ******************************************************************
 
 
-	@Override
-    public CurvePointDTO getCurvePointById(final int curvePointId) {
+	/**
+     * Gets the curve point by id.
+     *
+     * @param curvePointId the curve point id
+     * @return the curve point by id
+     */
+    @Override
+    public CurvePointDTO getCurvePointById(
+    		final int curvePointId) {
 
 
         CurvePoint curvePointById = curvePointRepository
@@ -76,9 +103,11 @@ public class CurvePointService implements ICurvePointService {
         		.orElseThrow(() ->
                 new DataNotFoundException("ID Not Found"));
 
-        log.info("Request: curvePointRepository.findById(curvePointId)"
+        log.info("Request: curvePointRepository"
+        		+ ".findById(curvePointId)"
         		+ "CurvePoint ID: {} & Value: {} ",
-        		curvePointById.getCurveId(), curvePointById.getValue());
+        		curvePointById.getCurveId(),
+        		curvePointById.getValue());
 
         return curvePointMapper
         		.toCurvePointDTO(curvePointById);
@@ -87,8 +116,15 @@ public class CurvePointService implements ICurvePointService {
     // ******************************************************************
 
 
-	@Override
-    public CurvePointDTO addCurvePoint(final CurvePointDTO curvePointDTO) {
+	/**
+     * Adds the curve point.
+     *
+     * @param curvePointDTO the curve point DTO
+     * @return the curve point DTO
+     */
+    @Override
+    public CurvePointDTO addCurvePoint(
+    		final CurvePointDTO curvePointDTO) {
 
 
         CurvePoint curvePointToAdd = curvePointMapper
@@ -115,7 +151,14 @@ public class CurvePointService implements ICurvePointService {
 
     // ******************************************************************
 
-	@Override
+	/**
+     * Update curve point.
+     *
+     * @param curvePointId the curve point id
+     * @param curvePointDTO the curve point DTO
+     * @return the curve point DTO
+     */
+    @Override
     public CurvePointDTO updateCurvePoint(
     		final int curvePointId,
     		final CurvePointDTO curvePointDTO) {
@@ -152,7 +195,12 @@ public class CurvePointService implements ICurvePointService {
     // ******************************************************************
 
 
-	@Override
+	/**
+     * Delete curve point.
+     *
+     * @param curvePointId the curve point id
+     */
+    @Override
     public void deleteCurvePoint(final int curvePointId) {
 
 

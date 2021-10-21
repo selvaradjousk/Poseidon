@@ -17,24 +17,38 @@ import com.nnk.springboot.service.ICurvePointService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The Curve Controller class. */
 @Log4j2
 @Controller
 @RequestMapping("/curvePoint")
 public class CurveController {
 
+    /** The curve point service. */
     @Autowired
     private final ICurvePointService curvePointService;
 
 	// ############################################################
 
-    public CurveController(
+    /**
+	 * Instantiates a new curve controller.
+	 *
+	 * @param curvePointService the curve point service
+	 */
+	public CurveController(
     		final ICurvePointService curvePointService) {
         this.curvePointService = curvePointService;
     }
 
 	// ############################################################
 
-    @GetMapping("/list")
+    /**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/list")
     public String home(final Model model) {
 
     	log.info("Request GET for curvePoint/list received");
@@ -45,9 +59,9 @@ public class CurveController {
         		.getAuthorities().toString()
         		.equals("[ADMIN]");
 
-        if (adminSession){
+        if (adminSession) {
 
-        	log.info("Session ADMIN USER LIST is accessible" );
+        	log.info("Session ADMIN USER LIST is accessible");
 
         	model.addAttribute("admin", "admin");
         }
@@ -63,7 +77,13 @@ public class CurveController {
 
 	// ############################################################
 
-    @GetMapping("/add")
+    /**
+	 * Adds the bid form.
+	 *
+	 * @param curvePointDTO the curve point DTO
+	 * @return the string
+	 */
+	@GetMapping("/add")
     public String addBidForm(final CurvePointDTO curvePointDTO) {
 
     	log.info("Request GET for curvePoint/add received");
@@ -76,7 +96,15 @@ public class CurveController {
 
 	// ############################################################
 
-    @PostMapping("/validate")
+    /**
+	 * Validate.
+	 *
+	 * @param curvePointDTO the curve point DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/validate")
     public String validate(
     		@Valid final CurvePointDTO curvePointDTO,
     		final BindingResult result,
@@ -104,7 +132,14 @@ public class CurveController {
 
 	// ############################################################
 
-    @GetMapping("/update/{id}")
+    /**
+	 * Show update form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
@@ -124,7 +159,16 @@ public class CurveController {
 
 	// ############################################################
 
-    @PostMapping("/update/{id}")
+    /**
+	 * Update bid.
+	 *
+	 * @param id the id
+	 * @param curvePointDTO the curve point DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/update/{id}")
     public String updateBid(
     		@PathVariable("id") final Integer id,
     		@Valid final CurvePointDTO curvePointDTO,
@@ -158,10 +202,14 @@ public class CurveController {
 
 	// ############################################################
 
-
-  	// ********************************************************************
-
-    @GetMapping("/delete/{id}")
+    /**
+	 * Delete bid.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/delete/{id}")
     public String deleteBid(
     		@PathVariable("id") final Integer id,
     		final Model model) {

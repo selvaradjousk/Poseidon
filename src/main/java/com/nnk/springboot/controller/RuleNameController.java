@@ -17,17 +17,25 @@ import com.nnk.springboot.service.IRuleNameService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The RuleName Controller class. */
 @Log4j2
 @Controller
 @RequestMapping("/ruleName")
 public class RuleNameController {
 
+    /** The rule name service. */
     @Autowired
     private final IRuleNameService ruleNameService;
 
 	// ############################################################
 
-    public RuleNameController(
+    /**
+	 * Instantiates a new rule name controller.
+	 *
+	 * @param ruleNameService the rule name service
+	 */
+	public RuleNameController(
     		final IRuleNameService ruleNameService) {
         this.ruleNameService = ruleNameService;
     }
@@ -36,7 +44,13 @@ public class RuleNameController {
 	// ############################################################
 
 
-    @RequestMapping("/list")
+    /**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	@RequestMapping("/list")
     public String home(final Model model) {
 
     	log.info("Request GET for ruleName/list received");
@@ -47,9 +61,9 @@ public class RuleNameController {
         		.getAuthorities().toString()
         		.equals("[ADMIN]");
 
-        if (adminSession){
+        if (adminSession) {
 
-        	log.info("Session ADMIN USER LIST is accessible" );
+        	log.info("Session ADMIN USER LIST is accessible");
 
         	model.addAttribute("admin", "admin");
         }
@@ -65,7 +79,13 @@ public class RuleNameController {
 	// ############################################################
 
 
-    @GetMapping("/add")
+    /**
+	 * Adds the rule form.
+	 *
+	 * @param ruleNameDTO the rule name DTO
+	 * @return the string
+	 */
+	@GetMapping("/add")
     public String addRuleForm(final RuleNameDTO ruleNameDTO) {
 
     	log.info("Request GET for ruleName/add received");
@@ -78,7 +98,15 @@ public class RuleNameController {
 	// ############################################################
 
 
-    @PostMapping("/validate")
+    /**
+	 * Validate.
+	 *
+	 * @param ruleNameDTO the rule name DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/validate")
     public String validate(
     		final @Valid RuleNameDTO ruleNameDTO,
     		final BindingResult result,
@@ -88,7 +116,8 @@ public class RuleNameController {
 
     	if (result.hasErrors()) {
 
-        	log.error("Request post for ruleName/validate Error(s) {} ", result);
+        	log.error("Request post for ruleName/validate"
+        			+ " Error(s) {} ", result);
 
     		return "ruleName/add";
         }
@@ -103,14 +132,23 @@ public class RuleNameController {
 	// ############################################################
 
 
-    @GetMapping("/update/{id}")
+    /**
+	 * Show update form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request GET ruleName/update/{id} received - ID: {}", id);
+       	log.info("Request GET ruleName/update/{id} received"
+       			+ " - ID: {}", id);
 
-    	RuleNameDTO ruleNameDTO = ruleNameService.getRuleNameById(id);
+    	RuleNameDTO ruleNameDTO = ruleNameService
+    			.getRuleNameById(id);
 
     	model.addAttribute("ruleNameDTO", ruleNameDTO);
 
@@ -121,7 +159,16 @@ public class RuleNameController {
 
 	// ############################################################
 
-    @PostMapping("/update/{id}")
+    /**
+	 * Update rule name.
+	 *
+	 * @param id the id
+	 * @param ruleNameDTO the rule name DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/update/{id}")
     public String updateRuleName(
     		@PathVariable("id") final Integer id,
     		@Valid final RuleNameDTO ruleNameDTO,
@@ -154,10 +201,17 @@ public class RuleNameController {
 
 	// ############################################################
 
-    @GetMapping("/delete/{id}")
+    /**
+	 * Delete rule name.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/delete/{id}")
     public String deleteRuleName(
-    		@PathVariable("id") Integer id,
-    		Model model) {
+    		@PathVariable("id") final Integer id,
+    		final Model model) {
 
        	log.info("Request DELETE ruleName/delete/{id} received - ID: {}", id);
 

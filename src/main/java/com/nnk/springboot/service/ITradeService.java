@@ -4,16 +4,49 @@ import java.util.List;
 
 import com.nnk.springboot.dto.TradeDTO;
 
+
+/**
+ * The Interface ITradeService.
+ */
 public interface ITradeService {
 
+	/**
+	 * Gets the all trade.
+	 *
+	 * @return the all trade
+	 */
 	List<TradeDTO> getAllTrade();
 
-	TradeDTO getTradeById(final int tradeId);
+	/**
+	 * Gets the trade by id.
+	 *
+	 * @param tradeId the trade id
+	 * @return the trade by id
+	 */
+	TradeDTO getTradeById(int tradeId);
 
-	TradeDTO addTrade(final TradeDTO trade);
+	/**
+	 * Adds the trade.
+	 *
+	 * @param trade the trade
+	 * @return the trade DTO
+	 */
+	TradeDTO addTrade(TradeDTO trade);
 
-	TradeDTO updateTrade(final int tradeId, final TradeDTO trade);
+	/**
+	 * Update trade.
+	 *
+	 * @param tradeId the trade id
+	 * @param trade the trade
+	 * @return the trade DTO
+	 */
+	TradeDTO updateTrade(int tradeId, TradeDTO trade);
 
-	void deleteTrade(final int tradeId);
+	/**
+	 * Delete trade.
+	 *
+	 * @param tradeId the trade id
+	 */
+	void deleteTrade(int tradeId);
 
 }

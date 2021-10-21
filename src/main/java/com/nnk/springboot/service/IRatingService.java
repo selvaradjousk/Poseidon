@@ -4,18 +4,51 @@ import java.util.List;
 
 import com.nnk.springboot.dto.RatingDTO;
 
+
+/**
+ * The Interface IRatingService.
+ */
 public interface IRatingService {
 
 
+	/**
+	 * Gets the all rating.
+	 *
+	 * @return the all rating
+	 */
 	List<RatingDTO> getAllRating();
 
-	RatingDTO getRatingById(final int ratingId);
+	/**
+	 * Gets the rating by id.
+	 *
+	 * @param ratingId the rating id
+	 * @return the rating by id
+	 */
+	RatingDTO getRatingById(int ratingId);
 
-	RatingDTO addRating(final RatingDTO rating);
+	/**
+	 * Adds the rating.
+	 *
+	 * @param rating the rating
+	 * @return the rating DTO
+	 */
+	RatingDTO addRating(RatingDTO rating);
 
+	/**
+	 * Update rating.
+	 *
+	 * @param ratingId the rating id
+	 * @param rating the rating
+	 * @return the rating DTO
+	 */
 	RatingDTO updateRating(
-			final int ratingId,
-			final RatingDTO rating);
+			int ratingId,
+			RatingDTO rating);
 
-	void deleteRating(final int ratingId);
+	/**
+	 * Delete rating.
+	 *
+	 * @param ratingId the rating id
+	 */
+	void deleteRating(int ratingId);
 }

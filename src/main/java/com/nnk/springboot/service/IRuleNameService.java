@@ -4,19 +4,52 @@ import java.util.List;
 
 import com.nnk.springboot.dto.RuleNameDTO;
 
+
+/**
+ * The Interface IRuleNameService.
+ */
 public interface IRuleNameService {
 
 
+	/**
+	 * Gets the all rule name.
+	 *
+	 * @return the all rule name
+	 */
 	List<RuleNameDTO> getAllRuleName();
 
-	RuleNameDTO getRuleNameById(final int ruleNameId);
+	/**
+	 * Gets the rule name by id.
+	 *
+	 * @param ruleNameId the rule name id
+	 * @return the rule name by id
+	 */
+	RuleNameDTO getRuleNameById(int ruleNameId);
 
-	RuleNameDTO addRuleName(final RuleNameDTO ruleName);
+	/**
+	 * Adds the rule name.
+	 *
+	 * @param ruleName the rule name
+	 * @return the rule name DTO
+	 */
+	RuleNameDTO addRuleName(RuleNameDTO ruleName);
 
+	/**
+	 * Update rule name.
+	 *
+	 * @param ruleNameId the rule name id
+	 * @param ruleName the rule name
+	 * @return the rule name DTO
+	 */
 	RuleNameDTO updateRuleName(
-			final int ruleNameId,
-			final RuleNameDTO ruleName);
+			int ruleNameId,
+			RuleNameDTO ruleName);
 
-	void deleteRuleName(final int ruleNameId);
+	/**
+	 * Delete rule name.
+	 *
+	 * @param ruleNameId the rule name id
+	 */
+	void deleteRuleName(int ruleNameId);
 
 }

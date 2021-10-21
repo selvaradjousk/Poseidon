@@ -15,32 +15,54 @@ import com.nnk.springboot.service.IUserService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The Registration Controller class. */
 @Log4j2
 @Controller
 public class RegistrationController {
 
+    /** The user service. */
     @Autowired
     private IUserService userService;
 
     // ############################################################
 
-    public RegistrationController(IUserService userService) {
+    /**
+     * Instantiates a new registration controller.
+     *
+     * @param userService the user service
+     */
+    public RegistrationController(final IUserService userService) {
 		super();
 		this.userService = userService;
 	}
 
     // ############################################################
 
+    /**
+     * View registration page.
+     *
+     * @param userDTO the user DTO
+     * @return the string
+     */
     @GetMapping("/register")
-    public String viewRegistrationPage(UserDTO userDTO) {
+    public String viewRegistrationPage(final UserDTO userDTO) {
 
-    	log.info( "Registration GET requested" );
+    	log.info("Registration GET requested");
 
     	return "register";
     }
 
     // ############################################################
 
+    /**
+     * Registration validate.
+     *
+     * @param userDTO the user DTO
+     * @param result the result
+     * @param model the model
+     * @return the string
+     */
     @PostMapping("/register")
     public String registrationValidate(
     		@Valid final UserDTO userDTO,
@@ -59,8 +81,8 @@ public class RegistrationController {
                 		+ userToAddDTO.getUsername());
 
                 return "redirect:/login";
-            }
-            catch (DataAlreadyExistsException e){
+
+    		} catch (DataAlreadyExistsException e) {
 
             	model.addAttribute("error", e);
 
@@ -69,9 +91,9 @@ public class RegistrationController {
         }
 
         return "register";
-    }    
+    }
 
 	  // ############################################################
 
-    
+
 }

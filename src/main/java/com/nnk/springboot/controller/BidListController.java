@@ -17,16 +17,24 @@ import com.nnk.springboot.service.IBidListService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The BidList Controller class. */
 @Log4j2
 @Controller
 @RequestMapping("/bidList")
 public class BidListController {
 
+	/** The bid list service. */
 	@Autowired
 	private final IBidListService bidListService;
 
 	// ############################################################
 
+	/**
+	 * Instantiates a new bid list controller.
+	 *
+	 * @param bidListService the bid list service
+	 */
 	public BidListController(
 			final IBidListService bidListService) {
         this.bidListService = bidListService;
@@ -34,6 +42,12 @@ public class BidListController {
 
 	// ############################################################
 
+	/**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@GetMapping("/list")
     public String home(final Model model) {
 
@@ -63,8 +77,14 @@ public class BidListController {
 
 	// ############################################################
 
-    @GetMapping("/add")
-    public String addBidForm(BidListDTO bid) {
+    /**
+	 * Adds the bid form.
+	 *
+	 * @param bid the bid
+	 * @return the string
+	 */
+	@GetMapping("/add")
+    public String addBidForm(final BidListDTO bid) {
 
     	log.info("Request GET for bidList/add received");
 
@@ -76,7 +96,15 @@ public class BidListController {
 
 	// ############################################################
 
-    @PostMapping("/validate")
+    /**
+	 * Validate.
+	 *
+	 * @param bidListDTO the bid list DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/validate")
     public String validate(
     		@Valid final BidListDTO bidListDTO,
     		final BindingResult result,
@@ -85,7 +113,7 @@ public class BidListController {
     	log.info("Request post for bidList/validate"
     			+ " received");
 
-    	if(result.hasErrors()){
+    	if (result.hasErrors()) {
 
         	log.error("Request post for bidList/validate"
         			+ " Error(s) {} ", result);
@@ -103,7 +131,14 @@ public class BidListController {
 
 	// ############################################################
 
-    @GetMapping("/update/{id}")
+    /**
+	 * Show update form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
@@ -124,7 +159,16 @@ public class BidListController {
 
 	// ############################################################
 
-    @PostMapping("/update/{id}")
+    /**
+	 * Update bid.
+	 *
+	 * @param id the id
+	 * @param bidListDTO the bid list DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/update/{id}")
     public String updateBid(
     		@PathVariable("id") final Integer id,
     		@Valid final BidListDTO bidListDTO,
@@ -134,7 +178,7 @@ public class BidListController {
        	log.info("Request POST bidList/update/{id} received"
        			+ " - ID: {}", id);
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
 
             model.addAttribute("bidListDTO", bidListDTO);
 
@@ -156,7 +200,14 @@ public class BidListController {
 
 	// ############################################################
 
-    @GetMapping("/delete/{id}")
+    /**
+	 * Delete bid.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/delete/{id}")
     public String deleteBid(
     		@PathVariable("id") final Integer id,
     		final Model model) {

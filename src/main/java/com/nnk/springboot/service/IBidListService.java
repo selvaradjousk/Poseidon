@@ -4,16 +4,49 @@ import java.util.List;
 
 import com.nnk.springboot.dto.BidListDTO;
 
+
+/**
+ * The Interface IBidListService.
+ */
 public interface IBidListService {
 
+	/**
+	 * Gets the all bid list.
+	 *
+	 * @return the all bid list
+	 */
 	List<BidListDTO> getAllBidList();
 
-	BidListDTO getBidListById(final int bidListId);
+	/**
+	 * Gets the bid list by id.
+	 *
+	 * @param bidListId the bid list id
+	 * @return the bid list by id
+	 */
+	BidListDTO getBidListById(int bidListId);
 
-	BidListDTO addBidList(final BidListDTO bidList);
+	/**
+	 * Adds the bid list.
+	 *
+	 * @param bidList the bid list
+	 * @return the bid list DTO
+	 */
+	BidListDTO addBidList(BidListDTO bidList);
 
-	BidListDTO updateBidList(final int bidListId, final BidListDTO bidList);
+	/**
+	 * Update bid list.
+	 *
+	 * @param bidListId the bid list id
+	 * @param bidList the bid list
+	 * @return the bid list DTO
+	 */
+	BidListDTO updateBidList(int bidListId, BidListDTO bidList);
 
-	 void deleteBidList(final int bidListId);
+	 /**
+ 	 * Delete bid list.
+ 	 *
+ 	 * @param bidListId the bid list id
+ 	 */
+ 	void deleteBidList(int bidListId);
 
 }

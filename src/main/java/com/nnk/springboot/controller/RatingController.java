@@ -17,25 +17,39 @@ import com.nnk.springboot.service.IRatingService;
 
 import lombok.extern.log4j.Log4j2;
 
+
+/** The Rating Controller class. */
 @Log4j2
 @Controller
 @RequestMapping("/rating")
 public class RatingController {
 
 
+    /** The rating service. */
     @Autowired
     private final IRatingService ratingService;
 
 	// ############################################################
 
-    public RatingController(
+    /**
+	 * Instantiates a new rating controller.
+	 *
+	 * @param ratingService the rating service
+	 */
+	public RatingController(
     		final IRatingService ratingService) {
         this.ratingService = ratingService;
     }
 
 	// ############################################################
 
-    @GetMapping("/list")
+    /**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/list")
     public String home(final Model model) {
 
     	log.info("Request GET for rating/list received");
@@ -46,9 +60,9 @@ public class RatingController {
         		.getAuthorities().toString()
         		.equals("[ADMIN]");
 
-        if (adminSession){
+        if (adminSession) {
 
-        	log.info("Session ADMIN USER LIST is accessible" );
+        	log.info("Session ADMIN USER LIST is accessible");
 
         	model.addAttribute("admin", "admin");
         }
@@ -64,7 +78,13 @@ public class RatingController {
 	// ############################################################
 
 
-    @GetMapping("/add")
+    /**
+	 * Adds the rating form.
+	 *
+	 * @param ratingDTO the rating DTO
+	 * @return the string
+	 */
+	@GetMapping("/add")
     public String addRatingForm(final RatingDTO ratingDTO) {
 
     	log.info("Request GET for rating/add received");
@@ -76,7 +96,15 @@ public class RatingController {
 
 	// ############################################################
 
-    @PostMapping("/validate")
+    /**
+	 * Validate.
+	 *
+	 * @param ratingDTO the rating DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/validate")
     public String validate(
     		@Valid final RatingDTO ratingDTO,
     		final BindingResult result,
@@ -86,7 +114,8 @@ public class RatingController {
 
     	if (result.hasErrors()) {
 
-        	log.error("Request post for rating/validate Error(s) {} ", result);
+        	log.error("Request post for rating/validate"
+        			+ " Error(s) {} ", result);
 
     		return "rating/add";
         }
@@ -100,12 +129,20 @@ public class RatingController {
 
 	// ############################################################
 
-    @GetMapping("/update/{id}")
+    /**
+	 * Show update form.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/update/{id}")
     public String showUpdateForm(
     		@PathVariable("id") final Integer id,
     		final Model model) {
 
-       	log.info("Request GET rating/update/{id} received - ID: {}", id);
+       	log.info("Request GET rating/update/{id} received"
+       			+ " - ID: {}", id);
 
     	RatingDTO ratingDTO = ratingService.getRatingById(id);
 
@@ -119,7 +156,16 @@ public class RatingController {
 	// ############################################################
 
 
-    @PostMapping("/update/{id}")
+    /**
+	 * Update rating.
+	 *
+	 * @param id the id
+	 * @param ratingDTO the rating DTO
+	 * @param result the result
+	 * @param model the model
+	 * @return the string
+	 */
+	@PostMapping("/update/{id}")
     public String updateRating(
     		@PathVariable("id") final Integer id,
     		final @Valid RatingDTO ratingDTO,
@@ -152,7 +198,14 @@ public class RatingController {
 
 	// ############################################################
 
-    @GetMapping("/delete/{id}")
+    /**
+	 * Delete rating.
+	 *
+	 * @param id the id
+	 * @param model the model
+	 * @return the string
+	 */
+	@GetMapping("/delete/{id}")
     public String deleteRating(
     		@PathVariable("id") final Integer id,
     		final Model model) {

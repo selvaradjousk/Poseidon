@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @Builder
 @Getter
 @Setter
@@ -23,18 +24,24 @@ import lombok.ToString;
 @ToString
 public class UserDTO {
 
+	/** The id. */
 	private Integer id;
 
+	/** The username. */
 	@NotBlank(message = "Username is mandatory")
 	@Length(max = GeneralConstraints.VARIABLE_LENGTH_125,
-		message = "The maximum length for username should be 125 characters")
+		message = "The maximum length for username"
+				+ " should be 125 characters")
     @Pattern(regexp = GeneralConstraints.PATTERN_USERNAME,
-	message = "Should be alphanumeric or email and minimum more than 2 characters")
+	message = "Should be alphanumeric or email and"
+			+ " minimum more than 2 characters")
 	private String username;
 
+	/** The password. */
 	@NotBlank(message = "Password is mandatory")
 	@Length(max = GeneralConstraints.VARIABLE_LENGTH_125,
-	message = "The maximum length for password should be 125 characters")
+	message = "The maximum length for password should"
+			+ " be 125 characters")
 	@Pattern(regexp = UserConstraints.PATTERN_PASSWORD,
 	message = "The password must contain at least"
 			+ " 8 characters that includes"
@@ -43,21 +50,34 @@ public class UserDTO {
 			+ " any one symbol ( & ~ # @ = * - + € ^ $ £ µ % )")
 	private String password;
 
+	/** The fullname. */
 	@NotBlank(message = "FullName is mandatory")
 	@Length(max = GeneralConstraints.VARIABLE_LENGTH_125,
-	message = "The maximum length for FullName should be 125 characters")
+	message = "The maximum length for FullName should"
+			+ " be 125 characters")
     @Pattern(regexp = GeneralConstraints.PATTERN_ALPHANUMERIC,
-	message = "Should be alphanumeric and minimum more than 2 characters")
+	message = "Should be alphanumeric and minimum more"
+			+ " than 2 characters")
 	private String fullname;
 
+	/** The role. */
 	@NotBlank(message = "Role is mandatory")
     @Pattern(regexp = GeneralConstraints.PATTERN_ALPHABETCHARACTERS,
-	message = "Should be alphabets and minimum more than 2 characters")
+	message = "Should be alphabets and minimum more than"
+			+ " 2 characters")
 	private String role;
 
 	// ############################################################
 
-    public UserDTO(
+    /**
+	 * Instantiates a new user DTO.
+	 *
+	 * @param username the username
+	 * @param password the password
+	 * @param fullname the fullname
+	 * @param role the role
+	 */
+	public UserDTO(
     		final String username,
     		final String password,
     		final String fullname,
