@@ -1,6 +1,5 @@
 package com.nnk.springboot.IT.controller;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -43,7 +42,7 @@ class UserControllerGetUpdate_IT {
     @Test
     public void testGetUserUpdateByIdWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(get("/user/update/1"))
+        mockMvc.perform(get("/user/update/3"))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -62,7 +61,7 @@ class UserControllerGetUpdate_IT {
     @Test
     public void testGetUserUpdateById() throws Exception {
 
-        mockMvc.perform(get("/user/update/1"))
+        mockMvc.perform(get("/user/update/3"))
                 .andExpect(model().attributeExists("userDTO"))
                 .andExpect(model().size(1))
                 .andExpect(view().name("user/update"))
