@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.nnk.springboot.config.AuthTokenFilter;
-import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.UserController;
 import com.nnk.springboot.service.UserService;
@@ -37,9 +36,6 @@ class UserControllerGetAddTest {
 
     @MockBean
     private MyUserDetailsService userDetailsService;
-
-    @MockBean
-    private JwtUtils jwtUtils;
 
     @Autowired
     private MockMvc mockMvc;

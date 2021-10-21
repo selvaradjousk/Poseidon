@@ -21,7 +21,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.config.AuthTokenFilter;
-import com.nnk.springboot.config.JwtUtils;
 import com.nnk.springboot.config.MyUserDetailsService;
 import com.nnk.springboot.controller.BidListController;
 import com.nnk.springboot.dto.BidListDTO;
@@ -41,9 +40,6 @@ class BidListControllerGetUpdateTest {
 
     @MockBean
     private MyUserDetailsService userDetailsService;
-
-    @MockBean
-    private JwtUtils jwtUtils;
        
     @Autowired
     private MockMvc mockMvc;

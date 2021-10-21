@@ -46,9 +46,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	UserService userService;
 
-	/** The jwt utils. */
-	@Autowired
-	private JwtUtils jwtUtils;
 
     /** The authentication manager. */
     @Autowired
@@ -133,21 +130,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 				+ " {}", response.getHeaderNames());
 		log.debug("### FilterChain: {}", filterChain);
 
-	    // ############################################################
-		// THOUGH JWT not of much user with statefull session based
-		// application, We have implementing to keep open the possibility
-		// of application being flexible for JWT implementation
-		// transition with classic login excluding oauth
-		
-		// Present implementation is focuses on session based implementation
-		// based on the
-		// OAuth2AuthenticationToken and UsernamePasswordAuthenticationToken
-	    // ############################################################
 
-
-		// UserPrincipal null condition is checked to prevent recursive
-		// conditional check on static resources files which are
-		// always apparently null (eg. images, css & js files)
 
 		if (request.getUserPrincipal() != null) {
 
@@ -159,12 +142,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
             Cookie cookie = WebUtils.getCookie(request, "token");
             
-// #############IF COOKIE IS NOT NULL #####################################
+            // #############IF COOKIE IS NOT NULL #####################################
             if (cookie != null) {
 
-            	jwt = cookie.getValue();
 
-                logger.info("JWT ***********" + jwt);
+
+                logger.info("Cookie is not null ***********" + cookie);
 
 
             } else {
@@ -175,39 +158,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
           	  checkForOauthUserInDatabaseIfAbsentPersistUser(request);
             }
             
-            // Jwt token validation called if not null
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-
-				log.debug("jwt not null and validated");
-
-				String username = jwtUtils.getUserNameFromJwtToken(jwt);
-
-				log.debug("jwt urerered username : {}", username);
-
-				UserDetails userDetails = userDetailsService
-						.loadUserByUsername(username);
-
-				log.debug("userDetails: {}", userDetails.toString());
-
-				UsernamePasswordAuthenticationToken settingNewToken
-					= new UsernamePasswordAuthenticationToken(
-						userDetails,
-						null,
-						userDetails.getAuthorities());
-
-				log.debug("UserNamePasswordAuthenticationToken intial:"
-						+ " {}", settingNewToken);
-
-				settingNewToken.setDetails(new WebAuthenticationDetailsSource()
-						.buildDetails(request));
-
-				log.debug("UserNamePasswordAuthenticationToken set value:"
-						+ " {}", settingNewToken);
-
-				SecurityContextHolder.getContext()
-				.setAuthentication(settingNewToken);
-
-			}
 
 		} catch (Exception e) {
 

@@ -1,9 +1,6 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -47,9 +44,9 @@ class RegistrationController_IT {
 //	@MockBean
 //	private AuthenticationManager authenticationManager;
 //
-	private static ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
 	
-    private static UserDTO testUserDTO1;
+    private UserDTO testUserDTO1, testUserDTO2;
 	
     @BeforeEach
     public void setUp() {
@@ -59,6 +56,13 @@ class RegistrationController_IT {
         		.username("Username")
         		.password("Password&1")
         		.fullname("Fullname")
+        		.role("USER")
+        		.build();
+        
+        testUserDTO2 = UserDTO.builder()
+        		.username("user5")
+        		.password("Password&1")
+        		.fullname("User5")
         		.role("USER")
         		.build();
     }    
@@ -101,6 +105,32 @@ class RegistrationController_IT {
                     .andExpect(model().attributeDoesNotExist("userDTO"))
                     .andExpect(redirectedUrl("/login"))
                     .andExpect(status().is(302));
+
+
+    }
+
+	// ********************************************************************
+
+
+
+    @DisplayName(" Url request POST /register Existing user"
+    		+ " - Given a Existing User,"
+    		+ " when POST /register action request,"
+    		+ " then returns user exists")    
+    @Test
+    public void testPostRegisterUserAlredyExists() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/register")
+                    .sessionAttr("userDTO", testUserDTO2)
+                    .param("username", testUserDTO2.getUsername())
+                    .param("password", testUserDTO2.getPassword())
+                    .param("fullname", testUserDTO2.getFullname())
+                    .param("role", testUserDTO2.getRole()))
+                    .andExpect(model().hasNoErrors())
+                    .andExpect(model().size(2))
+                    .andExpect(model().attributeExists("userDTO"))
+//                    .andExpect(redirectedUrl("/register"))
+                    .andExpect(status().is(200));
 
 
     }
