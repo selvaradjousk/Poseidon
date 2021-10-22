@@ -37,7 +37,7 @@ class UserControllerPostUpdate_IT {
 	
     private static UserDTO testUserDTO1;
 
-
+	
     @BeforeEach
     public void setUp() {
 

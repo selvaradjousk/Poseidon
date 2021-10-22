@@ -2,7 +2,10 @@ package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,6 +21,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.nnk.springboot.service.UserService;
 
@@ -33,10 +38,16 @@ class UserControllerGetList_IT {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private WebApplicationContext context;
 
     @BeforeEach
     public void setUp() {
-
+    	mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
 
     }
     
@@ -50,7 +61,7 @@ class UserControllerGetList_IT {
     @Test
     public void testGetUserListWithoutAuthentication() throws Exception {
 
-        mockMvc.perform(get("/user/list"))
+        mockMvc.perform(get("/user/list").with(anonymous()))
 	        .andExpect(status().is(401))
 	        .andDo(MockMvcResultHandlers.print())
 	        .andExpect(status().isUnauthorized())
@@ -58,7 +69,24 @@ class UserControllerGetList_IT {
 	        .andExpect(unauthenticated());
 
     }
+    
+    @DisplayName(" Url request GET /user/list - With wrong password Authentication"
+    		+ " - Given a User List,"
+    		+ " when GET /user/list action request with wrong password authetication,"
+    		+ " then returns Error 403 Forbidden")   
+    @Test
+    public void testGetUserListWithWrongUserPasswordAuthentication() throws Exception {
 
+    	mockMvc.perform(get("/user/list")
+				  .with(user("Someone")
+				  .password("somePassword1!")
+				  .roles("ADMIN")))
+			  .andExpect(status().is(403))
+			  .andExpect(status().reason(containsString("Forbidden")));
+
+    }
+
+ 
     // ********************************************************************
 
     @WithMockUser(username = "admin", authorities = { "ADMIN", "USER"})
@@ -80,6 +108,5 @@ class UserControllerGetList_IT {
     }
 
     // ********************************************************************
-
 
 }

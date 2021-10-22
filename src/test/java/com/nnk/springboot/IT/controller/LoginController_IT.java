@@ -2,8 +2,8 @@ package com.nnk.springboot.IT.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -106,6 +106,27 @@ class LoginController_IT {
     }  
 
 	// ********************************************************************
+//    @Test
+//    public void testUserLogin() throws Exception {
+//        RequestBuilder requestBuilder = post("/login")
+//                .param("username", "admin")
+//                .param("password", "Password1!");
+//
+//        mockMvc.perform(requestBuilder)
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(cookie().exists("JSESSIONID"));
+//    }    
+
+    @DisplayName("ERROR pagewith OAuth login")
+    @Test
+    void getErrorPageOAuth2Auth() throws Exception {
+        mockMvc.perform(get("/error").with(oauth2Login()))
+                .andExpect(status().isOk());
+    }
+    
+	// ********************************************************************
+      
     
     @DisplayName("login Url request - With Correct Authority"
     		+ " - Given correct authority url /login request,"

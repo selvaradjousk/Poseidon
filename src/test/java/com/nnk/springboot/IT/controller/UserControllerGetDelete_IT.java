@@ -1,11 +1,15 @@
 package com.nnk.springboot.IT.controller;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +22,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import com.nnk.springboot.dto.UserDTO;
+import com.nnk.springboot.service.UserService;
+
 @DisplayName("INTEGRATION TESTS - Controller < USER > DELETE")
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -25,6 +32,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 class UserControllerGetDelete_IT {
 
 
+
+    @Autowired
+    private UserService userService;
+    	
     @Autowired
     private MockMvc mockMvc;
 
@@ -62,13 +73,18 @@ class UserControllerGetDelete_IT {
     @Test
     public void testGetUserDeleteWithAuthentication() throws Exception {
 
+    	List<UserDTO> users = userService.getAllUser();
+    	assertNotNull(users);
+    	int size = users.size();
+    	
     	mockMvc.perform(get("/user/delete/1"))
     				.andExpect(redirectedUrl("/user/list"))
             		.andExpect(status().isFound())
             		.andExpect(model().hasNoErrors())
             		.andExpect(status().is(302));
 
-
+    	List<UserDTO> userAfterDelete = userService.getAllUser();
+        assertEquals(size - 1, userAfterDelete.size());
         
     }
 

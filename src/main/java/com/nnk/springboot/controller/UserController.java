@@ -57,7 +57,27 @@ public class UserController {
 
     	log.info("Request GET for user/list received");
 
-        boolean adminSession = SecurityContextHolder
+        checkAdminSessionTrue(model);
+
+    	model.addAttribute(
+        		"users",
+        		userService.getAllUser());
+
+    	log.info("Request GET for user/list reponse SUCCESS");
+
+    	return "user/list";
+    }
+
+    
+	// ############################################################
+    
+	/**
+	 * Check admin session true.
+	 *
+	 * @param model the model
+	 */
+	public void checkAdminSessionTrue(final Model model) {
+		boolean adminSession = SecurityContextHolder
         		.getContext()
         		.getAuthentication()
         		.getAuthorities().toString()
@@ -69,15 +89,7 @@ public class UserController {
 
         	model.addAttribute("admin", "admin");
         }
-
-    	model.addAttribute(
-        		"users",
-        		userService.getAllUser());
-
-    	log.info("Request GET for user/list reponse SUCCESS");
-
-    	return "user/list";
-    }
+	}
 
 	// ############################################################
 
