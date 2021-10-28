@@ -1,27 +1,25 @@
 <p id="start" align="center">
 <br>
 <a href="#"><img height="130rem" src="src/main/resources/static/img/logo_alone.PNG"></a>
-<br><br>
 <a href="#"><img width="250rem" src="src/main/resources/static/img/logo_text.PNG"></a>
 <h1></h1>
 </p>
 
 <a title="Spring Boot" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Spring%20Boot-2.5.5-yellowgreen"></a>
 <a title="Java Version" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Java-1.8-blue"></a>
-<a title="JaCoCo" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%94%A8-JACoCo%2096.2%25-success"></a>
-<a title="STAN4j2" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%8E%A2-Stan4j2-important"></a>
-<a title="SureFire" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%9B%A0%EF%B8%8F-SureFire-informational"></a>
-<a title="SonarLint" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%8F%B9-SonarLint-ff69b4t"></a>
-<a title="SpotBugs / FindBugs" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%90%9B-SpotBugs%20%2F%20FindBugs-important"></a>
+<a title="JaCoCo" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%94%A8-JACoCo%2098.4%25-success"></a>
+<a title="STAN4j2" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Stan4j2-Design-important"></a>
+<a title="SureFire" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/SureFire--informational"></a>
+<a title="SonarLint" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/SonarLint-implemented-ff69b4t"></a>
+<a title="SpotBugs / FindBugs" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/SpotBugs-FindBugs-important"></a>
 <a title="MySQL" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/MySQL--cyan"></a>
-<a title="Spring Security" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%94%91-Spring%20Security-critical"></a>
+<a title="Spring Security" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Spring%20Security--critical"></a>
 <a title="OAuth" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/OAuth-2.0-orange"></a>
 <a title="JWT" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/JWT-STATELESS-success"></a>
-
-<a title="Spring DATA JPA" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%E2%9B%88%EF%B8%8F-Spring%20DATA%20JPA-blue"></a>
-<a title="Thymeleaf" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%8C%B1-Thymeleaf-brightgreen"></a>
-<a title="HTML" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%92%BB-HTML-success"></a>
-<a title="CSS" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%91%91-CSS-orange"></a>
+<a title="Spring DATA JPA" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Spring%20DATA%20JPA--blue"></a>
+<a title="Thymeleaf" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Thymeleaf--brightgreen"></a>
+<a title="HTML" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/HTML--success"></a>
+<a title="CSS" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/CSS--orange"></a>
 <a title="Maven Version" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Maven-2.7.7-yellow"></a>
 
 
