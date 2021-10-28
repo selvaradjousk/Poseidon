@@ -7,7 +7,7 @@
 
 <a title="Spring Boot" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Spring%20Boot-2.5.5-yellowgreen"></a>
 <a title="Java Version" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Java-1.8-blue"></a>
-<a title="JaCoCo" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%94%A8-JACoCo%2098.4%25-success"></a>
+<a title="JaCoCo" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/%F0%9F%94%A8-JACoCo%2087.0%25-success"></a>
 <a title="STAN4j2" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/Stan4j2-Design-important"></a>
 <a title="SureFire" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/SureFire--informational"></a>
 <a title="SonarLint" href="https://github.com/selvaradjousk/Poseidon"><img src="https://img.shields.io/badge/SonarLint-implemented-ff69b4t"></a>
